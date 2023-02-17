@@ -1,0 +1,45 @@
+.cardEvent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px;
+
+
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid transparent;
+
+    transition: color .3s ease-in-out, background-color .3s ease-in-out, border .3s ease-in-out;
+
+    p {
+      font-size: 20px
+    }
+
+  }
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    &__button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+    }
+  }
+}
+
+.cardEvent__content--active {
+  background-color: #EDE7F8;
+  border: 1px solid #33156E;
+  color: #33156E;
+}

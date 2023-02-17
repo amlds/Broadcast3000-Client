@@ -1,0 +1,407 @@
+{
+  "day1": {
+    "id": 1,
+    "date": "01/02/2023",
+    "challenge":
+      {
+        "name": "_Setup",
+        "time": "10:00"
+      }
+  },
+  "day2": {
+    "id": 2,
+    "date": "02/02/2023",
+    "challenge":
+      {
+        "name": "Programming Basics",
+        "time": "10:00"
+      }
+  },
+  "day3": {
+    "id": 3,
+    "date": "03/02/2023",
+    "challenge":
+      {
+        "name": "Flow, Conditionals & Arrays",
+        "time": "10:00"
+      }
+  },
+  "day4": {
+    "id": 4,
+    "date": "04/02/2023",
+    "challenge":
+      {
+        "name": "Iterators & Blocks",
+        "time": "10:00"
+      }
+  },
+  "day5": {
+    "id": 5,
+    "date": "05/02/2023",
+    "challenge":
+      {
+        "name": "Hash & Symbols",
+        "time": "10:00"
+      }
+  },
+  "day6": {
+    "id": 6,
+    "date": "06/02/2023",
+    "challenge":
+      {
+        "name": "Regular Expressions",
+        "time": "10:00"
+      }
+  },
+  "day7": {
+    "id": 7,
+    "date": "07/02/2023",
+    "challenge":
+      {
+        "name": "Parsing",
+        "time": "10:00"
+      }
+  },
+  "day8": {
+    "id": 8,
+    "date": "08/02/2023",
+    "challenge":
+      {
+        "name": "Classes & Instances",
+        "time": "10:00"
+      }
+  },
+  "day9": {
+    "id": 9,
+    "date": "09/02/2023",
+    "challenge":
+      {
+        "name": "Inheritance & Self",
+        "time": "10:00"
+      }
+  },
+  "day10": {
+    "id": 10,
+    "date": "10/02/2023",
+    "challenge":
+      {
+        "name": "Cookbook (Day 1)",
+        "time": "10:00"
+      }
+  },
+  "day11": {
+    "id": 11,
+    "date": "11/02/2023",
+    "challenge":
+      {
+        "name": "Cookbook (Day 2)",
+        "time": "10:00"
+      }
+  },
+  "day12": {
+    "id": 12,
+    "date": "12/02/2023",
+    "challenge":
+      {
+        "name": "Food Delivery (Day 1)",
+        "time": "10:00"
+      }
+  },
+  "day13": {
+    "id": 13,
+    "date": "13/02/2023",
+    "challenge":
+      {
+        "name": "Food Delivery (Day 2)",
+        "time": "10:00"
+      }
+  },
+  "day14": {
+    "id": 14,
+    "date": "14/02/2023",
+    "challenge":
+      {
+        "name": "Schema Design & SQL",
+        "time": "10:00"
+      }
+  },
+  "day15": {
+    "id": 15,
+    "date": "15/02/2023",
+    "challenge":
+      {
+        "name": "CRUD with SQL",
+        "time": "10:00"
+      }
+  },
+  "day16": {
+    "id": 16,
+    "date": "16/02/2023",
+    "challenge":
+      {
+        "name": "Active Record Basics",
+        "time": "10:00"
+      }
+  },
+  "day17": {
+    "id": 17,
+    "date": "17/02/2023",
+    "challenge":
+      {
+        "name": "Associations & Validations",
+        "time": "10:00"
+      }
+  },
+  "day18": {
+    "id": 18,
+    "date": "18/02/2023",
+    "challenge":
+      {
+        "name": "HTML & CSS",
+        "time": "10:00"
+      }
+  },
+  "day19": {
+    "id": 19,
+    "date": "19/02/2023",
+    "challenge":
+      {
+        "name": "CSS Components",
+        "time": "10:00"
+      }
+  },
+  "day20": {
+    "id": 20,
+    "date": "20/02/2023",
+    "challenge":
+      {
+        "name": "Bootstrap & Layouts",
+        "time": "10:00"
+      }
+  },
+  "day21": {
+    "id": 21,
+    "date": "21/02/2023",
+    "challenge":
+      {
+        "name": "JavaScript basics",
+        "time": "10:00"
+      }
+  },
+  "day22": {
+    "id": 22,
+    "date": "22/02/2023",
+    "challenge":
+      {
+        "name": "DOM & challenge",
+        "time": "10:00"
+      }
+  },
+  "day23": {
+    "id": 23,
+    "date": "23/02/2023",
+    "challenge":
+      {
+        "name": "HTTP & AJAX",
+        "time": "10:00"
+      }
+  },
+  "day24": {
+    "id": 24,
+    "date": "24/02/2023",
+    "challenge":
+      {
+        "name": "JavaScript Packages",
+        "time": "10:00"
+      }
+  },
+  "day25": {
+    "id": 25,
+    "date": "25/02/2023",
+    "challenge":
+      {
+        "name": "Product Design Sprint",
+        "time": "10:00"
+      }
+  },
+  "day26": {
+    "id": 26,
+    "date": "26/02/2023",
+    "challenge":
+      {
+        "name": "Routing, Controllers & Views",
+        "time": "10:00"
+      }
+  },
+  "day27": {
+    "id": 27,
+    "date": "27/02/2023",
+    "challenge":
+      {
+        "name": "Models & CRUD",
+        "time": "10:00"
+      }
+  },
+  "day28": {
+    "id": 28,
+    "date": "28/02/2023",
+    "challenge":
+      {
+        "name": "Advanced Routing",
+        "time": "10:00"
+      }
+  },
+  "day29": {
+    "id": 29,
+    "date": "29/02/2023",
+    "challenge":
+      {
+        "name": "Front-End",
+        "time": "10:00"
+      }
+  },
+  "day30": {
+    "id": 30,
+    "date": "30/02/2023",
+    "challenge":
+      {
+        "name": "Hosting & Image Upload",
+        "time": "10:00"
+      }
+  },
+  "day31": {
+    "id": 31,
+    "date": "31/02/2023",
+    "challenge":
+      {
+        "name": "Authentication & Devise",
+        "time": "10:00"
+      }
+  },
+  "day32": {
+    "id": 32,
+    "date": "01/03/2023",
+    "challenge":
+      {
+        "name": "Authorization & Pundit",
+        "time": "10:00"
+      }
+  },
+  "day33": {
+    "id": 33,
+    "date": "02/03/2023",
+    "challenge":
+      {
+        "name": "Geocoding",
+        "time": "10:00"
+      }
+  },
+  "day34": {
+    "id": 34,
+    "date": "03/03/2023",
+    "challenge":
+      {
+        "name": "Search",
+        "time": "10:00"
+      }
+  },
+  "day35": {
+    "id": 35,
+    "date": "04/03/2023",
+    "challenge":
+      {
+        "name": "AJAX in Rails",
+        "time": "10:00"
+      }
+  },
+  "day36": {
+    "id": 36,
+    "date": "05/03/2023",
+    "challenge":
+      {
+        "name": "WebSocket & Action Cable",
+        "time": "10:00"
+      }
+  },
+  "day37": {
+    "id": 37,
+    "date": "06/03/2023",
+    "challenge":
+      {
+        "name": "From Design To Code",
+        "time": "10:00"
+      }
+  },
+  "day38": {
+    "id": 38,
+    "date": "07/03/2023",
+    "challenge":
+      {
+        "name": "Background Jobs & Sidekiq",
+        "time": "10:00"
+      }
+  },
+  "day39": {
+    "id": 39,
+    "date": "08/03/2023",
+    "challenge":
+      {
+        "name": "DB advanced",
+        "time": "10:00"
+      }
+  },
+  "day40": {
+    "id": 40,
+    "date": "09/03/2023",
+    "challenge":
+      {
+        "name": "Demo preparation",
+        "time": "10:00"
+      }
+  },
+  "day41": {
+    "id": 41,
+    "date": "10/03/2023",
+    "challenge":
+      {
+        "name": "Project",
+        "time": "10:00"
+      }
+  },
+  "day42": {
+    "id": 42,
+    "date": "11/03/2023",
+    "challenge":
+      {
+        "name": "Project",
+        "time": "10:00"
+      }
+  },
+  "day43": {
+    "id": 43,
+    "date": "12/03/2023",
+    "challenge":
+      {
+        "name": "Project",
+        "time": "10:00"
+      }
+  },
+  "day44": {
+    "id": 44,
+    "date": "13/03/2023",
+    "challenge":
+      {
+        "name": "Dress Rehearsal",
+        "time": "10:00"
+      }
+  },
+  "day45": {
+    "id": 45,
+    "date": "14/03/2023",
+    "challenge":
+      {
+        "name": "Demo Day",
+        "time": "10:00"
+      }
+  }
+}

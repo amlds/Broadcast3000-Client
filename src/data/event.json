@@ -1,0 +1,101 @@
+{
+  "event0": {
+    "id": 0,
+    "name": "Construire un site web avec ReactJS.",
+    "description": "Avec Pauline & Alexy !",
+    "start": "2022-02-1T14:52:00.155Z",
+    "end": "2022-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event1": {
+    "id": 1,
+    "name": "Faire le plein de moustache pour 2023",
+    "description": "Vous aurez un cours de dessin avec notre Seigneur à tous!",
+    "start": "2023-03-01T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event2": {
+    "id": 2,
+    "name": "Soirée jeune Lait",
+    "description": "Viens boire un coups avec François!",
+    "start": "2023-03-01T20:16:04.155Z",
+    "end": "2023-03-04T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva2.png"
+  },
+  "event3": {
+    "id": 3,
+    "name": "Batch lunch",
+    "description": "N'amenez rien à manger, c'est le wagon qui régale!",
+    "start": "2023-03-06T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event4": {
+    "id": 4,
+    "name": "Meetup Ruby",
+    "description": "Diffusion du live Twitch de la communauté Ruby on Rails.",
+    "start": "2023-03-10T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event5": {
+    "id": 5,
+    "name": "Code'n'Drink",
+    "description": "Tournoi de code sur le campus, durant lequel vous vous affronterz sur des challenges, en fonction de votre formation.",
+    "start": "2023-03-11T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event6": {
+    "id": 6,
+    "name": "Talks au wagon",
+    "description": "Des talks sur des sujets variés, par des personnes de la communauté.",
+    "start": "2023-03-23T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event7": {
+    "id": 7,
+    "name": "Interventions de la communauté",
+    "description": "Des interventions de la communauté, sur des sujets variés.",
+    "start": "2023-03-29T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event8": {
+    "id": 8,
+    "name": "Machin truc bidule",
+    "description": "C'est rien de bien méchant, mais ça fait toujours plaisir de voir des gens qui s'amusent.",
+    "start": "2023-04-02T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  },
+  "event9": {
+    "id": 9,
+    "name": "Titre #9",
+    "description": "Description #9",
+    "start": "2023-04-10T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+    },
+  "event10": {
+    "id": 10,
+    "name": "Je n'ai plus d'idée",
+    "description": "Je n'ai plus d'idée pour les titres et les descriptions",
+    "start": "2023-04-12T20:16:04.155Z",
+    "end": "2023-03-01T20:16:04.155Z",
+    "location": "test",
+    "image": "./images/cardCanva.png"
+  }
+}

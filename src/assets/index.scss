@@ -1,0 +1,18 @@
+//import config
+@import "./config/fonts";
+@import "./config/colors";
+@import "./config/bascis";
+
+//import components
+@import "./components/listCards";
+@import "./components/cards";
+@import "./components/focusImages";
+@import "./components/form";
+@import './components/buttons';
+@import './components/nav';
+@import './components/dashboardConfig';
+@import './components/settings';
+@import './components/link-device';
+
+//import views
+@import "./views/home";

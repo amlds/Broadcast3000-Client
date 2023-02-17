@@ -1,0 +1,47 @@
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 16px 0;
+  gap: 16px;
+
+  & > button {
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  & > .button_active {
+    color: #E40D06;
+    border-bottom: 2px solid #E40D06;
+  }
+}
+
+.nav__button {
+  background-color: transparent;
+  font-size: 20px;
+  letter-spacing: 0.1px;
+  font-weight: 400;
+  padding: 4px 0;
+  width: fit-content;
+  border-radius: 0px;
+  color: #1B1A21;
+  position: relative;
+  &::before {
+    transition: width .3s ease-in-out;
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: #E40D06;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+  &--active {
+    -webkit-text-stroke: 0.7px #1B1A21;
+    &::before {
+      height: 2px;
+      width: 100%;
+    }
+  }
+}

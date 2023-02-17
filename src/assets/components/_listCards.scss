@@ -1,0 +1,66 @@
+.listCard {
+  padding: 65px 80px;
+  box-sizing: border-box;
+  height: 100vh;
+  position: relative;
+  .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 11%;
+    z-index: 1;
+  }
+  .shadow:nth-child(1) {
+    top: auto;
+    bottom: 0;
+    height: 6%;
+  }
+  &__title {
+    position: absolute;
+    z-index: 2;
+    color: #1B1A21;
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 11%;
+    gap: 24px;
+  }
+}
+
+.device {
+  .listCard {
+    overflow: hidden;
+    background: #FDF9FA;
+    .shadow {
+      background: #FDF9FA;
+    }
+    &__content {
+      animation: contentScroll 30s linear 15s infinite alternate;
+    }
+  }
+}
+
+.dashboard {
+  background: #FAFAFA;
+  .listCard {
+    .shadow {
+      display: none;
+    }
+    &__title {
+      top: 24px;
+      left: 80px;
+    }
+  }
+}
+
+@keyframes contentScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -60%, 0);
+  }
+}

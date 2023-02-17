@@ -1,0 +1,147 @@
+button {
+  border-radius: 8px;
+  padding: 8px 12px;
+  width: fit-content;
+
+  cursor: pointer;
+
+  font-weight: 600;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  outline: none;
+  border: none;
+}
+
+.button {
+  width: fit-content;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+font-size: 16px;
+
+  &--primary {
+    background-color: #E40D06;
+    color: #FAFAFA;
+    border: 1px solid transparent;
+  }
+
+  &--secondary {
+    background-color: #FAFAFA;
+    color: #1B1A21;
+    border: 1px solid #1B1A21;
+
+    &--red {
+      background-color: #FAFAFA;
+      color: #E40D06;
+      border: 1px solid #E40D06;
+    }
+  }
+}
+
+
+.button--edit {
+  background-color: #EDE7F8;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #33156E;
+  cursor: pointer;
+  padding: 4px 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  transition: border .3s ease-in-out;
+
+  &:hover {
+    border: 1px solid #33156E;
+  }
+}
+
+.button--delete {
+  background-color: #E40D06;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #FAFAFA;
+  cursor: pointer;
+  padding: 4px 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  transition: border .3s ease-in-out;
+
+  &:hover {
+    border: 1px solid #FAFAFA;
+  }
+}
+
+.twoButtonSet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  // premiére enfant
+  & > *:first-child {
+    background-color: transparent;
+    color: #E40D06;
+    border-color: #E40D06;
+  }
+}
+
+
+input[type="radio"] {
+  appearance: none;
+  width:24px;
+  height:24px;
+  border:1px solid #D9D9D9;
+  background-color: #D9D9D9;
+
+  border-radius:50%;
+  outline:none;
+
+  transition: border .3s ease-in-out, background-color .3s ease-in-out;
+
+  &:checked {
+    background-color: #1B1A21;
+    border: 5px solid #D9D9D9;
+
+    &:hover {
+        border: 5px solid #D9D9D9;
+    }
+  }
+
+  &:hover {
+    background-color: #1B1A21;
+    border: 10px solid #D9D9D9;
+  }
+
+}

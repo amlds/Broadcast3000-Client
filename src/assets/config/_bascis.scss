@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  font-family: 'Inter-Regular', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #333;
+  background-color: #fff;
+}
+
+h1, h2, h3 {
+  font-family: 'Circular-Medium', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1, h2, h3, p, a {
+  margin: 0;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+.text-medium {
+  font-weight: 700;
+  font-size: 32px;
+  text-transform: capitalize;
+}
+
+.text-normal {
+  font-weight: 500;
+  font-size: 24px;
+  text-transform: capitalize;
+}
+
+.md-text-1 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.align-row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.container--dashboard {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}

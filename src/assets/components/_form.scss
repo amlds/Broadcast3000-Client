@@ -1,0 +1,96 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1em;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter-Bold', sans-serif;
+  }
+
+  input::placeholder {
+      color: #C4C2C3;
+      font-size: 16px;
+      font-weight: 400;
+      font-family: 'Inter-Regular', sans-serif;
+  }
+
+  .messageAlerte {
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Inter-Regular', sans-serif;
+    width: 100%;
+    text-align: center;
+  }
+
+  .input--txt {
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    background-color: #F2F2F2;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: 'Inter-Regular', sans-serif;
+    color: #333;
+    outline: none;
+    transition: border .3s ease-in-out;
+  }
+
+  .input--txt:hover {
+    border: 1px solid #E5E5E5;
+  }
+
+  .input--txt:focus {
+    border: 1px solid #000;
+  }
+
+
+  label[for="description"] {
+    flex-grow: 1;
+    .input--txt {
+      width: 100%;
+      height: 100%;
+      padding: 8px;
+      resize: none;
+      box-sizing: border-box;
+
+      &::placeholder{
+        color: #C4C2C3;
+        font-size: 16px;
+        font-weight: 400;
+        font-family: 'Inter-Regular', sans-serif;
+      }
+
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+    }
+  }
+
+  ::-webkit-file-upload-button {
+    background: #EDE7F8;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 8px 12px;
+    outline: none;
+    color: #33156E;
+    font-size: 16px;
+    font-weight: 600;
+    transition: border .3s ease-in-out;
+  }
+
+  ::-webkit-file-upload-button:hover {
+    border: 1px solid #33156E;
+  }
+}
