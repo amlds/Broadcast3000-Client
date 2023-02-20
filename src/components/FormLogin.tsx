@@ -9,7 +9,6 @@ const FormLogin: React.FC = () => {
       <label htmlFor="password">Password
         <input className='input--txt' type="password" name="password" id="password-input" placeholder="Alumni drink" />
       </label>
-      <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image" />
       <button className='button--primary' type="submit">Log in</button>
     </form>
   );
