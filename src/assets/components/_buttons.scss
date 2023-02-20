@@ -30,7 +30,7 @@ button {
   justify-content: center;
   align-items: center;
   font-weight: 600;
-font-size: 16px;
+  font-size: 16px;
 
   &--primary {
     background-color: #E40D06;
@@ -47,6 +47,28 @@ font-size: 16px;
       background-color: #FAFAFA;
       color: #E40D06;
       border: 1px solid #E40D06;
+    }
+  }
+
+  &--link {
+    position: relative;
+    background-color: transparent;
+    color: #333;
+    padding: 0;
+
+    &::before {
+      position: absolute;
+      content: '';
+      display: inline-block;
+      background-color: #333;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      transition: width .3s ease-in-out;
+    }
+    &:hover::before {
+      width: 100%;
     }
   }
 }
