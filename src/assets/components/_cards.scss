@@ -12,7 +12,7 @@
     padding: 16px;
 
 
-    background: #FFFFFF;
+    background: var(--white);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     border: 1px solid transparent;
@@ -39,7 +39,7 @@
 }
 
 .cardEvent__content--active {
-  background-color: #EDE7F8;
-  border: 1px solid #33156E;
-  color: #33156E;
+  background-color: var(--secondary-light);
+  border: 1px solid var(--secondary-dark);
+  color: var(--secondary-dark);
 }

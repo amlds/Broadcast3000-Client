@@ -4,8 +4,8 @@ body {
   font-size: 16px;
   font-weight: 300;
   line-height: 1.5;
-  color: #333;
-  background-color: #fff;
+  color: var(--grey-dark);
+  background-color: var(--white);
 }
 
 h1, h2, h3 {
@@ -28,7 +28,7 @@ h3 {
 
 a {
   text-decoration: none;
-  color: #333;
+  color: var(--grey-dark);
 }
 
 li {
@@ -71,23 +71,29 @@ ul {
 }
 
 .messageError {
-  color: #E40D06;
+  color: var(--primary);
   font-size: 12px;
   font-weight: 500;
   font-family: 'Inter-Regular', sans-serif;
+}
+
+.text {
+  &--secondary {
+    color: var(--secondary);
+  }
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
   ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #F2F2F2;
 }
   ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #C4C2C3;
     border-radius:10px;
 }
 ::-webkit-scrollbar-thumb:hover {
 
-  background: #555;
+  background: #666666;
 }

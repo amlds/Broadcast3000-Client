@@ -1,9 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const FormLogin: React.FC = () => {
   const [isLogin, setIsLogin] = React.useState(true);
+  const [validateLogin, setValidateLogin] = React.useState(false);
   const messagePassword = React.useRef<HTMLParagraphElement>(null);
   const messagePasswordValidate = React.useRef<HTMLParagraphElement>(null);
+  const Navigate = useNavigate();
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -11,8 +14,6 @@ const FormLogin: React.FC = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     console.log(data);
-    messagePassword.current!.innerHTML = '';
-    messagePasswordValidate.current!.innerHTML = '';
     if (!isLogin) {
       if(!passwordValidation(data.password)) {
         messagePassword.current!.innerHTML = '(Il faut 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)';
@@ -23,7 +24,14 @@ const FormLogin: React.FC = () => {
         return;
       }
     }
-    window.location.href = '/dashboard';
+    getLogin();
+    if (validateLogin) {
+      Navigate('/dashboard')
+    }
+  };
+
+  const getLogin = () => {
+    setValidateLogin(true);
   };
 
   React.useEffect(() => {

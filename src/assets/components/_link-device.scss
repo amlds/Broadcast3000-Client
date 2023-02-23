@@ -5,11 +5,11 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background: #FFFFFF;
+    background: var(--white);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     p {
-      color: #1B1A21;
+      color: var(--black);
       padding: 0 12px;
     }
   }

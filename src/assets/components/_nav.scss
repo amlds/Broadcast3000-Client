@@ -11,8 +11,8 @@ nav {
   }
 
   & > .button_active {
-    color: #E40D06;
-    border-bottom: 2px solid #E40D06;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
   }
 }
 
@@ -24,7 +24,7 @@ nav {
   padding: 4px 0;
   width: fit-content;
   border-radius: 0px;
-  color: #1B1A21;
+  color: var(--black);
   position: relative;
   &::before {
     transition: width .3s ease-in-out;
@@ -32,13 +32,13 @@ nav {
     position: absolute;
     width: 0%;
     height: 2px;
-    background-color: #E40D06;
+    background-color: var(--primary);
     bottom: 0;
     left: 50%;
     transform: translate(-50%, 0%);
   }
   &--active {
-    -webkit-text-stroke: 0.7px #1B1A21;
+    -webkit-text-stroke: 0.7px var(--black);
     &::before {
       height: 2px;
       width: 100%;
