@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 /* import EventContext, { defaultState } from '../context/EventContext'; */
 
 import Event from '../types/Event';
@@ -32,6 +32,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      <Link to='/login'>Login</Link>
       <Toolbar />
       <ListCard events={events} />
     </div>

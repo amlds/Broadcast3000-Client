@@ -17,6 +17,15 @@ button {
   border: none;
 }
 
+.buttonLink {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  font-weight: 600;
+}
+
 .button {
   width: fit-content;
   border-radius: 8px;
@@ -39,12 +48,12 @@ button {
   }
 
   &--secondary {
-    background-color: #FAFAFA;
+    background-color: transparent;
     color: #1B1A21;
     border: 1px solid #1B1A21;
 
     &--red {
-      background-color: #FAFAFA;
+      background-color: transparent;
       color: #E40D06;
       border: 1px solid #E40D06;
     }
@@ -142,10 +151,9 @@ button {
 
 input[type="radio"] {
   appearance: none;
-  width:24px;
-  height:24px;
-  border:1px solid #D9D9D9;
-  background-color: #D9D9D9;
+  width:40px;
+  height:40px;
+  border: 1px solid #33156E;
 
   border-radius:50%;
   outline:none;
@@ -153,17 +161,41 @@ input[type="radio"] {
   transition: border .3s ease-in-out, background-color .3s ease-in-out;
 
   &:checked {
-    background-color: #1B1A21;
-    border: 5px solid #D9D9D9;
-
+    background-color: #EDE7F8;
+    border: 1px solid #EDE7F8;
     &:hover {
-        border: 5px solid #D9D9D9;
+        border: 1px solid #33156E;
+        background-color: #EDE7F8;
+
     }
   }
 
   &:hover {
-    background-color: #1B1A21;
-    border: 10px solid #D9D9D9;
+    border: 1px solid #33156E;
+    background-color: #EDE7F8;
   }
 
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  position: relative;
+
+  label {
+    position: absolute;
+    transform-origin: 50% 50%;
+    transform: translate(42%, 11%);
+    color: #33156E;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      background-color: #EDE7F8;
+    }
+  }
 }

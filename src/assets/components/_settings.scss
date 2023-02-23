@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 32px;
+  margin-bottom: 2rem;
 
   & > div {
     padding: 24px 36px;
@@ -19,15 +20,16 @@
     }
   }
 
-  .settings__carrousel__radio {
-    display: flex;
-    align-items: flex-end;
-
-    & > *:nth-child(even) {
-      margin-right: 16px;
-    }
-    & > *:nth-child(odd) {
-      margin-left: 8px;
+  .extra {
+    form {
+      background-color: none;
+      padding: 0;
+      box-shadow: none;
+      .settings__carrousel__radio {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+      }
     }
   }
 }
