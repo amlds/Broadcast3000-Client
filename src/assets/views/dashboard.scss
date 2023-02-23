@@ -1,12 +1,16 @@
 body {
   overflow: hidden;
-  background: #FFFFFF;
+  background: var(--white);
 }
 
 .dashboard {
   display: grid;
   grid-template-columns: 3fr 2fr;
   height: 100vh;
+
+  &__content {
+    overflow-y: scroll;
+  }
 
   header {
     display: flex;
@@ -25,7 +29,7 @@ body {
     }
 
     .header__txt {
-      color: #FAFAFA;
+      color: var(--grey-extralight);
       display: flex;
       flex-direction: column;
       gap: 32px;
@@ -39,7 +43,7 @@ body {
 
   form {
     padding: 32px;
-    background: #FFFFFF;
+    background: var(--white);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     box-sizing: border-box;
@@ -49,5 +53,5 @@ body {
 
 .listCard {
   overflow-y: scroll;
-  background-color: #FAFAFA;
+  background-color: var(--grey-extralight);
 }

@@ -19,7 +19,7 @@ form {
   }
 
   input::placeholder {
-      color: #C4C2C3;
+      color: var(--grey-regular);
       font-size: 16px;
       font-weight: 400;
       font-family: 'Inter-Regular', sans-serif;
@@ -37,22 +37,22 @@ form {
     height: 40px;
     padding: 0 16px;
     border: 1px solid transparent;
-    background-color: #F2F2F2;
+    background-color: var(--grey-light);
     border-radius: 8px;
     font-size: 16px;
     font-weight: 400;
     font-family: 'Inter-Regular', sans-serif;
-    color: #333;
+    color: var(--grey-dark);
     outline: none;
     transition: border .3s ease-in-out;
   }
 
   .input--txt:hover {
-    border: 1px solid #E5E5E5;
+    border: 1px solid var(--grey-regular);
   }
 
   .input--txt:focus {
-    border: 1px solid #000;
+    border: 1px solid var(--grey-regular);
   }
 
 
@@ -66,7 +66,7 @@ form {
       box-sizing: border-box;
 
       &::placeholder{
-        color: #C4C2C3;
+        color: var(--grey-regular);
         font-size: 16px;
         font-weight: 400;
         font-family: 'Inter-Regular', sans-serif;
@@ -79,18 +79,18 @@ form {
   }
 
   ::-webkit-file-upload-button {
-    background: #EDE7F8;
+    background: var(--secondary-light);
     border: 1px solid transparent;
     border-radius: 8px;
     padding: 8px 12px;
     outline: none;
-    color: #33156E;
+    color: var(--secondary-dark);
     font-size: 16px;
     font-weight: 600;
     transition: border .3s ease-in-out;
   }
 
   ::-webkit-file-upload-button:hover {
-    border: 1px solid #33156E;
+    border: 1px solid var(--secondary-dark);
   }
 }

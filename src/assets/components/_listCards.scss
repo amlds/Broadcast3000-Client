@@ -19,7 +19,7 @@
   &__title {
     position: absolute;
     z-index: 2;
-    color: #1B1A21;
+    color: var(--black);
   }
   &__content {
     display: flex;
@@ -33,9 +33,9 @@
 .device {
   .listCard {
     overflow: hidden;
-    background: #FDF9FA;
+    background: var(--background-extralight);
     .shadow {
-      background: #FDF9FA;
+      background: var(--background-extralight);
     }
     &__content {
       animation: contentScroll 30s linear 15s infinite alternate;
@@ -44,7 +44,7 @@
 }
 
 .dashboard {
-  background: #FAFAFA;
+  background: var(--grey-extralight);
   .listCard {
     .shadow {
       display: none;

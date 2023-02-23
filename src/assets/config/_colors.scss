@@ -1,12 +1,17 @@
 :root {
-  .light-theme {
-    --background: #FFFFFF;
-    --backgroundCard: #FDF9FA;
-    --text-color: #1B1A21;
-  }
-  .dark-theme {
-    --background: #000000;
-    --backgroundOpacity: #0F0F0F;
-    --text-color: #E5E5E5;
-  }
+  --red: #FF0000;
+  --black: #1B1A21;
+  --white: #FFFFFF;
+
+  --primary: #E60F05;
+  --primary-extralight: #FDF9FA;
+
+  --secondary-dark: #33156E;
+  --secondary: #4d04c4;
+  --secondary-light: #EDE7F8;
+
+  --grey-extralight: #FAFAFA;
+  --grey-light: #F2F2F2;
+  --grey-regular: #C4C2C3;
+  --grey-dark: #333333;
 }

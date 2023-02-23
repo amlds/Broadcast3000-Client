@@ -4,8 +4,8 @@ body {
   font-size: 16px;
   font-weight: 300;
   line-height: 1.5;
-  color: #333;
-  background-color: #fff;
+  color: var(--grey-dark);
+  background-color: var(--white);
 }
 
 h1, h2, h3 {
@@ -28,7 +28,16 @@ h3 {
 
 a {
   text-decoration: none;
-  color: #333;
+  color: var(--grey-dark);
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
 }
 
 .text-medium {
@@ -59,4 +68,32 @@ a {
   max-width: 950px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+.messageError {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Inter-Regular', sans-serif;
+}
+
+.text {
+  &--secondary {
+    color: var(--secondary);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+  ::-webkit-scrollbar-track {
+  background: #F2F2F2;
+}
+  ::-webkit-scrollbar-thumb {
+  background: #C4C2C3;
+    border-radius:10px;
+}
+::-webkit-scrollbar-thumb:hover {
+
+  background: #666666;
 }

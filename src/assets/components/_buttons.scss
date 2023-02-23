@@ -17,6 +17,15 @@ button {
   border: none;
 }
 
+.buttonLink {
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  font-weight: 600;
+}
+
 .button {
   width: fit-content;
   border-radius: 8px;
@@ -33,34 +42,34 @@ button {
   font-size: 16px;
 
   &--primary {
-    background-color: #E40D06;
-    color: #FAFAFA;
+    background-color: var(--primary);
+    color: var(--grey-extralight);
     border: 1px solid transparent;
   }
 
   &--secondary {
-    background-color: #FAFAFA;
-    color: #1B1A21;
-    border: 1px solid #1B1A21;
+    background-color: transparent;
+    color: var(--black);
+    border: 1px solid var(--black);
 
     &--red {
-      background-color: #FAFAFA;
-      color: #E40D06;
-      border: 1px solid #E40D06;
+      background-color: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
     }
   }
 
   &--link {
     position: relative;
     background-color: transparent;
-    color: #333;
+    color: var(--grey-dark);
     padding: 0;
 
     &::before {
       position: absolute;
       content: '';
       display: inline-block;
-      background-color: #333;
+      background-color: var(--grey-dark);
       width: 0;
       height: 2px;
       bottom: 0;
@@ -75,10 +84,10 @@ button {
 
 
 .button--edit {
-  background-color: #EDE7F8;
+  background-color: var(--secondary-light);
   border: 1px solid transparent;
   border-radius: 8px;
-  color: #33156E;
+  color: var(--secondary-dark);
   cursor: pointer;
   padding: 4px 12px;
   font-size: 1rem;
@@ -95,15 +104,15 @@ button {
   transition: border .3s ease-in-out;
 
   &:hover {
-    border: 1px solid #33156E;
+    border: 1px solid var(--secondary-dark);
   }
 }
 
 .button--delete {
-  background-color: #E40D06;
+  background-color: var(--primary);
   border: 1px solid transparent;
   border-radius: 8px;
-  color: #FAFAFA;
+  color: var(--grey-extralight);
   cursor: pointer;
   padding: 4px 12px;
   font-size: 1rem;
@@ -120,7 +129,7 @@ button {
   transition: border .3s ease-in-out;
 
   &:hover {
-    border: 1px solid #FAFAFA;
+    border: 1px solid var(--grey-extralight);
   }
 }
 
@@ -134,18 +143,17 @@ button {
   // premiére enfant
   & > *:first-child {
     background-color: transparent;
-    color: #E40D06;
-    border-color: #E40D06;
+    color: var(--primary);
+    border-color: var(--primary);
   }
 }
 
 
 input[type="radio"] {
   appearance: none;
-  width:24px;
-  height:24px;
-  border:1px solid #D9D9D9;
-  background-color: #D9D9D9;
+  width:40px;
+  height:40px;
+  border: 1px solid var(--secondary-dark);
 
   border-radius:50%;
   outline:none;
@@ -153,17 +161,41 @@ input[type="radio"] {
   transition: border .3s ease-in-out, background-color .3s ease-in-out;
 
   &:checked {
-    background-color: #1B1A21;
-    border: 5px solid #D9D9D9;
-
+    background-color: var(--secondary-light);
+    border: 1px solid var(--secondary-light);
     &:hover {
-        border: 5px solid #D9D9D9;
+        border: 1px solid var(--secondary-dark);
+        background-color: var(--secondary-light);
+
     }
   }
 
   &:hover {
-    background-color: #1B1A21;
-    border: 10px solid #D9D9D9;
+    border: 1px solid var(--secondary-dark);
+    background-color: var(--secondary-light);
   }
 
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  position: relative;
+
+  label {
+    position: absolute;
+    transform-origin: 50% 50%;
+    transform: translate(42%, 11%);
+    color: var(--secondary-dark);
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      background-color: var(--secondary-light);
+    }
+  }
 }
