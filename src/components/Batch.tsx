@@ -63,9 +63,12 @@ const Batch: React.FC = () => {
             <label htmlFor='typeAnalyse'>Data Analyse</label>
           </div>
         </label>
-        <div className='align-row'>
-          <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
-          <button type="submit" className='button--primary'>Confirm update</button>
+        <div className='align-row align-row--spaces'>
+          <div className='align-row'>
+            <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
+            <button type="submit" className='button--primary'>Confirm create</button>
+          </div>
+          <button className='button--secondary button--secondary--red'>Delete this batch</button>
         </div>
       </form>
     </div>

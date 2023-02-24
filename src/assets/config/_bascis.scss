@@ -61,6 +61,10 @@ ul {
   display: flex;
   gap: 1rem;
   width: 100%;
+
+  &--spaces{
+    justify-content: space-between;
+  }
 }
 
 .messageError {
