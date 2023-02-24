@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import Edit from './svg/Edit';
 
+import Batch from './Batch';
+
 const Settings: React.FC = () => {
   const [numberCarrousel, setNumberCarrousel] = React.useState(1);
 
@@ -22,14 +24,7 @@ const Settings: React.FC = () => {
 
   return (
     <section className='settings'>
-      <div className='settings__batch'>
-        <h3>Actual batches</h3>
-        <div>
-          <p><span className='md-text-1'>Batch #1102 :</span> Web development - Started on January 16 2023 <Edit/></p>
-          <p><span className='md-text-1'>Batch #1104 :</span> Data science - Started on January 16 2023 <Edit/></p>
-        </div>
-        <button className='button--primary'>Add a new batch</button>
-      </div>
+      <Batch />
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
 

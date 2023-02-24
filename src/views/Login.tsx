@@ -5,9 +5,6 @@ import '../assets/views/login.scss';
 import FromLogin from '../components/FormLogin';
 
 const Login: React.FC = () => {
-
-
-
   return (
     <main>
       <img className='background' src='./images/backgroundLogin.png' alt='backgroundLogin'></img>

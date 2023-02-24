@@ -20,6 +20,19 @@
     }
   }
 
+  &__batch {
+    & > ul{
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      & > li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+    }
+  }
+
   .extra {
     form {
       background-color: none;

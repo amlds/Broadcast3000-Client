@@ -49,13 +49,22 @@ button {
 
   &--secondary {
     background-color: transparent;
-    color: var(--black);
-    border: 1px solid var(--black);
+    color: var(--secondary-dark);
+    border: 1px solid var(--secondary-dark);
 
     &--red {
       background-color: transparent;
       color: var(--primary);
       border: 1px solid var(--primary);
+    }
+  }
+
+  &--edit--svg {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    & > svg > path {
+      stroke: var(--black);
     }
   }
 
@@ -149,53 +158,74 @@ button {
 }
 
 
-input[type="radio"] {
-  appearance: none;
-  width:40px;
-  height:40px;
-  border: 1px solid var(--secondary-dark);
-
-  border-radius:50%;
-  outline:none;
-
-  transition: border .3s ease-in-out, background-color .3s ease-in-out;
-
-  &:checked {
-    background-color: var(--secondary-light);
-    border: 1px solid var(--secondary-light);
-    &:hover {
-        border: 1px solid var(--secondary-dark);
-        background-color: var(--secondary-light);
-
-    }
-  }
-
-  &:hover {
-    border: 1px solid var(--secondary-dark);
-    background-color: var(--secondary-light);
-  }
-
-}
 
 .checkbox {
   display: flex;
   align-items: center;
   gap: 8px;
-
   position: relative;
-
+  input[type="radio"] {
+    appearance: none;
+    width:40px;
+    height:40px;
+    border: 1px solid var(--secondary-dark);
+    border-radius:50%;
+    outline:none;
+    transition: border .3s ease-in-out, background-color .3s ease-in-out;
+    &:checked {
+      background-color: var(--secondary-light);
+      border: 1px solid var(--secondary-light);
+      &:hover {
+          border: 1px solid var(--secondary-dark);
+          background-color: var(--secondary-light);
+      }
+    }
+    &:hover {
+      border: 1px solid var(--secondary-dark);
+      background-color: var(--secondary-light);
+    }
+  }
   label {
     position: absolute;
     transform-origin: 50% 50%;
     transform: translate(42%, 11%);
     color: var(--secondary-dark);
   }
-
   &:hover {
     cursor: pointer;
-
     input[type="checkbox"] {
       background-color: var(--secondary-light);
     }
+  }
+}
+
+.checkbox--batch {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  input[type="radio"].textContaint {
+    display: none;
+  }
+  input[type="radio"].textContaint + label {
+    border: 1px solid var(--secondary-dark);
+    background-color: var(--white);
+    transition: background .3s linear, border .3s linear;
+    color: var(--secondary-dark);
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: 8px 16px;
+    border-radius: 100px;
+  }
+  input[type="radio"].textContaint:hover + label {
+    background-color: var(--secondary-light);
+  }
+  input[type="radio"].textContaint:checked + label {
+    border: 1px solid var(--secondary-light);
+    background-color: var(--secondary-light);
+  }
+  label {
+
   }
 }

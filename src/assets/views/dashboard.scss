@@ -48,8 +48,20 @@ body {
     border-radius: 8px;
     box-sizing: border-box;
   }
+  .batch__form {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+  }
 }
 
+.container--dashboard {
+  width: 100%;
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  box-sizing: border-box;
+}
 
 .listCard {
   overflow-y: scroll;

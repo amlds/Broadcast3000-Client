@@ -25,14 +25,16 @@ const FormLogin: React.FC = () => {
       }
     }
     getLogin();
-    if (validateLogin) {
-      Navigate('/dashboard')
-    }
+    navigateTo();
   };
 
   const getLogin = () => {
     setValidateLogin(true);
   };
+
+  const navigateTo = () => {
+    Navigate('/dashboard')
+  }
 
   React.useEffect(() => {
     const form = document.querySelector('form');
