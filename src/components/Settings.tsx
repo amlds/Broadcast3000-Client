@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Edit from './svg/Edit';
-
 import Batch from './Batch';
 
 const Settings: React.FC = () => {
@@ -27,7 +25,6 @@ const Settings: React.FC = () => {
       <Batch />
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
-
         <div className="extra">
           <form>
             <label>Extra info sentence

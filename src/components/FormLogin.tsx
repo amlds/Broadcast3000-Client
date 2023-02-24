@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const FormLogin: React.FC = () => {
   const [isLogin, setIsLogin] = React.useState(true);
-  const [validateLogin, setValidateLogin] = React.useState(false);
+  const [/* validateLogin */, setValidateLogin] = React.useState(false);
   const messagePassword = React.useRef<HTMLParagraphElement>(null);
   const messagePasswordValidate = React.useRef<HTMLParagraphElement>(null);
   const Navigate = useNavigate();
