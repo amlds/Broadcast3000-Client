@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
 
 import { EventContext } from '../context/EventContext';
 import EventService from '../services/EventService';
