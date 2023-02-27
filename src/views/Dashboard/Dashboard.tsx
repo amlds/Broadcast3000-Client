@@ -11,13 +11,12 @@ import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
 
 const getEvents = async () => {
-  const events = await EventService.getEvents();
+  const events = await EventService.getEvents(1);
   return events;
 }
 
 const Dashboard: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>([]);
-
 
   React.useEffect(() => {
     getEvents().then((events) => {

@@ -4,25 +4,21 @@ import EventService from '../services/EventService';
 import Event from '../types/Event'
 
 const createEvent = async (event: Event) => {
-  if (!event.name || !event.startEvent || !event.endEvent || !event.description || !event.location) {
-    throw new Error('Missing fields');
-  } else if (event.startEvent > event.endEvent) {
-    throw new Error('Start date must be before end date');
-  } else if (event.startEvent === event.endEvent) {
-    throw new Error('Start date and end date must be different');
-  }
-  const newEvent = await EventService.createEvent(event);
-  return newEvent;
+  const res = await EventService.createEvent(1, event);
+  return res;
 }
 
 const AddEventForm: React.FC = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
-  const [event, setEvent] = React.useState({
+  const [event, setEvent] = React.useState<Event>({
     name: '',
     startEvent: '',
     endEvent: '',
     description: '',
-    location: '',
+    id: 0,
+    eventTypeId: 0,
+    schoolId: 0,
+    image: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,23 +28,30 @@ const AddEventForm: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    const description = document.getElementById('description') as HTMLInputElement;
-    if(event.name && event.startEvent && event.endEvent && event.location && description.value){
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setEvent({
+      ...event,
+      [e.target.name]: parseInt(e.target.value)
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+    if(form.checkValidity()){
       createEvent({
         ...event,
-        description: description.value,
-        image: 'test',
-        id: 0
       }).then(res => {
         messageRef.current!.innerHTML = '✅ Event added ✅';
       }).catch(err => {
         messageRef.current!.innerHTML = '🚨 Erreur 🚨';
       });
     } else {
-      e.preventDefault();
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
     }
+    e.preventDefault();
   };
 
 
@@ -69,8 +72,14 @@ const AddEventForm: React.FC = () => {
       <label htmlFor="description">Description
         <textarea className='input--txt' name="description" id="description" placeholder="Get an hangorver for free with your Le Wagon mates !"></textarea>
       </label>
-      <label htmlFor="location">Location
-        <input className='input--txt' type="text" name="location" id="location" placeholder="Le Wagon Lyon #TheBest" value={event.location} onChange={handleChange} />
+      <label htmlFor="eventTypeId">Type
+        <select className='input--txt' name="eventTypeId" id="eventTypeId" value={event.eventTypeId} onChange={handleChangeSelect}>
+          <option value="0">Choose a type</option>
+          <option value="1">Party</option>
+          <option value="2">Conference</option>
+          <option value="3">Meetup</option>
+          <option value="4">Other</option>
+        </select>
       </label>
       <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image" />
       <button className='button--primary' type="submit">Add event</button>

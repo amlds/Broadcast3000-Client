@@ -10,7 +10,7 @@ import ListCard from '../components/ListCard';
 import '../assets/views/device.scss'
 
 const getEvents = async () => {
-  const events = await EventService.getEvents();
+  const events = await EventService.getEvents(1);
   return events;
 }
 

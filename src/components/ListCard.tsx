@@ -4,7 +4,7 @@ import Event from '../types/Event';
 import CardEvent from './CardEvent';
 import ButtonEdit from './ButtonEdit'
 
-const id = [1,2,3,4]
+const id = [1]
 
 interface Props {
   events: Event[];

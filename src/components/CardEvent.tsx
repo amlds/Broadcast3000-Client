@@ -1,21 +1,9 @@
 import React from "react";
 
-import EventService from "../services/EventService";
-
-/* import EventContext, { defaultState } from '../context/EventContext'; */
-
+import ButtonEdit from "./ButtonEdit";
 import Edit from "./svg/Edit";
 import event from "../types/Event";
 import { useParams } from "react-router-dom";
-
-
-const deleteEvent = async (id: number) => {
-  // eslint-disable-next-line no-restricted-globals
-  const submit = confirm('Are you sure?');
-  if(submit) {
-    await EventService.deleteEvent(id);
-  }
-}
 
 type props = {
   event: event;
@@ -65,7 +53,7 @@ const CardEvent: React.FC<props> = (event: props) => {
         </h3>
         <div className="cardEvent__header__button">
           <button className="button--edit cardEvent__content__buttonEdit"><Edit /> Edit</button>
-          <button onClick={() => deleteEvent(event.event.id)} className="button--delete">X</button>
+          <ButtonEdit key={id} id={id} />
         </div>
       </div>
       <div ref={cardRef} className="cardEvent__content">

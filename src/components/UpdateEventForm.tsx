@@ -6,58 +6,49 @@ import Event from '../types/Event'
 
 
 const updateEvent = async (event: Event) => {
-  await EventService.updateEvent(event);
+  await EventService.updateEvent(event.schoolId, event);
   window.location.reload();
 }
 
-const getEventById = async (id: number) => {
-  const stringId = id.toString();
-  const event = await EventService.getEventById(stringId);
+const getEventById = async (schoolId: number, eventId: number) => {
+  const event = await EventService.getEvent(schoolId, eventId);
   return event;
 }
 
 const UpdateEventForm: React.FC = () => {
   const { eventIdUpdate, toggleUpdate, isUpdate } = React.useContext(EventContext);
-
   const [event, setEvent] = React.useState<Event>({
     name: '',
     startEvent: '',
     endEvent: '',
     description: '',
-    location: '',
+    id: 0,
+    eventTypeId: 0,
+    schoolId: 0,
     image: '',
-    id: 0
   });
   const [name, setName] = React.useState(event.name);
   const [startEvent, setStartEvent] = React.useState(event.startEvent);
   const [endEvent, setEndEvent] = React.useState(event.endEvent);
   const [description, setDescription] = React.useState(event.description);
-  const [location, setLocation] = React.useState(event.location);
+  const [eventTypeId, setEventTypeId] = React.useState(event.eventTypeId);
   const messageRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
-    getEventById(eventIdUpdate).then((event) => {
+    getEventById(1, eventIdUpdate).then((event) => {
       setEvent(event);
       setName(event.name);
       setStartEvent(event.startEvent);
       setEndEvent(event.endEvent);
       setDescription(event.description);
-      setLocation(event.location);
+      setEventTypeId(event.eventTypeId);
     });
   }, [eventIdUpdate]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    const description = document.getElementById('description') as HTMLInputElement;
-    //si tout les champs sont remplis on envoie le formulaire
-    if(name && startEvent && endEvent && location && description.value){
+    if(event.name && event.startEvent && event.endEvent && event.eventTypeId && event.description && event.eventTypeId){
       updateEvent({
         ...event,
-        name: name,
-        startEvent: startEvent,
-        endEvent: endEvent,
-        description: description.value,
-        location: location,
-        id: event.id
       }).then(res => {
         messageRef.current!.innerHTML = '✅ Event added ✅';
       }).catch(err => {
@@ -93,8 +84,13 @@ const UpdateEventForm: React.FC = () => {
       <label htmlFor="description">Description
         <textarea className='input--txt' name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
       </label>
-      <label htmlFor="location">Location
-        <input className='input--txt' type="text" name="location" id="location" placeholder="Le Wagon Lyon #TheBest" value={location} onChange={(e) => setLocation(e.target.value)}/>
+      <label htmlFor="type">type
+        <select className='input--txt' name="type" id="type" value={event.eventTypeId}>
+          <option value="1">Party</option>
+          <option value="2">Conference</option>
+          <option value="3">Workshop</option>
+          <option value="4">Other</option>
+        </select>
       </label>
       <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image"/>
       <div className='twoButtonSet'>
