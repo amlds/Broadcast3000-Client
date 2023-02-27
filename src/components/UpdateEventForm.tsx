@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
+import { EventContext } from '../context/EventContext';
 import EventService from '../services/EventService';
 import Event from '../types/Event'
 
@@ -10,12 +11,15 @@ const updateEvent = async (event: Event) => {
   window.location.reload();
 }
 
-const getEventById = async (id: string) => {
-  const event = await EventService.getEventById(id);
+const getEventById = async (id: number) => {
+  const stringId = id.toString();
+  const event = await EventService.getEventById(stringId);
   return event;
 }
 
 const UpdateEventForm: React.FC = () => {
+  const { eventIdUpdate, toggleUpdate, isUpdate } = React.useContext(EventContext);
+
   const [event, setEvent] = React.useState<Event>({
     name: '',
     startEvent: '',
@@ -30,11 +34,10 @@ const UpdateEventForm: React.FC = () => {
   const [endEvent, setEndEvent] = React.useState(event.endEvent);
   const [description, setDescription] = React.useState(event.description);
   const [location, setLocation] = React.useState(event.location);
-  let id = useParams().id as string;
   const messageRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
-    getEventById(id).then((event) => {
+    getEventById(eventIdUpdate).then((event) => {
       setEvent(event);
       setName(event.name);
       setStartEvent(event.startEvent);
@@ -42,7 +45,7 @@ const UpdateEventForm: React.FC = () => {
       setDescription(event.description);
       setLocation(event.location);
     });
-  }, [id]);
+  }, [eventIdUpdate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     const description = document.getElementById('description') as HTMLInputElement;
@@ -67,9 +70,16 @@ const UpdateEventForm: React.FC = () => {
     e.preventDefault();
   }
 
+  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    toggleUpdate();
+    console.log(isUpdate);
+    console.log('cancel');
+  }
+
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form >
       <label htmlFor="name">Name
       <input className='input--txt' type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
@@ -89,8 +99,8 @@ const UpdateEventForm: React.FC = () => {
       </label>
       <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image"/>
       <div className='twoButtonSet'>
-        <Link to='/dashboard' className='button'>Cancel</Link>
-        <button type="submit">Update event</button>
+        <button className='button--secondary--red' onClick={handleCancel}>Cancel</button>
+        <button onSubmit={handleSubmit} type="submit" className='button--primary'>Update event</button>
       </div>
       <p ref={messageRef} className="messageAlerte"></p>
     </form>

@@ -16,7 +16,6 @@ const ButtonEdit: React.FC<IButtonEditProps> = ({ id }) => {
       setId(Number(id));
       toggleUpdate();
     }
-    console.log(isUpdate);
   };
 
   return (
