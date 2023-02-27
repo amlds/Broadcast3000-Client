@@ -1,9 +1,40 @@
 import React from 'react';
 
+import BatchType from '../types/BatchType';
+
 import Edit from './svg/Edit';
+
+const createBatch = async (batch: BatchType) => {
+  if(!batch.name || !batch.startEvent || !batch.type){
+    throw new Error("Missing fields");
+  }
+  // const newBatch = await
+  const newBatch = batch;
+  console.log(batch);
+  return newBatch;
+}
 
 const Batch: React.FC = () => {
   const [state, setState] = React.useState(0);
+  const [batch, setBatch] = React.useState({
+    name: '',
+    startBatch: '',
+    type: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(batch.name && batch.startBatch && batch.type){
+      //create a new batch
+    }
+  };
+
+  const updateNewBatch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(e.target);
+    console.log('test')
+  };
+
   const viewBatch = (
     <div className='settings__batch'>
       <h3>Actual batches</h3>
@@ -18,7 +49,7 @@ const Batch: React.FC = () => {
   const createBatch = (
     <div className='settings__batch'>
       <h3>Add new batch</h3>
-      <form className='batch__form'>
+      <form className='batch__form' onSubmit={handleSubmit}>
         <label>Batch name
           <input className='input--txt' type="text" name="batchName" placeholder='batch #932'/>
         </label>
@@ -46,7 +77,7 @@ const Batch: React.FC = () => {
   const editBatch = (
     <div className='settings__batch'>
       <h3>Edit batch</h3>
-      <form className='batch__form'>
+      <form className='batch__form' onSubmit={updateNewBatch}>
         <label>Batch name
           <input className='input--txt' type="text" name="batchName" />
         </label>
@@ -66,13 +97,15 @@ const Batch: React.FC = () => {
         <div className='align-row align-row--spaces'>
           <div className='align-row'>
             <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
-            <button type="submit" className='button--primary'>Confirm create</button>
+            <button type="submit" className='button--primary'>Confirm update</button>
           </div>
           <button className='button--secondary button--secondary--red'>Delete this batch</button>
         </div>
       </form>
     </div>
   );
+
+
 
   return (
     <>

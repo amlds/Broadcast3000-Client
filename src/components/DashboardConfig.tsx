@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EventsConfig from './EventsConfig';
+import EventFormContainer from './EventFormContainer';
 import Settings from './Settings';
 
 
@@ -35,7 +35,7 @@ const DashboardConfig: React.FC = () => {
                   Settings
           </button>
         </nav>
-        {menu === 'Events' && <EventsConfig />}
+        {menu === 'Events' && <EventFormContainer />}
         {menu === 'Settings' && <Settings />}
       </div>
     </section>

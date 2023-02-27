@@ -1,4 +1,5 @@
 import React from 'react';
+import { EventProvider } from '../../context/EventContext';
 
 import EventService from '../../services/EventService';
 import Event from '../../types/Event';
@@ -32,19 +33,21 @@ const Dashboard: React.FC = () => {
 
   return (
     <main className='dashboard'>
-      <section className='dashboard__content'>
-        <header>
-          <div className="container--dashboard">
-            <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
-            <div className='header__txt'>
-              <h2>Hello Marina !</h2>
-              <LinkDevice/>
+      <EventProvider>
+        <section className='dashboard__content'>
+          <header>
+            <div className="container--dashboard">
+              <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
+              <div className='header__txt'>
+                <h2>Hello Marina !</h2>
+                <LinkDevice/>
+              </div>
             </div>
-          </div>
-        </header>
-        <DashboardConfig />
-      </section>
-      <ListCard events={events} />
+          </header>
+          <DashboardConfig />
+        </section>
+        <ListCard events={events} />
+      </EventProvider>
     </main>
   );
 };

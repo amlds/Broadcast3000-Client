@@ -15,7 +15,7 @@ const getEventById = async (id: string) => {
   return event;
 }
 
-const FormulaireUpdateEvent: React.FC = () => {
+const UpdateEventForm: React.FC = () => {
   const [event, setEvent] = React.useState<Event>({
     name: '',
     startEvent: '',
@@ -97,4 +97,4 @@ const FormulaireUpdateEvent: React.FC = () => {
   );
 };
 
-export default FormulaireUpdateEvent;
+export default UpdateEventForm;
