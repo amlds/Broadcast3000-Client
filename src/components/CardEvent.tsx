@@ -1,7 +1,6 @@
 import React from "react";
 
 import ButtonEdit from "./ButtonEdit";
-import Edit from "./svg/Edit";
 import event from "../types/Event";
 import { useParams } from "react-router-dom";
 
@@ -52,8 +51,7 @@ const CardEvent: React.FC<props> = (event: props) => {
           {structureTime(event.event.startEvent)}
         </h3>
         <div className="cardEvent__header__button">
-          <button className="button--edit cardEvent__content__buttonEdit"><Edit /> Edit</button>
-          <ButtonEdit key={id} id={id} />
+          <ButtonEdit key={event.event.id} id={event.event.id} />
         </div>
       </div>
       <div ref={cardRef} className="cardEvent__content">
