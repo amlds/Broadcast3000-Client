@@ -16,7 +16,7 @@ const getEventById = async (schoolId: number, eventId: number) => {
 }
 
 const UpdateEventForm: React.FC = () => {
-  const { eventIdUpdate, toggleUpdate, isUpdate } = React.useContext(EventContext);
+  const { eventIdUpdate, toggleUpdate } = React.useContext(EventContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -47,29 +47,27 @@ const UpdateEventForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if(event.name && event.start_time && event.end_time && event.event_type_id && event.description && event.event_type_id){
-      updateEvent({
-        ...event,
-      }).then(res => {
-        messageRef.current!.innerHTML = '✅ Event added ✅';
-      }).catch(err => {
-        messageRef.current!.innerHTML = '🚨 Erreur 🚨';
-      });
-    } else {
-      messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
-    }
+    const eventToUpdate = {
+      name,
+      start_time,
+      end_time,
+      description,
+      event_type_id,
+      id: event.id,
+      school_id: event.school_id,
+      image: event.image,
+    };
+    updateEvent(eventToUpdate);
   }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     toggleUpdate();
-    console.log(isUpdate);
-    console.log('cancel');
   }
 
 
   return (
-    <form >
+    <form onSubmit={handleSubmit}>
       <label htmlFor="name">Name
       <input className='input--txt' type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
@@ -95,7 +93,7 @@ const UpdateEventForm: React.FC = () => {
       <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image"/>
       <div className='twoButtonSet'>
         <button className='button--secondary--red' onClick={handleCancel}>Cancel</button>
-        <button onSubmit={handleSubmit} type="submit" className='button--primary'>Update event</button>
+        <button type="submit" className='button--primary'>Update event</button>
       </div>
       <p ref={messageRef} className="messageAlerte"></p>
     </form>

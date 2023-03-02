@@ -73,75 +73,69 @@ const AddEventForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form__group">
-        <label htmlFor="name">Nom de l'événement</label>
-        <input type="text"
-          name='name'
-          id='name'
-          className="form__input"
-          placeholder="Nom de l'événement"
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form__group">
-        <label htmlFor="start_time">Date de début</label>
+      <label htmlFor="name">Nom de l'événement
+      <input type="text"
+        name='name'
+        id='name'
+        className="input--txt"
+        placeholder="Nom de l'événement"
+        required
+        onChange={handleChange}
+      />
+      </label>
+      <div className='align-row'>
+        <label htmlFor="start_time">Date de début
         <input type="datetime-local"
           name='start_time'
           id='start_time'
-          className="form__input"
+          className="input--txt"
           placeholder="Date de début"
           required
           onChange={handleChange}
-        />
-      </div>
-      <div className="form__group">
-        <label htmlFor="end_time">Date de fin</label>
+          />
+        </label>
+        <label htmlFor="end_time">Date de fin
         <input type="datetime-local"
           name='end_time'
           id='end_time'
-          className="form__input"
+          className="input--txt"
           placeholder="Date de fin"
           required
           onChange={handleChange}
-        />
+          />
+        </label>
       </div>
-      <div className="form__group">
-        <label htmlFor="description">Description</label>
-        <textarea name="description"
-
-          id="description"
-          className="form__input"
-          placeholder="Description"
-          required
-          onChange={handleChangeTextArea}
+      <label htmlFor="description">Description
+      <textarea name="description"
+        id="description"
+        className="input--txt"
+        placeholder="Description"
+        required
+        onChange={handleChangeTextArea}
         ></textarea>
-      </div>
-      <div className="form__group">
-        <label htmlFor="event_type_id">Type d'événement</label>
+      </label>
+      <label htmlFor="event_type_id">Type d'événement
         <select name="event_type_id"
           id="event_type_id"
-          className="form__input"
+          className="input--txt"
           required
           onChange={handleChangeSelect}
-        >
-          <option value="1">Sport</option>
-          <option value="2">Culture</option>
-          <option value="3">Autre</option>
+          >
+          <option value="1">Private</option>
+          <option value="2">Public</option>
+          <option value="3">Formation</option>
+          <option value="3">Extern</option>
         </select>
-      </div>
-      <div className="form__group">
-        <label htmlFor="image">Image</label>
-        <input type="file"
-          name='image'
-          id='image'
-          className="form__input"
-          placeholder="Image"
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit" className="btn btn--primary">Ajouter</button>
+      </label>
+      <label htmlFor="image">Image</label>
+      <input type="file"
+        name='image'
+        id='image'
+        placeholder="Image"
+        required
+        onChange={handleChange}
+      />
+      <button type="submit" className="button button--primary">Ajouter</button>
       <p ref={messageRef}></p>
     </form>
   );
