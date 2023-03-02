@@ -3,6 +3,7 @@ import React from "react";
 import ButtonEdit from "./ButtonEdit";
 import event from "../types/Event";
 import { useParams } from "react-router-dom";
+import EventTypeStyle from "./EventTypeStyle";
 
 type props = {
   event: event;
@@ -51,6 +52,7 @@ const CardEvent: React.FC<props> = (event: props) => {
           {structureTime(event.event.start_time)}
         </h3>
         <div className="cardEvent__header__button">
+          <EventTypeStyle event_type_id={event.event.event_type_id} />
           <ButtonEdit key={event.event.id} id={event.event.id} />
         </div>
       </div>

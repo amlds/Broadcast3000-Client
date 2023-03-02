@@ -10,7 +10,6 @@ const createBatch = async (batch: BatchType) => {
   }
   // const newBatch = await
   const newBatch = batch;
-  console.log(batch);
   return newBatch;
 }
 
@@ -31,8 +30,6 @@ const Batch: React.FC = () => {
 
   const updateNewBatch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e.target);
-    console.log('test')
   };
 
   const viewBatch = (

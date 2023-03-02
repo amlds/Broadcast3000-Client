@@ -13,7 +13,6 @@ const FormLogin: React.FC = () => {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
     if (!isLogin) {
       if(!passwordValidation(data.password)) {
         messagePassword.current!.innerHTML = '(Il faut 8 caractères, 1 majuscule, 1 minuscule, 1 chiffre, 1 caractère spécial)';
