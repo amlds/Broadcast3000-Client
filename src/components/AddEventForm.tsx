@@ -12,35 +12,52 @@ const AddEventForm: React.FC = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const [event, setEvent] = React.useState<Event>({
     name: '',
-    startEvent: '',
-    endEvent: '',
+    start_time: '',
+    end_time: '',
     description: '',
     id: 0,
-    eventTypeId: 0,
-    schoolId: 0,
-    image: '',
+    event_type_id: 0,
+    school_id: 0,
+    image: 'test',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
     setEvent({
       ...event,
-      [e.target.name]: e.target.value
+      [name]: value,
+    });
+  };
+
+  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.currentTarget;
+    setEvent({
+      ...event,
+      [name]: value,
     });
   };
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.currentTarget;
     setEvent({
       ...event,
-      [e.target.name]: parseInt(e.target.value)
+      [name]: parseInt(value),
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
-    if(form.checkValidity()){
+  const handleSubmit = (e: React.FormEvent) => {
+    const { name, start_time, end_time, description, event_type_id } = event;
+    const eventToCreate = {
+      name,
+      start_time,
+      end_time,
+      description,
+      event_type_id,
+    };
+    const formData = new FormData();
+    formData.append('event', JSON.stringify(eventToCreate));
+    e.preventDefault();
+    if (name && start_time && end_time && event_type_id && description && event_type_id) {
       createEvent({
         ...event,
       }).then(res => {
@@ -48,42 +65,84 @@ const AddEventForm: React.FC = () => {
       }).catch(err => {
         messageRef.current!.innerHTML = '🚨 Erreur 🚨';
       });
-    } else {
+    }
+    else {
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
     }
-    e.preventDefault();
   };
-
-
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name
-        <input className='input--txt' type="text" name="name" id="name" placeholder="Alumni drink" value={event.name} onChange={handleChange} />
-      </label>
-      <div className='align-row'>
-        <label htmlFor="startEvent">Start
-          <input className='input--txt' type="datetime-local" name="startEvent" id="startEvent" value={event.startEvent} onChange={handleChange} max="2040-01-01"/>
-        </label>
-        <label htmlFor="endEvent">End
-          <input className='input--txt' type="datetime-local" name="endEvent" id="endEvent" value={event.endEvent} onChange={handleChange} />
-        </label>
+      <div className="form__group">
+        <label htmlFor="name">Nom de l'événement</label>
+        <input type="text"
+          name='name'
+          id='name'
+          className="form__input"
+          placeholder="Nom de l'événement"
+          required
+          onChange={handleChange}
+        />
       </div>
-      <label htmlFor="description">Description
-        <textarea className='input--txt' name="description" id="description" placeholder="Get an hangorver for free with your Le Wagon mates !"></textarea>
-      </label>
-      <label htmlFor="eventTypeId">Type
-        <select className='input--txt' name="eventTypeId" id="eventTypeId" value={event.eventTypeId} onChange={handleChangeSelect}>
-          <option value="0">Choose a type</option>
-          <option value="1">Party</option>
-          <option value="2">Conference</option>
-          <option value="3">Meetup</option>
-          <option value="4">Other</option>
+      <div className="form__group">
+        <label htmlFor="start_time">Date de début</label>
+        <input type="datetime-local"
+          name='start_time'
+          id='start_time'
+          className="form__input"
+          placeholder="Date de début"
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form__group">
+        <label htmlFor="end_time">Date de fin</label>
+        <input type="datetime-local"
+          name='end_time'
+          id='end_time'
+          className="form__input"
+          placeholder="Date de fin"
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form__group">
+        <label htmlFor="description">Description</label>
+        <textarea name="description"
+
+          id="description"
+          className="form__input"
+          placeholder="Description"
+          required
+          onChange={handleChangeTextArea}
+        ></textarea>
+      </div>
+      <div className="form__group">
+        <label htmlFor="event_type_id">Type d'événement</label>
+        <select name="event_type_id"
+          id="event_type_id"
+          className="form__input"
+          required
+          onChange={handleChangeSelect}
+        >
+          <option value="1">Sport</option>
+          <option value="2">Culture</option>
+          <option value="3">Autre</option>
         </select>
-      </label>
-      <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image" />
-      <button className='button--primary' type="submit">Add event</button>
-      <p ref={messageRef} className="messageAlerte"></p>
+      </div>
+      <div className="form__group">
+        <label htmlFor="image">Image</label>
+        <input type="file"
+          name='image'
+          id='image'
+          className="form__input"
+          placeholder="Image"
+          required
+          onChange={handleChange}
+        />
+      </div>
+      <button type="submit" className="btn btn--primary">Ajouter</button>
+      <p ref={messageRef}></p>
     </form>
   );
 };

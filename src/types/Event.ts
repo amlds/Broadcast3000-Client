@@ -1,10 +1,10 @@
 export default interface event {
   id: number,
   name: string,
-  startEvent: string,
-  endEvent: string,
+  start_time: string,
+  end_time: string,
   description: string,
-  eventTypeId: number,
-  schoolId: number,
+  event_type_id: number,
+  school_id: number,
   image?: string,
 }

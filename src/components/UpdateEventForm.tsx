@@ -6,7 +6,7 @@ import Event from '../types/Event'
 
 
 const updateEvent = async (event: Event) => {
-  await EventService.updateEvent(event.schoolId, event);
+  await EventService.updateEvent(event.school_id, event);
   window.location.reload();
 }
 
@@ -19,34 +19,35 @@ const UpdateEventForm: React.FC = () => {
   const { eventIdUpdate, toggleUpdate, isUpdate } = React.useContext(EventContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
-    startEvent: '',
-    endEvent: '',
+    start_time: '',
+    end_time: '',
     description: '',
     id: 0,
-    eventTypeId: 0,
-    schoolId: 0,
+    event_type_id: 0,
+    school_id: 0,
     image: '',
   });
   const [name, setName] = React.useState(event.name);
-  const [startEvent, setStartEvent] = React.useState(event.startEvent);
-  const [endEvent, setEndEvent] = React.useState(event.endEvent);
+  const [start_time, setstart_time] = React.useState(event.start_time);
+  const [end_time, setend_time] = React.useState(event.end_time);
   const [description, setDescription] = React.useState(event.description);
-  const [eventTypeId, setEventTypeId] = React.useState(event.eventTypeId);
+  const [event_type_id, setevent_type_id] = React.useState(event.event_type_id);
   const messageRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
     getEventById(1, eventIdUpdate).then((event) => {
       setEvent(event);
       setName(event.name);
-      setStartEvent(event.startEvent);
-      setEndEvent(event.endEvent);
+      setstart_time(event.start_time);
+      setend_time(event.end_time);
       setDescription(event.description);
-      setEventTypeId(event.eventTypeId);
+      setevent_type_id(event.event_type_id);
     });
   }, [eventIdUpdate]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    if(event.name && event.startEvent && event.endEvent && event.eventTypeId && event.description && event.eventTypeId){
+    e.preventDefault();
+    if(event.name && event.start_time && event.end_time && event.event_type_id && event.description && event.event_type_id){
       updateEvent({
         ...event,
       }).then(res => {
@@ -57,7 +58,6 @@ const UpdateEventForm: React.FC = () => {
     } else {
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
     }
-    e.preventDefault();
   }
 
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -74,18 +74,18 @@ const UpdateEventForm: React.FC = () => {
       <input className='input--txt' type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
       </label>
       <div className='align-row'>
-        <label htmlFor="startEvent">Start
-          <input className='input--txt' type="datetime-local" name="startEvent" id="startEvent" value={startEvent} onChange={(e) => setStartEvent(e.target.value)}/>
+        <label htmlFor="start_time">Start
+          <input className='input--txt' type="datetime-local" name="start_time" id="start_time" value={start_time} onChange={(e) => setstart_time(e.target.value)}/>
         </label>
-        <label htmlFor="endEvent">End
-          <input className='input--txt' type="datetime-local" name="endEvent" id="endEvent"  value={endEvent} onChange={(e) => setEndEvent(e.target.value)}/>
+        <label htmlFor="end_time">End
+          <input className='input--txt' type="datetime-local" name="end_time" id="end_time"  value={end_time} onChange={(e) => setend_time(e.target.value)}/>
         </label>
       </div>
       <label htmlFor="description">Description
         <textarea className='input--txt' name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
       </label>
       <label htmlFor="type">type
-        <select className='input--txt' name="type" id="type" value={event.eventTypeId}>
+        <select className='input--txt' name="type" id="type" value={event.event_type_id}>
           <option value="1">Party</option>
           <option value="2">Conference</option>
           <option value="3">Workshop</option>

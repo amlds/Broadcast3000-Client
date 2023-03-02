@@ -15,7 +15,7 @@ const CardEvent: React.FC<props> = (event: props) => {
 
   const structureTime = (time: string) => {
     const date = new Date(time);
-    return `${date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric' })} à ${date.toLocaleTimeString('fr-FR', { hour: 'numeric', minute: 'numeric' })}`;
+    return `${date.toLocaleDateString('fr-FR', {year:'numeric', month: 'long', day: 'numeric' })} à ${date.toLocaleTimeString('fr-FR', { hour: 'numeric', minute: 'numeric' })}`;
   };
 
   React.useEffect(() => {
@@ -48,7 +48,7 @@ const CardEvent: React.FC<props> = (event: props) => {
     <div className="cardEvent" ref={eventRef}>
       <div className="cardEvent__header">
         <h3>
-          {structureTime(event.event.startEvent)}
+          {structureTime(event.event.start_time)}
         </h3>
         <div className="cardEvent__header__button">
           <ButtonEdit key={event.event.id} id={event.event.id} />
