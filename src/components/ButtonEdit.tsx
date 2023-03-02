@@ -1,6 +1,8 @@
 import React from 'react';
 import { EventContext } from '../context/EventContext';
 
+import Edit from "./svg/Edit";
+
 interface IButtonEditProps {
   id: number;
 }
@@ -20,8 +22,8 @@ const ButtonEdit: React.FC<IButtonEditProps> = ({ id }) => {
 
   return (
     <>
-      <button className='button--primay btnEdit' data-id={id} onClick={handleClick}>
-        getId
+      <button className="button--edit cardEvent__content__buttonEdit" data-id={id} onClick={handleClick}>
+      <Edit />Edit
       </button>
     </>
   );

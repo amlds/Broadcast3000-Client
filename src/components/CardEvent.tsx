@@ -1,21 +1,8 @@
 import React from "react";
 
-import EventService from "../services/EventService";
-
-/* import EventContext, { defaultState } from '../context/EventContext'; */
-
-import Edit from "./svg/Edit";
+import ButtonEdit from "./ButtonEdit";
 import event from "../types/Event";
 import { useParams } from "react-router-dom";
-
-
-const deleteEvent = async (id: number) => {
-  // eslint-disable-next-line no-restricted-globals
-  const submit = confirm('Are you sure?');
-  if(submit) {
-    await EventService.deleteEvent(id);
-  }
-}
 
 type props = {
   event: event;
@@ -28,7 +15,7 @@ const CardEvent: React.FC<props> = (event: props) => {
 
   const structureTime = (time: string) => {
     const date = new Date(time);
-    return `${date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric' })} à ${date.toLocaleTimeString('fr-FR', { hour: 'numeric', minute: 'numeric' })}`;
+    return `${date.toLocaleDateString('fr-FR', {year:'numeric', month: 'long', day: 'numeric' })} à ${date.toLocaleTimeString('fr-FR', { hour: 'numeric', minute: 'numeric' })}`;
   };
 
   React.useEffect(() => {
@@ -61,11 +48,10 @@ const CardEvent: React.FC<props> = (event: props) => {
     <div className="cardEvent" ref={eventRef}>
       <div className="cardEvent__header">
         <h3>
-          {structureTime(event.event.startEvent)}
+          {structureTime(event.event.start_time)}
         </h3>
         <div className="cardEvent__header__button">
-          <button className="button--edit cardEvent__content__buttonEdit"><Edit /> Edit</button>
-          <button onClick={() => deleteEvent(event.event.id)} className="button--delete">X</button>
+          <ButtonEdit key={event.event.id} id={event.event.id} />
         </div>
       </div>
       <div ref={cardRef} className="cardEvent__content">

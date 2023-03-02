@@ -4,77 +4,139 @@ import EventService from '../services/EventService';
 import Event from '../types/Event'
 
 const createEvent = async (event: Event) => {
-  if (!event.name || !event.startEvent || !event.endEvent || !event.description || !event.location) {
-    throw new Error('Missing fields');
-  } else if (event.startEvent > event.endEvent) {
-    throw new Error('Start date must be before end date');
-  } else if (event.startEvent === event.endEvent) {
-    throw new Error('Start date and end date must be different');
-  }
-  const newEvent = await EventService.createEvent(event);
-  return newEvent;
+  const res = await EventService.createEvent(1, event);
+  return res;
 }
 
 const AddEventForm: React.FC = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
-  const [event, setEvent] = React.useState({
+  const [event, setEvent] = React.useState<Event>({
     name: '',
-    startEvent: '',
-    endEvent: '',
+    start_time: '',
+    end_time: '',
     description: '',
-    location: '',
+    id: 0,
+    event_type_id: 0,
+    school_id: 0,
+    image: 'test',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
     setEvent({
       ...event,
-      [e.target.name]: e.target.value
+      [name]: value,
+    });
+  };
+
+  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.currentTarget;
+    setEvent({
+      ...event,
+      [name]: value,
+    });
+  };
+
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.currentTarget;
+    setEvent({
+      ...event,
+      [name]: parseInt(value),
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    const description = document.getElementById('description') as HTMLInputElement;
-    if(event.name && event.startEvent && event.endEvent && event.location && description.value){
+    const { name, start_time, end_time, description, event_type_id } = event;
+    const eventToCreate = {
+      name,
+      start_time,
+      end_time,
+      description,
+      event_type_id,
+    };
+    const formData = new FormData();
+    formData.append('event', JSON.stringify(eventToCreate));
+    e.preventDefault();
+    if (name && start_time && end_time && event_type_id && description && event_type_id) {
       createEvent({
         ...event,
-        description: description.value,
-        image: 'test',
-        id: 0
       }).then(res => {
         messageRef.current!.innerHTML = '✅ Event added ✅';
       }).catch(err => {
         messageRef.current!.innerHTML = '🚨 Erreur 🚨';
       });
-    } else {
-      e.preventDefault();
+    }
+    else {
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
     }
   };
 
-
-
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name
-        <input className='input--txt' type="text" name="name" id="name" placeholder="Alumni drink" value={event.name} onChange={handleChange} />
+      <label htmlFor="name">Nom de l'événement
+      <input type="text"
+        name='name'
+        id='name'
+        className="input--txt"
+        placeholder="Nom de l'événement"
+        required
+        onChange={handleChange}
+      />
       </label>
       <div className='align-row'>
-        <label htmlFor="startEvent">Start
-          <input className='input--txt' type="datetime-local" name="startEvent" id="startEvent" value={event.startEvent} onChange={handleChange} max="2040-01-01"/>
+        <label htmlFor="start_time">Date de début
+        <input type="datetime-local"
+          name='start_time'
+          id='start_time'
+          className="input--txt"
+          placeholder="Date de début"
+          required
+          onChange={handleChange}
+          />
         </label>
-        <label htmlFor="endEvent">End
-          <input className='input--txt' type="datetime-local" name="endEvent" id="endEvent" value={event.endEvent} onChange={handleChange} />
+        <label htmlFor="end_time">Date de fin
+        <input type="datetime-local"
+          name='end_time'
+          id='end_time'
+          className="input--txt"
+          placeholder="Date de fin"
+          required
+          onChange={handleChange}
+          />
         </label>
       </div>
       <label htmlFor="description">Description
-        <textarea className='input--txt' name="description" id="description" placeholder="Get an hangorver for free with your Le Wagon mates !"></textarea>
+      <textarea name="description"
+        id="description"
+        className="input--txt"
+        placeholder="Description"
+        required
+        onChange={handleChangeTextArea}
+        ></textarea>
       </label>
-      <label htmlFor="location">Location
-        <input className='input--txt' type="text" name="location" id="location" placeholder="Le Wagon Lyon #TheBest" value={event.location} onChange={handleChange} />
+      <label htmlFor="event_type_id">Type d'événement
+        <select name="event_type_id"
+          id="event_type_id"
+          className="input--txt"
+          required
+          onChange={handleChangeSelect}
+          >
+          <option value="1">Private</option>
+          <option value="2">Public</option>
+          <option value="3">Formation</option>
+          <option value="3">Extern</option>
+        </select>
       </label>
-      <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image" />
-      <button className='button--primary' type="submit">Add event</button>
-      <p ref={messageRef} className="messageAlerte"></p>
+      <label htmlFor="image">Image</label>
+      <input type="file"
+        name='image'
+        id='image'
+        placeholder="Image"
+        required
+        onChange={handleChange}
+      />
+      <button type="submit" className="button button--primary">Ajouter</button>
+      <p ref={messageRef}></p>
     </form>
   );
 };

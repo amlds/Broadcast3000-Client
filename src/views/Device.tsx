@@ -4,24 +4,24 @@ import EventService from '../services/EventService';
 import Event from '../types/Event';
 
 import FocusImage from '../components/FocusImage';
-import LectureDay from '../components/LectureDay';
+/*import LectureDay from '../components/LectureDay';*/
 import ListCard from '../components/ListCard';
 
 import '../assets/views/device.scss'
 
 const getEvents = async () => {
-  const events = await EventService.getEvents();
+  const events = await EventService.getEvents(1);
   return events;
 }
 
 const Devices: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>([]);
-  const [date, setDate] = React.useState(new Date());
-  const [dayMonth, setDayMonth] = React.useState(date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'numeric', day: 'numeric'}));
+  /* const [date, setDate] = React.useState(new Date());
+  const [dayMonth, setDayMonth] = React.useState(date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'numeric', day: 'numeric'})); */
   const messageRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
-    getEvents().then((events) => {
+   /*  getEvents().then((events) => {
       const sortedEvents = events.sort((a, b) => {
         return new Date(a.endEvent).getTime() - new Date(b.endEvent).getTime();
       });
@@ -29,10 +29,13 @@ const Devices: React.FC = () => {
         return new Date(event.endEvent).getTime() > new Date().getTime();
       });
       setEvents(filteredEvents);
+    }); */
+    getEvents().then((events) => {
+      setEvents(events);
     });
   }, []);
 
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     const interval = setInterval(() => {
       setDate(new Date());
       setDayMonth(date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'numeric', day: 'numeric'}));
@@ -45,7 +48,7 @@ const Devices: React.FC = () => {
       messageRef.current.innerHTML = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', weekday: 'long',});
     }
   }, [date]);
-
+ */
     return (
     <main className='device'>
       <section className='device__content'>
@@ -53,7 +56,7 @@ const Devices: React.FC = () => {
         <div className='device__content--text'>
           <h1>Hello wagoners !</h1>
           <p>Nous somme le <span className='text-medium' ref={messageRef}></span></p>
-          <LectureDay date={dayMonth}/>
+          {/* <LectureDay date={dayMonth}/> */}
           <FocusImage />
         </div>
       </section>

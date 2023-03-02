@@ -11,23 +11,25 @@ import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
 
 const getEvents = async () => {
-  const events = await EventService.getEvents();
+  const events = await EventService.getEvents(1);
   return events;
 }
 
 const Dashboard: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>([]);
 
-
   React.useEffect(() => {
     getEvents().then((events) => {
       const sortedEvents = events.sort((a, b) => {
-        return new Date(a.endEvent).getTime() - new Date(b.endEvent).getTime();
+        return new Date(a.end_time).getTime() - new Date(b.end_time).getTime();
       });
       const filteredEvents = sortedEvents.filter((event) => {
-        return new Date(event.endEvent).getTime() > new Date().getTime();
+        return new Date(event.end_time).getTime() > new Date().getTime();
       });
       setEvents(filteredEvents);
+    });
+    getEvents().then((events) => {
+      setEvents(events);
     });
   }, []);
 
