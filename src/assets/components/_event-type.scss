@@ -1,0 +1,12 @@
+.event-type {
+  display: flex;
+  flex-direction: center;
+  align-items: center;
+
+  padding: 4px 12px;
+  border-radius: 8px;
+
+  p {
+    font-size: 16px;
+  }
+}

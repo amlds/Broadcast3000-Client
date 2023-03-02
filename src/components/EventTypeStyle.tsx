@@ -27,7 +27,8 @@ const EventTypeStyle: React.FC<Props> = ({ event_type_id }) => {
   }, [event_type_id]);
 
   const style = {
-    backgroundColor: eventTypeState.color,
+    backgroundColor: `${eventTypeState.color}1A`,
+    color: eventTypeState.color,
   };
 
   return (
