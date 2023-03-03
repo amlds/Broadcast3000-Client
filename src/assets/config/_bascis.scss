@@ -40,6 +40,12 @@ ul {
   margin: 0;
 }
 
+.text-large {
+  font-weight: 700;
+  font-size: 48px;
+  text-transform: capitalize;
+}
+
 .text-medium {
   font-weight: 700;
   font-size: 32px;
@@ -47,9 +53,8 @@ ul {
 }
 
 .text-normal {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 24px;
-  text-transform: capitalize;
 }
 
 .md-text-1 {

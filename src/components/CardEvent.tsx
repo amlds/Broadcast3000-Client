@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 
 import ButtonEdit from "./ButtonEdit";
 import event from "../types/Event";
-import { useParams } from "react-router-dom";
 import EventTypeStyle from "./EventTypeStyle";
 import { EventContext } from "../context/EventContext";
 
@@ -33,16 +32,16 @@ const CardEvent: React.FC<props> = (event: props) => {
   return (
     <div key={event.event.id} className="cardEvent cardEvent" ref={eventRef}>
       <div className="cardEvent__header">
-        <h3>
+        <p className="text-normal">
           {structureTime(event.event.start_time)}
-        </h3>
+        </p>
         <div className="cardEvent__header__button">
           <EventTypeStyle event_type_id={event.event.event_type_id} />
           <ButtonEdit id={event.event.id} />
         </div>
       </div>
       <div ref={cardRef} className="cardEvent__content">
-        <h3 className="cardEvent__content__title">{event.event.name}</h3>
+        <p className="cardEvent__content__title text-medium">{event.event.name}</p>
         <p className="cardEvent__content__description">
           {event.event.description}
         </p>
