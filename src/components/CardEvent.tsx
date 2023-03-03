@@ -32,6 +32,7 @@ const CardEvent: React.FC<props> = (event: props) => {
   React.useEffect(() => {
     const event = eventRef.current!;
     const card = cardRef.current!;
+    const button = document.querySelector('.button--edit');
     const toggle = () => {
       const cards = document.querySelectorAll('.cardEvent__content');
       cards.forEach((card) => {

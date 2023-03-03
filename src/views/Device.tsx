@@ -15,7 +15,6 @@ const getEvents = async () => {
 }
 
 const Devices: React.FC = () => {
-  const [events, setEvents] = React.useState<Event[]>([]);
   /* const [date, setDate] = React.useState(new Date());
   const [dayMonth, setDayMonth] = React.useState(date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'numeric', day: 'numeric'})); */
   const messageRef = React.useRef<HTMLParagraphElement>(null);
@@ -49,6 +48,23 @@ const Devices: React.FC = () => {
     }
   }, [date]);
  */
+  const [events, setEvents] = React.useState<Event[]>([]);
+
+  React.useEffect(() => {
+    getEvents().then((events) => {
+      const sortedEvents = events.sort((a, b) => {
+        return new Date(a.end_time).getTime() - new Date(b.end_time).getTime();
+      });
+      const filteredEvents = sortedEvents.filter((event) => {
+        return new Date(event.end_time).getTime() > new Date().getTime();
+      });
+      setEvents(filteredEvents);
+    });
+    getEvents().then((events) => {
+      setEvents(events);
+    });
+  }, []);
+
     return (
     <main className='device'>
       <section className='device__content'>
