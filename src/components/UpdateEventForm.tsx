@@ -16,7 +16,7 @@ const getEventById = async (schoolId: number, eventId: number) => {
 }
 
 const UpdateEventForm: React.FC = () => {
-  const { eventIdUpdate, toggleUpdate } = React.useContext(EventContext);
+  const { eventIdUpdate, toggleUpdate, setId } = React.useContext(EventContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -63,6 +63,7 @@ const UpdateEventForm: React.FC = () => {
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     toggleUpdate();
+    setId(0);
   }
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
