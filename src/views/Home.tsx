@@ -12,30 +12,10 @@ const createEvent = async (event: Event) => {
 }
 
 const Home: React.FC = () => {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const time = new Date(Date.now());
-    createEvent({
-      name: 'Nouvelle ghjk',
-      start_time: time.toISOString(),
-      end_time: time.toISOString(),
-      description: 'test',
-      id: 0,
-      event_type_id: 2,
-      school_id: 1,
-      image: '',
-    }).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.log(err);
-    });
-  }
-
-  return (
+    return (
     <main className='home'>
       <header className='home__header container'>
         <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
-        <button className='button button--primary' onClick={handleClick}>Ajouter un event</button>
         <Link to='/login' className='button button--primary'>Login</Link>
       </header>
       <section className='explication  container'>

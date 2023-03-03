@@ -124,7 +124,7 @@ const AddEventForm: React.FC = () => {
           <option value="1">Private</option>
           <option value="2">Public</option>
           <option value="3">Formation</option>
-          <option value="3">Extern</option>
+          <option value="4">Extern</option>
         </select>
       </label>
       <label htmlFor="image">Image</label>

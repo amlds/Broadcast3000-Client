@@ -16,7 +16,7 @@ const getEventById = async (schoolId: number, eventId: number) => {
 }
 
 const UpdateEventForm: React.FC = () => {
-  const { eventIdUpdate, toggleUpdate } = React.useContext(EventContext);
+  const { eventIdUpdate, toggleUpdate, setId } = React.useContext(EventContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -27,11 +27,11 @@ const UpdateEventForm: React.FC = () => {
     school_id: 0,
     image: '',
   });
-  const [name, setName] = React.useState(event.name);
-  const [start_time, setstart_time] = React.useState(event.start_time);
-  const [end_time, setend_time] = React.useState(event.end_time);
-  const [description, setDescription] = React.useState(event.description);
-  const [event_type_id, setevent_type_id] = React.useState(event.event_type_id);
+  const [name, setName] = React.useState("");
+  const [start_time, setstart_time] = React.useState("");
+  const [end_time, setend_time] = React.useState("");
+  const [description, setDescription] = React.useState("");
+  const [event_type_id, setevent_type_id] = React.useState(0);
   const messageRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
@@ -63,8 +63,17 @@ const UpdateEventForm: React.FC = () => {
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     toggleUpdate();
+    setId(0);
   }
 
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.eventPhase;
+    console.log(e);
+    setEvent({
+      ...event,
+      [event_type_id]: value,
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -83,7 +92,10 @@ const UpdateEventForm: React.FC = () => {
         <textarea className='input--txt' name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
       </label>
       <label htmlFor="type">type
-        <select className='input--txt' name="type" id="type" value={event.event_type_id}>
+        <select className='input--txt' name="type" id="type" onChange={(e) => {
+          console.log(e.eventPhase)
+          handleChangeSelect(e)
+        }}>
           <option value="1">Party</option>
           <option value="2">Conference</option>
           <option value="3">Workshop</option>

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import ButtonEdit from "./ButtonEdit";
 import event from "../types/Event";
 import { useParams } from "react-router-dom";
+import EventTypeStyle from "./EventTypeStyle";
+import { EventContext } from "../context/EventContext";
 
 type props = {
   event: event;
@@ -11,7 +13,7 @@ type props = {
 const CardEvent: React.FC<props> = (event: props) => {
   const eventRef = React.useRef<HTMLDivElement>(null);
   const cardRef = React.useRef<HTMLDivElement>(null);
-  let id = useParams().id as unknown as number;
+  const { eventIdUpdate } = useContext(EventContext);
 
   const structureTime = (time: string) => {
     const date = new Date(time);
@@ -19,39 +21,24 @@ const CardEvent: React.FC<props> = (event: props) => {
   };
 
   React.useEffect(() => {
-    const card = cardRef.current!;
-    // eslint-disable-next-line eqeqeq
-    if (event.event.id == id) {
-      card.classList.add('cardEvent__content--active');
-    } else {
-      card.classList.remove('cardEvent__content--active');
+    if (eventRef.current && cardRef.current) {
+      if (event.event.id === eventIdUpdate) {
+        cardRef.current.classList.add("cardEvent__content--active");
+      } else {
+        cardRef.current.classList.remove("cardEvent__content--active");
+      }
     }
-  }, [event.event.id, id]);
-
-  React.useEffect(() => {
-    const event = eventRef.current!;
-    const card = cardRef.current!;
-    const toggle = () => {
-      const cards = document.querySelectorAll('.cardEvent__content');
-      cards.forEach((card) => {
-        card.classList.remove('cardEvent__content--active');
-      });
-      card.classList.toggle('cardEvent__content--active');
-    };
-    event.addEventListener('click', toggle);
-    return () => {
-      event.removeEventListener('click', toggle);
-    };
-  }, []);
+  }, [event.event.id, eventIdUpdate]);
 
   return (
-    <div className="cardEvent" ref={eventRef}>
+    <div key={event.event.id} className="cardEvent cardEvent" ref={eventRef}>
       <div className="cardEvent__header">
         <h3>
           {structureTime(event.event.start_time)}
         </h3>
         <div className="cardEvent__header__button">
-          <ButtonEdit key={event.event.id} id={event.event.id} />
+          <EventTypeStyle event_type_id={event.event.event_type_id} />
+          <ButtonEdit id={event.event.id} />
         </div>
       </div>
       <div ref={cardRef} className="cardEvent__content">

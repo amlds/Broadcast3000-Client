@@ -23,7 +23,7 @@ const ButtonEdit: React.FC<IButtonEditProps> = ({ id }) => {
   return (
     <>
       <button className="button--edit cardEvent__content__buttonEdit" data-id={id} onClick={handleClick}>
-      <Edit />Edit
+        <Edit />Edit
       </button>
     </>
   );
