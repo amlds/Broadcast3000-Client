@@ -4,7 +4,6 @@ import Batch from '../types/Batch';
 import BatchService from '../services/BatchService';
 
 import Edit from './svg/Edit';
-import { stat } from 'fs';
 
 const getBatchs = async () => {
   const batches = await BatchService.getBatchs(1);
@@ -34,7 +33,13 @@ const deleteBatch = async (id: number) => {
 const BatchConfig: React.FC = () => {
   const [state, setState] = React.useState(0);
   const [batches, setBatches] = React.useState<Batch[]>([]);
-  const [batchToUpdate, setBatchToUpdate] = React.useState<Batch>({} as Batch);
+  const [batchToUpdate, setBatchToUpdate] = React.useState<Batch>({
+    id: 0,
+    number: 0,
+    start_at: '',
+    end_at: '',
+    course_id: 0,
+  } as Batch);
 
   React.useEffect(() => {
     if (state === 0) {
@@ -65,7 +70,6 @@ const BatchConfig: React.FC = () => {
     };
 
     createBatch(batchToCreate).then((res) => {
-      console.log(res);
       setState(0);
     });
   };
@@ -77,7 +81,6 @@ const BatchConfig: React.FC = () => {
     } else {
       setState(2);
       getBatch(parseInt(id)).then((batch) => {
-        console.log(batch);
         setBatchToUpdate(batch);
       });
     }
@@ -95,19 +98,16 @@ const BatchConfig: React.FC = () => {
       end_at: endDate(startDate),
       course_id: parseInt(courseId),
     }).then((res) => {
-      console.log(res);
       setState(0);
     });
   };
 
   const deleteBatchElement = (e: React.MouseEvent) => {
     const id = (e.currentTarget as HTMLButtonElement).dataset.id;
-    console.log(id);
     if (id === undefined) {
       return;
     } else {
       deleteBatch(parseInt(id)).then((res) => {
-        console.log(res);
         setState(0);
       });
     }
@@ -156,23 +156,16 @@ const BatchConfig: React.FC = () => {
         <label>Start date
           <input className='input--txt' type="date" name="startDate" />
         </label>
-        <label htmlFor='courseId'>Type
-          <select className='input--txt' name="courseId" id="courseId">
-            <option value="1">Web Development</option>
-            <option value="2">Data Science</option>
-            <option value="3">Data Analyse</option>
-          </select>
-        </label>
-        {/* <label>Type
-          <div className='checkbox--batch'>
-            <input type="radio" name='coursesId' className="textContaint" />
-            <label htmlFor='typeDev'>Web Development</label>
-            <input type="radio" name='coursesId' className="textContaint" />
-            <label htmlFor='typeScience'>Data Science</label>
-            <input type="radio" name='coursesId' className="textContaint" />
-            <label htmlFor='typeAnalyse'>Data Analyse</label>
-          </div>
-        </label> */}
+        <div className="radio-group">
+          <input type="radio" id="webdev" name="courseId" value="1" />
+          <label htmlFor="webdev">Web Development</label>
+
+          <input type="radio" id="datascience" name="courseId" value="2" />
+          <label htmlFor="datascience">Data Science</label>
+
+          <input type="radio" id="dataanalyse" name="courseId" value="3" />
+          <label htmlFor="dataanalyse">Data Analyse</label>
+        </div>
         <div className='align-row'>
           <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
           <button type="submit" className='button--primary'>Confirm create</button>
@@ -191,17 +184,26 @@ const BatchConfig: React.FC = () => {
         <label>Start date
           <input className='input--txt' type="date" name="startDate" value={batchToUpdate.start_at} onChange={onChange}/>
         </label>
-        <label htmlFor='courseId'>Type
-          <select className='input--txt' name="courseId" id="courseId" value={batchToUpdate.course_id} >
-            <option value="1">Web Development</option>
-            <option value="2">Data Science</option>
-            <option value="3">Data Analyse</option>
-          </select>
-        </label>
+        <div className="radio-group">
+          <input  type="radio" id="webdev" name="courseId"
+                  value="1" checked={batchToUpdate.course_id === 1}
+                  onChange={() => { setBatchToUpdate({ ...batchToUpdate, course_id: 1 }) }} />
+          <label htmlFor="webdev">Web Development</label>
+
+          <input  type="radio" id="datascience" name="courseId"
+                  value="2" checked={batchToUpdate.course_id === 2}
+                  onChange={() => { setBatchToUpdate({ ...batchToUpdate, course_id: 2 }) }} />
+          <label htmlFor="datascience">Data Science</label>
+
+          <input  type="radio" id="dataanalyse" name="courseId"
+                  value="3" checked={batchToUpdate.course_id === 3}
+                  onChange={() => { setBatchToUpdate({ ...batchToUpdate, course_id: 3 }) }} />
+          <label htmlFor="dataanalyse">Data Analyse</label>
+        </div>
         <div className='align-row'>
           <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
           <button type="submit" className='button--primary'>Confirm create</button>
-          <button className='button--secondary' onClick={deleteBatchElement}>Delete</button>
+          <button className='button--secondary button--secondary--red' data-id={batchToUpdate.id} onClick={deleteBatchElement}>Delete</button>
         </div>
       </form>
     </div>
