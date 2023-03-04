@@ -1,15 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import EventService from '../services/EventService';
-import Event from '../types/Event'
-
 import '../assets/views/home.scss';
 
-const createEvent = async (event: Event) => {
-  const res = await EventService.createEvent(1, event);
-  return res;
-}
 
 const Home: React.FC = () => {
     return (
