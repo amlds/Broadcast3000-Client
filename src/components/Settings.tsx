@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import Batch from './Batch';
+import BatchConfig from './BatchConfig';
 
 const Settings: React.FC = () => {
   const [numberCarrousel, setNumberCarrousel] = React.useState(1);
@@ -22,7 +22,7 @@ const Settings: React.FC = () => {
 
   return (
     <section className='settings'>
-      <Batch />
+      <BatchConfig />
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
         <div className="extra">

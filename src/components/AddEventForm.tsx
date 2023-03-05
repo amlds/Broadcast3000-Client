@@ -47,9 +47,6 @@ const AddEventForm: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     const { name, start_time, end_time, description, event_type_id } = event;
-    console.log(event);
-    console.log(start_time);
-    console.log(end_time);
     const eventToCreate = {
       name,
       start_time,
@@ -138,7 +135,7 @@ const AddEventForm: React.FC = () => {
         required
         onChange={handleChange}
       />
-      <button type="submit" className="button button--primary">Ajouter</button>
+      <button type="submit" className="button button--primary">Add a new event</button>
       <p ref={messageRef}></p>
     </form>
   );
