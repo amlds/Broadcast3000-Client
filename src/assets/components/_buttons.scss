@@ -219,9 +219,9 @@ button {
     padding: 8px 16px;
     border-radius: 100px;
   }
-  input[type="radio"].textContaint:hover + label {
+  /* input[type="radio"].textContaint:hover + label {
     background-color: var(--secondary-light);
-  }
+  } */
   input[type="radio"].textContaint:checked + label {
     border: 1px solid var(--secondary-light);
     background-color: var(--secondary-light);

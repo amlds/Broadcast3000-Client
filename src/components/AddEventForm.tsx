@@ -135,7 +135,7 @@ const AddEventForm: React.FC = () => {
         required
         onChange={handleChange}
       />
-      <button type="submit" className="button button--primary">Ajouter</button>
+      <button type="submit" className="button button--primary">Add a new event</button>
       <p ref={messageRef}></p>
     </form>
   );
