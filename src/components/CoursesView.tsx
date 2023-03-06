@@ -19,20 +19,15 @@ const CourseView: React.FC<Props> = (props) => {
       name: '',
     } as Course
   );
-  const [state, setState] = React.useState(0);
 
   React.useEffect(() => {
-    if (state === 0) {
-      getCourse(props.id).then((course) => {
-        setCourse(course);
-      });
-    }
-  }, [state]);
+    getCourse(props.id).then((course) => {
+      setCourse(course);
+    })
+  }, [props.id]);
 
   return (
-    <>
-      <p>{course.name}</p>
-    </>
+    <>{course.name}</>
   );
 };
 
