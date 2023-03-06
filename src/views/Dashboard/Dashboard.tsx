@@ -22,8 +22,7 @@ const Dashboard: React.FC = () => {
     getEvents().then((events) => {
       const sortedEvents = events.sort((a, b) => {
         return new Date(a.start_time).getTime() - new Date(b.start_time).getTime();
-      }
-      );
+      });
       const filteredEvents = sortedEvents.filter((event) => {
         return new Date(event.start_time).getTime() > new Date().getTime();
       });

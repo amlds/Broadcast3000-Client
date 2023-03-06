@@ -27,7 +27,16 @@
       }
     }
   }
-  .cardEvent__header__button{
+  .cardEvent__content__buttonEdit {
     display: none;
+  }
+
+  .cardEvent--first {
+    & > .cardEvent__header {
+      color: var(--primary);
+    }
+    & > .cardEvent__content {
+      border: 2px solid var(--primary);
+    }
   }
 }

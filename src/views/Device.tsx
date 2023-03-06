@@ -2,10 +2,11 @@ import React from 'react';
 
 import EventService from '../services/EventService';
 import Event from '../types/Event';
+import BatchService from '../services/BatchService';
+import Batch from '../types/Batch';
 
-import FocusImage from '../components/FocusImage';
-/*import LectureDay from '../components/LectureDay';*/
 import ListCard from '../components/ListCard';
+import ChallengeView from '../components/ChallengesView';
 
 import '../assets/views/device.scss'
 
@@ -14,56 +15,58 @@ const getEvents = async () => {
   return events;
 }
 
+const getBatchs = async (batchId: number) => {
+  const batch = await BatchService.getBatchs(batchId);
+  return batch;
+}
+
 const Devices: React.FC = () => {
-  /* const [date, setDate] = React.useState(new Date());
-  const [dayMonth, setDayMonth] = React.useState(date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'numeric', day: 'numeric'})); */
   const messageRef = React.useRef<HTMLParagraphElement>(null);
+  const [events, setEvents] = React.useState<Event[]>([]);
+  const [batch, setBatch] = React.useState<Batch[]>([]);
+  const [date, setDate] = React.useState<Date>(new Date());
 
   React.useEffect(() => {
-   /*  getEvents().then((events) => {
+    getEvents().then((events) => {
       const sortedEvents = events.sort((a, b) => {
-        return new Date(a.endEvent).getTime() - new Date(b.endEvent).getTime();
+        return new Date(a.start_time).getTime() - new Date(b.start_time).getTime();
       });
       const filteredEvents = sortedEvents.filter((event) => {
-        return new Date(event.endEvent).getTime() > new Date().getTime();
+        return new Date(event.start_time).getTime() > new Date().getTime();
       });
       setEvents(filteredEvents);
-    }); */
-    getEvents().then((events) => {
-      setEvents(events);
     });
   }, []);
 
-  /* React.useEffect(() => {
+  React.useEffect(() => {
+    getBatchs(1).then((batch) => {
+      console.log(batch);
+      const sortedBatch = batch.sort((a, b) => {
+        return new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
+      });
+      const filteredBatch = sortedBatch.filter((batch) => {
+        return new Date(batch.start_at).getTime() > new Date().getTime();
+      });
+      setBatch(filteredBatch);
+    });
+  }, []);
+
+  React.useEffect(() => {
+    const firstCard = document.querySelector('.cardEvent');
+    if (firstCard) {
+      firstCard.classList.add('cardEvent--first');
+    }}, [events])
+
+
+  React.useEffect(() => {
+    if(messageRef.current)
+    if(messageRef.current.outerText === '') messageRef.current.innerHTML = date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', weekday: 'long' });
     const interval = setInterval(() => {
       setDate(new Date());
-      setDayMonth(date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'numeric', day: 'numeric'}));
-    }, 5000);
+      messageRef.current!.innerHTML = date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', weekday: 'long' });
+    }, 50000);
     return () => clearInterval(interval);
   }, [date]);
-
-  React.useEffect(() => {
-    if (messageRef.current) {
-      messageRef.current.innerHTML = date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', weekday: 'long',});
-    }
-  }, [date]);
- */
-  const [events, setEvents] = React.useState<Event[]>([]);
-
-  React.useEffect(() => {
-    getEvents().then((events) => {
-      const sortedEvents = events.sort((a, b) => {
-        return new Date(a.end_time).getTime() - new Date(b.end_time).getTime();
-      });
-      const filteredEvents = sortedEvents.filter((event) => {
-        return new Date(event.end_time).getTime() > new Date().getTime();
-      });
-      setEvents(filteredEvents);
-    });
-    getEvents().then((events) => {
-      setEvents(events);
-    });
-  }, []);
 
     return (
     <main className='device'>
@@ -71,9 +74,12 @@ const Devices: React.FC = () => {
         <img className='logo' src='./images/Logo_wagon.png' alt='Wagon Logo'></img>
         <div className='device__content--text'>
           <h1>Hello wagoners !</h1>
-          <p>Nous somme le <span className='text-medium' ref={messageRef}></span></p>
-          {/* <LectureDay date={dayMonth}/> */}
-          <FocusImage />
+          <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
+          <p>Ici une phase que Marina pourra changer à sa guise</p>
+          <div className="align-row">
+            <p>Aujourd’hui au programme :</p>
+            {batch.map((batch) => {return (<ChallengeView key={batch.number}CourseId={batch.course_id} />)})}
+          </div>
         </div>
       </section>
       <ListCard events={events} />

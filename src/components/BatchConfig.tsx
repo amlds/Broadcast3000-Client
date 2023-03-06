@@ -134,7 +134,7 @@ const BatchConfig: React.FC = () => {
       <ul>
         {batches.map((batch) => (
           <li key={batch.id}>
-            Batch #{batch.number} : <CoursesView id={batch.course_id} /> - Started on {batch.start_at}
+            <span className='md-text-1'>Batch #{batch.number} :</span> <CoursesView id={batch.course_id} /> - Started on {batch.start_at}
             <button className='button--edit--svg'
               data-id={batch.id}
               onClick={goToUpdate}>

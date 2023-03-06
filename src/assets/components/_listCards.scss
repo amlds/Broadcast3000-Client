@@ -33,12 +33,12 @@
 .device {
   .listCard {
     overflow: hidden;
-    background: var(--background-extralight);
+    background: var(--primary-extralight);
     .shadow {
       background: var(--background-extralight);
     }
     &__content {
-      animation: contentScroll 30s linear 15s infinite alternate;
+      /* animation: contentScroll 30s linear 15s infinite alternate; */
     }
   }
 }
