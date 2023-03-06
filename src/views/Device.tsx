@@ -46,6 +46,10 @@ const Devices: React.FC = () => {
         <div className='device__content--text'>
           <h1>Hello wagoners !</h1>
           <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
+          <p>Ici une phase que Marina pourra changer à sa guise</p>
+          <div className="align-row">
+            <p>Aujourd’hui au programme :</p>
+          </div>
         </div>
       </section>
       <ListCard events={events} />
