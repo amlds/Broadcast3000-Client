@@ -3,6 +3,7 @@ import React from 'react';
 import Batch from '../types/Batch';
 import BatchService from '../services/BatchService';
 
+import CoursesView from './CoursesView';
 import Edit from './svg/Edit';
 
 const getBatchs = async () => {
@@ -133,7 +134,7 @@ const BatchConfig: React.FC = () => {
       <ul>
         {batches.map((batch) => (
           <li key={batch.id}>
-            Batch #{batch.number} : {batch.course_id} - Started on {batch.start_at}
+            Batch #{batch.number} : <CoursesView id={batch.course_id} /> - Started on {batch.start_at}
             <button className='button--edit--svg'
               data-id={batch.id}
               onClick={goToUpdate}>
