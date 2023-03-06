@@ -3,7 +3,6 @@ import React from 'react';
 import EventService from '../services/EventService';
 import Event from '../types/Event';
 
-import FocusImage from '../components/FocusImage';
 /*import LectureDay from '../components/LectureDay';*/
 import ListCard from '../components/ListCard';
 
@@ -17,6 +16,7 @@ const getEvents = async () => {
 const Devices: React.FC = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const [events, setEvents] = React.useState<Event[]>([]);
+  const [date, setDate] = React.useState<Date>(new Date());
 
   React.useEffect(() => {
     getEvents().then((events) => {
@@ -30,13 +30,23 @@ const Devices: React.FC = () => {
     });
   }, []);
 
+  React.useEffect(() => {
+    if(messageRef.current)
+    if(messageRef.current.outerText === '') messageRef.current.innerHTML = date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', weekday: 'long' });
+    const interval = setInterval(() => {
+      setDate(new Date());
+      messageRef.current!.innerHTML = date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', weekday: 'long' });
+    }, 50000);
+    return () => clearInterval(interval);
+  }, [date]);
+
     return (
     <main className='device'>
       <section className='device__content'>
         <img className='logo' src='./images/Logo_wagon.png' alt='Wagon Logo'></img>
         <div className='device__content--text'>
           <h1>Hello wagoners !</h1>
-          <p>Nous somme le <span className='text-medium' ref={messageRef}></span></p>
+          <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
         </div>
       </section>
       <ListCard events={events} />
