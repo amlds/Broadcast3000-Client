@@ -62,6 +62,10 @@ ul {
   font-weight: 600;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .align-row {
   display: flex;
   gap: 1rem;

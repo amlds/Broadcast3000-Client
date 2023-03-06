@@ -15,6 +15,10 @@ const getEventById = async (schoolId: number, eventId: number) => {
   return event;
 }
 
+const deleteEvent = async (schoolId: number, eventId: number) => {
+  await EventService.deleteEvent(schoolId, eventId);
+}
+
 const UpdateEventForm: React.FC = () => {
   const { eventIdUpdate, toggleUpdate, setId } = React.useContext(EventContext);
   const [event, setEvent] = React.useState<Event>({
@@ -91,7 +95,7 @@ const UpdateEventForm: React.FC = () => {
       <label htmlFor="description">Description
         <textarea className='input--txt' name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
       </label>
-      <label htmlFor="type">type
+      <label htmlFor="type">Type
         <select className='input--txt' name="type" id="type" onChange={(e) => {
           console.log(e.eventPhase)
           handleChangeSelect(e)
@@ -102,10 +106,14 @@ const UpdateEventForm: React.FC = () => {
           <option value="4">Other</option>
         </select>
       </label>
+      <label htmlFor="image">Image</label>
       <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image"/>
-      <div className='twoButtonSet'>
-        <button className='button--secondary--red' onClick={handleCancel}>Cancel</button>
-        <button type="submit" className='button--primary'>Update event</button>
+      <div className='threeButtonSet'>
+        <div>
+          <button className='button--secondary' onClick={handleCancel}>Cancel</button>
+          <button type="submit" className='button--primary'>Edit event</button>
+        </div>
+        <button className='button--secondary--red' onClick={() => deleteEvent(1, event.id)}>Delete this event</button>
       </div>
       <p ref={messageRef} className="messageAlerte"></p>
     </form>

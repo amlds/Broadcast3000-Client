@@ -10,6 +10,7 @@ const createEvent = async (event: Event) => {
 
 const AddEventForm: React.FC = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
+  const formRef = React.useRef<HTMLFormElement>(null);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -62,6 +63,10 @@ const AddEventForm: React.FC = () => {
         ...event,
       }).then(res => {
         messageRef.current!.innerHTML = '✅ Event added ✅';
+        setTimeout(() => {
+          messageRef.current!.innerHTML = '';
+          formRef.current!.reset();
+        }, 5000);
       }).catch(err => {
         messageRef.current!.innerHTML = '🚨 Erreur 🚨';
       });
@@ -72,8 +77,8 @@ const AddEventForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Nom de l'événement
+    <form onSubmit={handleSubmit} ref={formRef}>
+      <label htmlFor="name">Name
       <input type="text"
         name='name'
         id='name'
@@ -84,7 +89,7 @@ const AddEventForm: React.FC = () => {
       />
       </label>
       <div className='align-row'>
-        <label htmlFor="start_time">Date de début
+        <label htmlFor="start_time">Start
         <input type="datetime-local"
           name='start_time'
           id='start_time'
@@ -94,7 +99,7 @@ const AddEventForm: React.FC = () => {
           onChange={handleChange}
           />
         </label>
-        <label htmlFor="end_time">Date de fin
+        <label htmlFor="end_time">End
         <input type="datetime-local"
           name='end_time'
           id='end_time'
@@ -114,7 +119,7 @@ const AddEventForm: React.FC = () => {
         onChange={handleChangeTextArea}
         ></textarea>
       </label>
-      <label htmlFor="event_type_id">Type d'événement
+      <label htmlFor="event_type_id">Type
         <select name="event_type_id"
           id="event_type_id"
           className="input--txt"
@@ -135,8 +140,10 @@ const AddEventForm: React.FC = () => {
         required
         onChange={handleChange}
       />
-      <button type="submit" className="button button--primary">Add a new event</button>
-      <p ref={messageRef}></p>
+      <div className="align-row">
+        <button type="submit" className="button button--primary">Add a new event</button>
+        <p ref={messageRef}></p>
+      </div>
     </form>
   );
 };

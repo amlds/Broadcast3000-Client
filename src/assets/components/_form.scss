@@ -25,6 +25,16 @@ form {
       font-family: 'Inter-Regular', sans-serif;
   }
 
+  .threeButtonSet {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    & > div {
+      display: flex;
+      gap: 16px;
+    }
+  }
+
   .messageAlerte {
     font-size: 16px;
     font-weight: 400;

@@ -202,9 +202,11 @@ const BatchConfig: React.FC = () => {
                   onChange={onChange}/>
           <label htmlFor="dataanalyse">Data Analyse</label>
         </div>
-        <div className='align-row'>
-          <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
-          <button type="submit" className='button--primary'>Confirm update</button>
+        <div className='threeButtonSet'>
+          <div>
+            <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
+            <button type="submit" className='button--primary'>Confirm update</button>
+          </div>
           <button className='button--secondary button--secondary--red' data-id={batchToUpdate.id} onClick={deleteBatchElement}>Delete</button>
         </div>
       </form>
