@@ -3,7 +3,6 @@ import React from 'react';
 import EventService from '../services/EventService';
 import Event from '../types/Event';
 
-/*import LectureDay from '../components/LectureDay';*/
 import ListCard from '../components/ListCard';
 
 import '../assets/views/device.scss'
