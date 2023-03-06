@@ -9,7 +9,10 @@ const Home: React.FC = () => {
     <main className='home'>
       <header className='home__header container'>
         <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
-        <Link to='/login' className='button button--primary'>Login</Link>
+        <div className="align-row">
+          <Link to='/login' className='button button--primary'>Login</Link>
+          <Link to='/device' className='button button--secondary'>Go to device</Link>
+        </div>
       </header>
       <section className='explication  container'>
         <div className="explication__header">

@@ -51,6 +51,12 @@ const Devices: React.FC = () => {
     });
   }, []);
 
+  React.useEffect(() => {
+    const firstCard = document.querySelector('.cardEvent');
+    if (firstCard) {
+      firstCard.classList.add('cardEvent--first');
+    }}, [events])
+
 
   React.useEffect(() => {
     if(messageRef.current)
