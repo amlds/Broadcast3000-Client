@@ -3,24 +3,10 @@ import React from 'react';
 import EventFormContainer from './EventFormContainer';
 import Settings from './Settings';
 
-import School from '../types/School';
-import SchoolService from '../services/SchoolService';
 
-const getSchool = async () => {
-  const school = await SchoolService.getSchool(1);
-  return school;
-}
 
 const DashboardConfig: React.FC = () => {
   const [menu, setMenu] = React.useState('Events');
-  const [school, setSchool] = React.useState<School>();
-
-  React.useEffect(() => {
-    getSchool().then((school) => {
-      setSchool(school);
-    });
-  }, []);
-
 
   const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent)
