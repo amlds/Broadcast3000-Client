@@ -2,7 +2,6 @@ import React from 'react';
 
 import ChallengeService from '../services/ChallengeService';
 import Challenge from '../types/Challenge';
-import CourseService from '../services/CourseService';
 
 interface Props {
   CourseId: number;
@@ -26,7 +25,7 @@ const ChallengeView: React.FC<Props> = (Props) => {
     getChallenge(Props.CourseId, 1).then((challenge) => {
       setChallenge(challenge);
     })
-  }, []);
+  }, [Props.CourseId]);
 
   return (
     <p className='md-text-1'>{challenge.name}</p>
