@@ -3,7 +3,7 @@ import User from '../types/User';
 const url = 'http://localhost:3000/api/v1';
 
 const UserService = {
-  async connectUser(user: User): Promise<User> {
+  async loginUser(user: User): Promise<User> {
     const response = await fetch(`${url}/auth/login`, {
       method: 'POST',
       headers: {
@@ -15,7 +15,7 @@ const UserService = {
     return newUser;
   },
 
-  async createUser(user: User): Promise<User> {
+  async signInUser(user: User): Promise<User> {
     const response = await fetch(`${url}/users`, {
       method: 'POST',
       headers: {
@@ -25,7 +25,7 @@ const UserService = {
     });
     const newUser = await response.json();
     return newUser;
-  }
+  },
 };
 
 export default UserService;

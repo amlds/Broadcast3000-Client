@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../assets/views/login.scss';
 
-import FromLogin from '../components/FormLogin';
+import Formlogin from '../components/FormLogin';
 
 const Login: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ const Login: React.FC = () => {
           <h3>Hello there !</h3>
           <p>Here is the best app to broadcast and manage your devices on campus. Please login to start.</p>
         </div>
-        <FromLogin />
+        <Formlogin />
       </section>
     </main>
   );

@@ -1,6 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
+import User from '../types/User';
+import UserService from '../services/UserService';
+
+const connect = async (user: User) => {
+  const token = await UserService.loginUser(user);
+  return token;
+}
+
 const FormLogin: React.FC = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const [/* validateLogin */, setValidateLogin] = React.useState(false);
