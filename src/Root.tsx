@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { TokenProvider } from './context/TokenContext';
 
 import Home from './views/Home';
 import Dashboard from './views/Dashboard/Dashboard';
@@ -14,10 +13,8 @@ const Root: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <TokenProvider>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-        </TokenProvider>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/device" element={<Device />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

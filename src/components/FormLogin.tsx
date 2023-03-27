@@ -1,20 +1,46 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { TokenContext } from '../context/TokenContext';
 
 import User from '../types/User';
 import UserService from '../services/UserService';
+
+interface IFormLoginProps {
+  isLogin: boolean;
+  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setValidateLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  messagePassword: React.RefObject<HTMLParagraphElement>;
+  messagePasswordValidate: React.RefObject<HTMLParagraphElement>;
+}
+
+interface IFormLoginState {
+  user: User;
+}
 
 const connect = async (user: User) => {
   const token = await UserService.loginUser(user);
   return token;
 }
 
+const signin = async (user: User) => {
+  const res = await UserService.signInUser(user);
+  return res;
+}
+
 const FormLogin: React.FC = () => {
   const [isLogin, setIsLogin] = React.useState(true);
-  const [/* validateLogin */, setValidateLogin] = React.useState(false);
+  const [validateLogin, setValidateLogin] = React.useState(false);
   const messagePassword = React.useRef<HTMLParagraphElement>(null);
   const messagePasswordValidate = React.useRef<HTMLParagraphElement>(null);
   const Navigate = useNavigate();
+  const { token, setToken } = React.useContext(TokenContext);
+
+  React.useEffect(() => {
+    console.log(token);
+    if(token !== '') {
+      Navigate('/dashboard');
+    }
+  }, [token]);
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
