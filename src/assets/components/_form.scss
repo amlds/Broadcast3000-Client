@@ -15,6 +15,10 @@ form {
     font-size: 16px;
     font-weight: 600;
     font-family: 'Inter-Bold', sans-serif;
+
+    .align-row {
+      gap: 2px;
+    }
   }
 
   input::placeholder {
