@@ -2,7 +2,6 @@ import React from 'react';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 import User from '../../types/User';
-import InfosBubble from '../InfosBubble';
 
 interface FormUserProps {
   isLogin: boolean;
@@ -10,6 +9,7 @@ interface FormUserProps {
 }
 
 const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
+  const messageRef = React.useRef<HTMLParagraphElement>(null);
   const [user, setUser] = React.useState<User>({
     user: {
       email: '',
@@ -25,6 +25,8 @@ const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
       console.log('Form submitted successfully');
     } else {
       console.log('Password does not meet the requirements');
+      messageRef.current!.classList.add('show');
+      messageRef.current!.innerHTML = 'Password does not meet the requirements';
     }
     onSubmit(user);
   };
@@ -40,6 +42,7 @@ const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p className='message' ref={messageRef}></p>
       {isLogin ? (
         <LoginForm handleChange={handleChange} user={user} />
       ) : (

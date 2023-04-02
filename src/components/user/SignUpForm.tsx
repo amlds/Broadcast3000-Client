@@ -1,3 +1,4 @@
+import { config } from 'process';
 import React from 'react';
 import User from '../../types/User';
 import InfosBubble from '../InfosBubble';
@@ -8,31 +9,18 @@ interface SignUpFormProps {
 }
 
 const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
-
   const [passwordStrength, setPasswordStrength] = React.useState<string>('Weak');
+  const messageRef = React.useRef<HTMLDivElement>(null);
 
   const checkPasswordStrength = (password: string) => {
-    // Vérifiez ici la force du mot de passe et définissez la valeur de setPasswordStrength
-    console.log(password.match(/[!@#$%^&*(),.?":{}|<>]/))
-    console.log(password.match(/\d+/))
-    console.log(password.match(/[A-Z]/))
-    console.log(password.length)
-    if (password.match(/[!@#$%^&*(),.?":{}|<>]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g) && password.length >= 8) {
-      setPasswordStrength('Strong');
-    } else if (password.match(/[!@#$%^&*(),.?":{}|<>]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g) && password.length <= 8) {
-      setPasswordStrength('Strong');
-    } else if (password.match(/[!@#$%^&*(),.?":{}|<>]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g)) {
-      setPasswordStrength('Medium');
-    } else {
-      setPasswordStrength('Weak');
-    }
-
     if(password.length < 8) {
       setPasswordStrength('Weak');
-    } else if (password.match(/[!@#$%^&*(),.?":{}|<>]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g)) {
+    } else if (password.match(/[-!$%^&*()_+|~=`{}[\]:";'<>?,./]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g) && password.length >= 12) {
+      setPasswordStrength('very-strong');
+    } else if (password.match(/[-!$%^&*()_+|~=`{}[\]:";'<>?,./]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g) && password.length >= 10) {
       setPasswordStrength('Strong');
-    } else if (password.match(/[!@#$%^&*(),.?":{}|<>]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g) && password.length <= 12) {
-      setPasswordStrength('very strong');
+    } else if (password.match(/[-!$%^&*()_+|~=`{}[\]:";'<>?,./]/g) && password.match(/\d+/g) && password.match(/[A-Z]/g)) {
+      setPasswordStrength('good');
     }
   };
 
@@ -45,8 +33,16 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
 
   const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const confirmPassword = event.target.value;
-    if (confirmPassword !== user.user.password) {
-      // Gérer ici l'erreur de non-correspondance entre les deux mots de passe
+    console.log(confirmPassword, user.user.password)
+    if (confirmPassword === '') {
+      messageRef.current!.classList.remove('show');
+      messageRef.current!.innerHTML = '';
+    } else if (confirmPassword !== user.user.password) {
+      messageRef.current!.classList.add('show');
+      messageRef.current!.innerHTML = 'Passwords do not match';
+    } else {
+      messageRef.current!.classList.remove('show');
+      messageRef.current!.innerHTML = '';
     }
     handleChange(event);
   };
@@ -110,6 +106,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
           value={user.user.password}
           onChange={(event) => {
             handleChange(event);
+            handlePasswordChange(event);
             checkPasswordStrength(event.target.value);
           }}
           required
@@ -121,13 +118,14 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
           Confirm password
         </label>
         <input
-          type="password"
+          type="ConfirmPassword"
           className="input--txt"
           id="confirmPassword"
           name="confirmPassword"
           onChange={handleConfirmPasswordChange}
           required
         />
+        <p className="error-message" ref={messageRef} />
       </div>
     </>
   );
