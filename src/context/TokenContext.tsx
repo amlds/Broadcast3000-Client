@@ -2,12 +2,12 @@ import React from 'react';
 
 interface ITokenContext {
   token: string;
-  setToken: (token: string) => void;
+  setToken: (token: any) => void;
 }
 
 export const defaultState: ITokenContext = {
   token: '',
-  setToken: (token: string) => {},
+  setToken: (token: any) => {},
 };
 
 const TokenContext = React.createContext<ITokenContext>(defaultState);
