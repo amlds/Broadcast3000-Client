@@ -1,8 +1,10 @@
 export default interface User {
-  id?: number,
-  first_name?: string,
-  last_name?: string,
-  email: string,
-  password: string,
-  school?: string,
+  user : {
+    id?: number,
+    first_name?: string,
+    last_name?: string,
+    email: string,
+    password: string,
+    school?: string,
+  }
 }
