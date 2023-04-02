@@ -24,7 +24,12 @@ const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [event.target.name]: event.target.value })
+    setUser({
+      user: {
+        ...user.user,
+        [event.target.name]: event.target.value,
+      }
+    });
   };
 
   return (
@@ -34,7 +39,7 @@ const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
       ) : (
         <SignUpForm handleChange={handleChange} user={user} />
       )}
-      <button className="button md-text-1">{isLogin ? 'Login' : 'Sign Up'}</button>
+      <button className="button--primary">{isLogin ? 'Login' : 'Sign Up'}</button>
     </form>
   );
 };
