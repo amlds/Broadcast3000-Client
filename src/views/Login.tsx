@@ -7,46 +7,30 @@ import { TokenContext } from '../context/TokenContext';
 import UserService from '../services/UserService';
 import User from '../types/User';
 
-import FormUser from '../components/FormUser';
+import FormUser from '../components/user/FormUser';
 
 const Login = () => {
   const [isLogin, setIsLogin] = React.useState(true);
   const navigate = useNavigate();
-  const { setToken } = React.useContext(TokenContext);
+  const { token , setToken } = React.useContext(TokenContext);
 
   const handleSubmit = async (user: User) => {
+    console.log(user);
     const token = await UserService.loginUser(user);
-    return token;
+    setToken(token);
   };
 
-  const handleSignIn = async (user: User) => {
-    const res = await UserService.signInUser(user);
-    return res;
+  const handleSignUp = async (user: User) => {
+    console.log(user);
+    const token = await UserService.signInUser(user);
+    setToken(token);
   };
 
-  const formUser = (
-    <FormUser
-      isLogin={isLogin}
-      handleSubmit={handleSubmit}
-      handleSignIn={handleSignIn}
-      setUser={(user: User) => {
-        setToken(user);
-        navigate('/');
-      }}
-    />
-  );
-
-  const formCreateUser = (
-    <FormUser
-      isLogin={isLogin}
-      handleSubmit={handleSubmit}
-      handleSignIn={handleSignIn}
-      setUser={(user: User) => {
-        setToken(user);
-        navigate('/');
-      }}
-    />
-  );
+  React.useEffect(() => {
+    if (token !== '') {
+      console.log('token', token);
+    }
+  }, [token, navigate]);
 
   return (
     <main>
@@ -57,11 +41,10 @@ const Login = () => {
           <h3>Hello there !</h3>
           <p>Here is the best app to broadcast and manage your devices on campus. Please login to start.</p>
         </div>
-        {isLogin ? (
-          formUser
-        ) : (
-          formCreateUser
-        )}
+        <FormUser
+          isLogin={isLogin}
+          onSubmit={isLogin ? handleSubmit : handleSignUp}
+        />
         <p className='alignText'>{isLogin ? 'You do not have an account ?' : 'Already have an account?'}
           <button
             className='button--link md-text-1'
