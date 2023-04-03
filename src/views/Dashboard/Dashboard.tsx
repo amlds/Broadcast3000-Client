@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
       });
       setEvents(filteredEvents);
     });
-  }, []);
+  }, []); 
 
   return (
     <main className='dashboard'>

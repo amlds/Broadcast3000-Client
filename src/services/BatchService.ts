@@ -2,7 +2,7 @@ import Batch from "../types/Batch";
 
 //Connect with the backend RUBY ON RAILS API
 // /api/v1/schools/:school_id/batchs
-const url = "http://localhost:3000/api/v1";
+const url = "http://localhost:3001/api/v1";
 
 const BatchService = {
   async getBatchs(schoolId: number): Promise<Batch[]> {

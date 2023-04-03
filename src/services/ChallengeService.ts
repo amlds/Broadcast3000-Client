@@ -1,6 +1,6 @@
 import Challenge from '../types/Challenge';
 
-const url = 'http://localhost:3000/api/v1/';
+const url = 'http://localhost:3001/api/v1/';
 // URL fetch for challenges : http://localhost:3000/api/v1/course/:course_id/challenges
 
 

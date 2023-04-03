@@ -1,6 +1,6 @@
 import School from "../types/School";
 
-const url = "http://localhost:3000/api/v1";
+const url = "http://localhost:3001/api/v1";
 
 const SchoolService = {
   async getSchools(): Promise<School[]> {

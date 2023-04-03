@@ -1,6 +1,6 @@
 import Course from '../types/Course';
 
-const url = 'http://localhost:3000/api/v1/courses/';
+const url = 'http://localhost:3001/api/v1/courses/';
 
 const CourseService = {
   getCourses: async (): Promise<Course[]> => {

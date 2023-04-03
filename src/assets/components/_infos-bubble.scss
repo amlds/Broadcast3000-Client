@@ -1,0 +1,43 @@
+.info-bubble {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.info-bubble:hover .info-bubble-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+.info-bubble-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: var(--secondary-dark);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.info-bubble-text {
+  position: absolute;
+  width: 240px;
+  top: 18px;
+  left: 18px;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--secondary-dark);
+  background-color: var(--grey-light);
+  border: 1px solid var(--secondary-dark);
+  border-radius: 4px;
+  z-index: 1;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}

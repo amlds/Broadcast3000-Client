@@ -2,9 +2,41 @@ import React from 'react';
 
 import '../assets/views/login.scss';
 
-import FromLogin from '../components/FormLogin';
+import { useNavigate } from 'react-router-dom';
+import { TokenContext } from '../context/TokenContext';
+import UserService from '../services/UserService';
+import User from '../types/User';
 
-const Login: React.FC = () => {
+import FormUser from '../components/user/FormUser';
+
+const Login = () => {
+  const messageRef = React.useRef<HTMLParagraphElement>(null);
+  const [isLogin, setIsLogin] = React.useState(true);
+  const navigate = useNavigate();
+  const { token , setToken } = React.useContext(TokenContext);
+
+  const handleSubmit = async (user: User) => {
+    console.log(user);
+    const response = await UserService.loginUser(user);
+    setToken(response);
+  };
+
+  const handleSignUp = async (user: User) => {
+    console.log(user);
+    const token = await UserService.signInUser(user);
+    setToken(token);
+  };
+
+  React.useEffect(() => {
+    if (token.error) {
+      console.log(token.error);
+      messageRef.current!.classList.add('show');
+      messageRef.current!.innerHTML = 'Email or password is incorrect';
+    } else {
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
+
   return (
     <main>
       <img className='background' src='./images/backgroundLogin.png' alt='backgroundLogin'></img>
@@ -14,7 +46,18 @@ const Login: React.FC = () => {
           <h3>Hello there !</h3>
           <p>Here is the best app to broadcast and manage your devices on campus. Please login to start.</p>
         </div>
-        <FromLogin />
+        <p className='message' ref={messageRef}></p>
+        <FormUser
+          isLogin={isLogin}
+          onSubmit={isLogin ? handleSubmit : handleSignUp}
+        />
+        <p className='alignText'>{isLogin ? 'You do not have an account ?' : 'Already have an account?'}
+          <button
+            className='button--link md-text-1'
+            onClick={() => setIsLogin(!isLogin)}>
+              {isLogin ? 'Log in here' : 'Sign up here'}
+          </button>
+        </p>
       </section>
     </main>
   );
