@@ -28,7 +28,7 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    if (token.error) {
+    if (token === '' || token.error) {
       console.log(token.error);
       messageRef.current!.classList.add('show');
       messageRef.current!.innerHTML = 'Email or password is incorrect';

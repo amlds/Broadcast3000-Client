@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 import { EventProvider } from '../../context/EventContext';
 
 import EventService from '../../services/EventService';
@@ -6,6 +7,7 @@ import Event from '../../types/Event';
 
 import '../../assets/views/dashboard.scss';
 
+import { TokenContext } from '../../context/TokenContext';
 import DashboardConfig from '../../components/DashboardConfig';
 import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
@@ -16,7 +18,18 @@ const getEvents = async () => {
 }
 
 const Dashboard: React.FC = () => {
+  const { token , setToken } = React.useContext(TokenContext);
+  const navigate = useNavigate();
   const [events, setEvents] = React.useState<Event[]>([]);
+
+  React.useEffect(() => {
+    if (token === '' || token.error) {
+      console.log("can't you go hear");
+      navigate('/')
+      console.log(token)
+    }
+    console.log(token)
+  }, [token, navigate])
 
   React.useEffect(() => {
     getEvents().then((events) => {
@@ -28,7 +41,11 @@ const Dashboard: React.FC = () => {
       });
       setEvents(filteredEvents);
     });
-  }, []); 
+  }, []);
+
+  const handleClick = () => {
+    setToken('');
+  }
 
   return (
     <main className='dashboard'>
@@ -39,6 +56,7 @@ const Dashboard: React.FC = () => {
               <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
               <div className='header__txt'>
                 <h2>Hello Marina !</h2>
+                <button onClick={handleClick}></button>
                 <LinkDevice/>
               </div>
             </div>
