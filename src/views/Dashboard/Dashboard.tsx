@@ -26,9 +26,7 @@ const Dashboard: React.FC = () => {
     if (token === '' || token.error) {
       console.log("can't you go hear");
       navigate('/')
-      console.log(token)
     }
-    console.log(token)
   }, [token, navigate])
 
   React.useEffect(() => {
@@ -53,10 +51,12 @@ const Dashboard: React.FC = () => {
         <section className='dashboard__content'>
           <header>
             <div className="container--dashboard">
-              <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
+              <div className="align-row">
+                <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
+                <button className='button--primary' onClick={handleClick}>Disconnect</button>
+              </div>
               <div className='header__txt'>
                 <h2>Hello Marina !</h2>
-                <button onClick={handleClick}></button>
                 <LinkDevice/>
               </div>
             </div>

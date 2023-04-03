@@ -23,7 +23,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
     }
   };
 
-
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const password = event.target.value;
     checkPasswordStrength(password);
@@ -125,7 +124,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
           onChange={handleConfirmPasswordChange}
           required
         />
-        <p className="error-message" ref={messageRef} />
+        <p className='messageRef'ref={messageRef} />
       </div>
     </>
   );
