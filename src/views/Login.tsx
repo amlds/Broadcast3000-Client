@@ -1,8 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import '../assets/views/login.scss';
 
-import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../context/TokenContext';
 import UserService from '../services/UserService';
 import User from '../types/User';
@@ -27,17 +27,14 @@ const Login = () => {
     setToken(token);
   };
 
-  const message = () => {
-    if (token === '' || token.error) {
-      messageRef.current!.classList.add('show');
-      messageRef.current!.classList.remove('hidden')
-      messageRef.current!.innerHTML = 'Email or password is incorrect';
+  React.useEffect(() => {
+    if(token === '' || token.error){
+      console.log('tit coquain')
     } else {
-      messageRef.current!.classList.add('hidden');
-      messageRef.current!.classList.remove('show')
-      navigate('/dashboard');
+      navigate('/dashboard')
     }
-  }
+  }, [token, navigate])
+
 
   return (
     <main>
@@ -58,7 +55,6 @@ const Login = () => {
             className='button--link md-text-1'
             onClick={() =>  {
               setIsLogin(!isLogin);
-              message();
             }}> {isLogin ? 'Log in here' : 'Sign up here'}
           </button>
         </p>
