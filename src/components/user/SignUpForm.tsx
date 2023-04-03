@@ -1,4 +1,3 @@
-import { config } from 'process';
 import React from 'react';
 import User from '../../types/User';
 import InfosBubble from '../InfosBubble';
@@ -103,6 +102,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
           className="input--txt"
           id="password"
           name="password"
+          autoComplete='new-password'
           value={user.user.password}
           onChange={(event) => {
             handleChange(event);

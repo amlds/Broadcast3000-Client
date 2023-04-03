@@ -3,7 +3,7 @@ import EventType from '../types/EventType';
 // localhost:3000/api/v1/event_types/:id
 // récupérer la variable NODE_ENV dans le fichier .env
 
-const urlDev = 'http://localhost:3000/api/v1';
+const urlDev = 'http://localhost:3001/api/v1';
 const urlProd = 'https://school-calendar-api.herokuapp.com/api/v1';
 
 const EventTypeService = {

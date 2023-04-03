@@ -16,8 +16,8 @@ const Login = () => {
 
   const handleSubmit = async (user: User) => {
     console.log(user);
-    const token = await UserService.loginUser(user);
-    setToken(token);
+    const response = await UserService.loginUser(user);
+    setToken(response);
   };
 
   const handleSignUp = async (user: User) => {
@@ -27,8 +27,10 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    if (token !== '') {
-      console.log('token', token);
+    if (token.error) {
+      console.log(token.error);
+    } else {
+      navigate('/dashboard');
     }
   }, [token, navigate]);
 

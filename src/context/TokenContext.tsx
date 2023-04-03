@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ITokenContext {
-  token: string;
+  token: any;
   setToken: (token: any) => void;
 }
 

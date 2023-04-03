@@ -34,6 +34,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ handleChange, user }) => {
           name="password"
           value={user.user.password}
           onChange={handleChange}
+          autoComplete='current-password'
           required
         />
       </div>
