@@ -10,6 +10,7 @@ import User from '../types/User';
 import FormUser from '../components/user/FormUser';
 
 const Login = () => {
+  const messageRef = React.useRef<HTMLParagraphElement>(null);
   const [isLogin, setIsLogin] = React.useState(true);
   const navigate = useNavigate();
   const { token , setToken } = React.useContext(TokenContext);
@@ -29,6 +30,8 @@ const Login = () => {
   React.useEffect(() => {
     if (token.error) {
       console.log(token.error);
+      messageRef.current!.classList.add('show');
+      messageRef.current!.innerHTML = 'Email or password is incorrect';
     } else {
       navigate('/dashboard');
     }
@@ -43,6 +46,7 @@ const Login = () => {
           <h3>Hello there !</h3>
           <p>Here is the best app to broadcast and manage your devices on campus. Please login to start.</p>
         </div>
+        <p className='message' ref={messageRef}></p>
         <FormUser
           isLogin={isLogin}
           onSubmit={isLogin ? handleSubmit : handleSignUp}
