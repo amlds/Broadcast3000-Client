@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import BatchConfig from './BatchConfig';
 
-/* interface Props {
+/*interface Props {
   School: {
     schoolId: number;
     nbrCarrousel: number;
@@ -11,31 +11,11 @@ import BatchConfig from './BatchConfig';
     message_display: string;
     setMessage_display: React.Dispatch<React.SetStateAction<string>>;
   }
-}
- */
-const Settings: React.FC/* <Props> */ = (/* Props */) => {
-
-  /* React.useEffect(() => {
-    Props.School.setNbrCarrousel(Props.School.nbrCarrousel);
-  }, [Props, Props.School.nbrCarrousel]); */
-
-  /* React.useEffect(() => {
-    Props.school.setMessage_display(Props.School.message_display);
-  }, [Props, Props.School.message_display]);
-
-  React.useEffect(() => {
-    const inputs = document.querySelectorAll('input');
-    inputs.forEach((input) => {
-      input.checked = false;
-      if (input.value === Props.nbrCarrousel.toString()) {
-        input.checked = true;
-      }
-    });
-  }, [Props, Props.nbrCarrousel]); */
-
+}*/
+const Settings: React.FC = () => {
   return (
     <section className='settings'>
-      <BatchConfig />
+      {/*<BatchConfig />*/}
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
         <div className="extra">

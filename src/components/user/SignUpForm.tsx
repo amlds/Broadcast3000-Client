@@ -99,7 +99,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
         <input
           type="password"
           className="input--txt"
-          id="password"
+          id="password-indic"
           name="password"
           autoComplete='new-password'
           value={user.user.password}
