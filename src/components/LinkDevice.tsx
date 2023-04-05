@@ -9,7 +9,7 @@ const LinkDevice: React.FC<any> = (displayPath: any) => {
     console.log(displayPath);
     const newValue = `${window.location.origin}/device/${displayPath.displayPath}`;
     linkRef.current && (linkRef.current.textContent = newValue);
-  }, []);
+  }, [displayPath]);
 
   const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const link = linkRef.current?.textContent;
