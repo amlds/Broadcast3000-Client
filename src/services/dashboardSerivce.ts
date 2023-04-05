@@ -1,28 +1,12 @@
 import dashboardInfos from '../types/DashboardInfos';
+import school from '../types/School';
 import jwt_decode from 'jwt-decode';
 
-const url = 'http://localhost:3001/api/schools/';
-
-interface decodedToken {
-  user_id: number;
-  schools: [
-    {
-      id: number;
-    }
-  ]
-  exp: number;
-}
-
+const url = 'http://localhost:3001/api/v1/schools/';
 
 const dashboardService = {
-  async getDashboardInfos(token: string): Promise<dashboardInfos> {
-    const decodedToken = jwt_decode(token);
-    console.log(decodedToken);
-    const schoolId = (decodedToken as decodedToken).schools[0].id;
-    console.log(schoolId);
-    console.log(token);
-    console.log(`${url}/${schoolId}`);
-    const response = await fetch(`${url}${schoolId}`, {
+  async getDashInfos(schoolInfos: school, token: string): Promise<dashboardInfos> {
+    const response = await fetch(`${url}${schoolInfos.city_id}`, {
       headers: {
         Authorization: `${token}`,
       },

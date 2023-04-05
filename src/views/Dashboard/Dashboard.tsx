@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode';
 import EventService from '../../services/EventService';
 import Event from '../../types/Event';
 import DashboardInfos from '../../types/DashboardInfos';
+import school from '../../types/School';
 import dashboardService from '../../services/dashboardSerivce';
 
 import '../../assets/views/dashboard.scss';
@@ -15,18 +16,13 @@ import DashboardConfig from '../../components/DashboardConfig';
 import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
 
-const getEvents = async () => {
-  const events = await EventService.getEvents(1);
-  return events;
-}
-
 const decodeToken = (token: string) => {
   const decoded = jwt_decode(token);
   return decoded;
 }
 
-const getDashboardInfos = async (token: string) => {
-  const dashboardInfos = await dashboardService.getDashboardInfos(token);
+const getDashboardInfos = async (schoolInfos: school, token: string) => {
+  const dashboardInfos = await dashboardService.getDashInfos(schoolInfos, token);
   return dashboardInfos;
 }
 
@@ -34,30 +30,21 @@ const getDashboardInfos = async (token: string) => {
 const Dashboard: React.FC = () => {
   const { token , setToken } = React.useContext(TokenContext);
   const [dashboardInfos, setDashboardInfos] = React.useState<DashboardInfos | any>();
+  const [schoolInfos, setSchoolInfos] = React.useState<any>([]);
   const navigate = useNavigate();
   const [events, setEvents] = React.useState<Event[]>([]);
 
   React.useEffect(() => {
     if(!token.token) navigate('/login');
     else {
-      getDashboardInfos(token.token).then((data) => {
+      const decoded = decodeToken(token.token);
+      setSchoolInfos((decoded as any).schools[0]);
+      console.log(schoolInfos);
+      getDashboardInfos(schoolInfos, token.token).then((data) => {
         setDashboardInfos(data);
       });
-      console.log(dashboardInfos);
     }
   }, [token]);
-
-  React.useEffect(() => {
-    getEvents().then((events) => {
-      const sortedEvents = events.sort((a, b) => {
-        return new Date(a.start_time).getTime() - new Date(b.start_time).getTime();
-      });
-      const filteredEvents = sortedEvents.filter((event) => {
-        return new Date(event.start_time).getTime() > new Date().getTime();
-      });
-      setEvents(filteredEvents);
-    });
-  }, []);
 
   const handleClick = () => {
     setToken('');
@@ -76,7 +63,7 @@ const Dashboard: React.FC = () => {
               </div>
               <div className='header__txt'>
                 <h2>Hello Marina !</h2>
-                <LinkDevice/>
+                <LinkDevice displayPath={schoolInfos.display_path}/>
               </div>
             </div>
           </header>

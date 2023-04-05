@@ -2,11 +2,12 @@ import React from 'react';
 
 import Copy from './svg/CopyIcones';
 
-const LinkDevice: React.FC = () => {
+const LinkDevice: React.FC<any> = (displayPath: any) => {
   const linkRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
-    const newValue = "broadcast3000.io/view/:idSession";
+    console.log(displayPath);
+    const newValue = `${window.location.origin}/device/${displayPath.displayPath}`;
     linkRef.current && (linkRef.current.textContent = newValue);
   }, []);
 
