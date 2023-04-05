@@ -1,26 +1,8 @@
 import React from 'react';
 
-import { EventContext } from '../context/EventContext';
-import EventService from '../services/EventService';
-import Event from '../types/Event'
-
-
-const updateEvent = async (event: Event) => {
-  await EventService.updateEvent(event.school_id, event);
-  window.location.reload();
-}
-
-const getEventById = async (schoolId: number, eventId: number) => {
-  const event = await EventService.getEvent(schoolId, eventId);
-  return event;
-}
-
-const deleteEvent = async (schoolId: number, eventId: number) => {
-  await EventService.deleteEvent(schoolId, eventId);
-}
 
 const UpdateEventForm: React.FC = () => {
-  const { eventIdUpdate, toggleUpdate, setId } = React.useContext(EventContext);
+  /*const { eventIdUpdate, toggleUpdate, setId } = React.useContext(EventContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -117,7 +99,8 @@ const UpdateEventForm: React.FC = () => {
       </div>
       <p ref={messageRef} className="messageAlerte"></p>
     </form>
-  );
+  ); */
+  return <div></div>
 };
 
 export default UpdateEventForm;

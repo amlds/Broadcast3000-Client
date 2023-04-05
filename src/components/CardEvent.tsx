@@ -10,7 +10,7 @@ type props = {
 };
 
 const CardEvent: React.FC<props> = (event: props) => {
-  const eventRef = React.useRef<HTMLDivElement>(null);
+  /* const eventRef = React.useRef<HTMLDivElement>(null);
   const cardRef = React.useRef<HTMLDivElement>(null);
   const { eventIdUpdate } = useContext(EventContext);
 
@@ -47,7 +47,8 @@ const CardEvent: React.FC<props> = (event: props) => {
         </p>
       </div>
     </div>
-  );
+  ); */
+  return <div></div>;
 };
 
 export default CardEvent;

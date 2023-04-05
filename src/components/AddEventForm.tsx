@@ -9,7 +9,7 @@ const createEvent = async (event: Event) => {
 }
 
 const AddEventForm: React.FC = () => {
-  const messageRef = React.useRef<HTMLParagraphElement>(null);
+/*   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
   const [event, setEvent] = React.useState<Event>({
     name: '',
@@ -17,9 +17,6 @@ const AddEventForm: React.FC = () => {
     end_time: '',
     description: '',
     id: 0,
-    event_type_id: 0,
-    school_id: 0,
-    image: 'test',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,9 +139,14 @@ const AddEventForm: React.FC = () => {
       />
       <div className="align-row">
         <button type="submit" className="button button--primary">Add a new event</button>
-        <p ref={messageRef}></p>
+        <p ref={messageRef} className='messageRef'></p>
       </div>
     </form>
+  ); */
+  return (
+    <div>
+      <p>🚧 Work in progress 🚧</p>
+    </div>
   );
 };
 

@@ -8,6 +8,8 @@ interface Props {
 }
 
 const ListCard: React.FC<Props> = ({ events }) => {
+  console.log(events)
+
   return (
     <div className="listCard">
       <span className='shadow'></span>
