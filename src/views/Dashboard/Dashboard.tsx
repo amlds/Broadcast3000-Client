@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import { EventProvider } from '../../context/EventContext';
+import jwt_decode from 'jwt-decode';
 
 import EventService from '../../services/EventService';
 import Event from '../../types/Event';
@@ -17,15 +18,23 @@ const getEvents = async () => {
   return events;
 }
 
+const decodeToken = (token: string) => {
+  const decoded = jwt_decode(token);
+  console.log(decoded);
+  return decoded;
+}
+
+
 const Dashboard: React.FC = () => {
   const { token , setToken } = React.useContext(TokenContext);
   const navigate = useNavigate();
   const [events, setEvents] = React.useState<Event[]>([]);
 
   React.useEffect(() => {
-    if (token === '' || token.error) {
-      console.log("can't you go hear");
-      navigate('/')
+    if (!token) {
+      navigate('/login');
+    } else {
+      decodeToken(token.token);
     }
   }, [token, navigate])
 
