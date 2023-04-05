@@ -38,13 +38,14 @@ const Dashboard: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>([]);
 
   React.useEffect(() => {
-    if (dashboardInfos) {
-      getDashboardInfos(token.token).then((dashboardInfos) => {
-        setDashboardInfos(dashboardInfos);
-        console.log(dashboardInfos);
+    if(!token.token) navigate('/login');
+    else {
+      getDashboardInfos(token.token).then((data) => {
+        setDashboardInfos(data);
       });
+      console.log(dashboardInfos);
     }
-  }, [dashboardInfos, token])
+  }, [token]);
 
   React.useEffect(() => {
     getEvents().then((events) => {
@@ -60,6 +61,7 @@ const Dashboard: React.FC = () => {
 
   const handleClick = () => {
     setToken('');
+    navigate('/login');
   }
 
   return (

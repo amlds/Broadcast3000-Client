@@ -1,19 +1,15 @@
 import dashboardInfos from '../types/DashboardInfos';
 import jwt_decode from 'jwt-decode';
 
-const url = 'http://localhost:3000/api/schools/';
+const url = 'http://localhost:3001/api/schools/';
 
 interface decodedToken {
   user_id: number;
-  schools: {
-    id: number;
-    display_path: string;
-    city_id: number;
-    created_at: string;
-    updated_at: string;
-    message_display: string;
-    nbr_carrousel: number;
-  };
+  schools: [
+    {
+      id: number;
+    }
+  ]
   exp: number;
 }
 
@@ -21,10 +17,14 @@ interface decodedToken {
 const dashboardService = {
   async getDashboardInfos(token: string): Promise<dashboardInfos> {
     const decodedToken = jwt_decode(token);
-    const schoolId = (decodedToken as decodedToken).schools.id;
-    const response = await fetch(`${url}/${schoolId}`, {
+    console.log(decodedToken);
+    const schoolId = (decodedToken as decodedToken).schools[0].id;
+    console.log(schoolId);
+    console.log(token);
+    console.log(`${url}/${schoolId}`);
+    const response = await fetch(`${url}${schoolId}`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
     });
     const dashboardInfos = await response.json();
