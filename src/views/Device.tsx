@@ -7,6 +7,7 @@ import Batch from '../types/Batch';
 
 import ListCard from '../components/ListCard';
 import ChallengeView from '../components/ChallengesView';
+import { TokenContext } from '../context/TokenContext';
 
 import '../assets/views/device.scss'
 
