@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode';
 import EventService from '../../services/EventService';
 import Event from '../../types/Event';
 import DashboardInfos from '../../types/DashboardInfos';
+import dashboardService from '../../services/dashboardSerivce';
 
 import '../../assets/views/dashboard.scss';
 
@@ -24,6 +25,11 @@ const decodeToken = (token: string) => {
   return decoded;
 }
 
+const getDashboardInfos = async (token: string) => {
+  const dashboardInfos = await dashboardService.getDashboardInfos(token);
+  return dashboardInfos;
+}
+
 
 const Dashboard: React.FC = () => {
   const { token , setToken } = React.useContext(TokenContext);
@@ -32,14 +38,13 @@ const Dashboard: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>([]);
 
   React.useEffect(() => {
-    if (!token) {
-      navigate('/login');
-    } else {
-      const decoded = decodeToken(token.token);
-      setDashboardInfos(decoded);
-      console.log(dashboardInfos);
+    if (dashboardInfos) {
+      getDashboardInfos(token.token).then((dashboardInfos) => {
+        setDashboardInfos(dashboardInfos);
+        console.log(dashboardInfos);
+      });
     }
-  }, [token, navigate, dashboardInfos])
+  }, [dashboardInfos, token])
 
   React.useEffect(() => {
     getEvents().then((events) => {
