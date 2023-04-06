@@ -6,7 +6,6 @@ const LinkDevice: React.FC<any> = (displayPath: any) => {
   const linkRef = React.useRef<HTMLParagraphElement>(null);
 
   React.useEffect(() => {
-    console.log(displayPath);
     const newValue = `${window.location.origin}/display/${displayPath.displayPath}`;
     linkRef.current && (linkRef.current.textContent = newValue);
   }, [displayPath]);

@@ -10,9 +10,9 @@ import Event from '../../types/Event';
 import school from '../../types/School';
 
 import { TokenContext } from '../../context/TokenContext';
-import DashboardConfig from '../../components/DashboardConfig';
 import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
+import DashboardConfig from '../../components/DashboardConfig';
 
 const decodeToken = (token: string) => {
   const decoded = jwt_decode(token);
@@ -29,6 +29,7 @@ interface decoded {
     display_path: string
   }]
 }
+
 
 const Dashboard: React.FC = () => {
   const { token , setToken } = React.useContext(TokenContext);

@@ -1,106 +1,54 @@
 import React from 'react';
+import Event from '../types/Event';
+import { EventContext } from '../context/EventContext';
 
+interface Props {
+  events: Event[];
+  schoolId: number;
+}
 
-const UpdateEventForm: React.FC = () => {
-  /*const { eventIdUpdate, toggleUpdate, setId } = React.useContext(EventContext);
-  const [event, setEvent] = React.useState<Event>({
-    name: '',
-    start_time: '',
-    end_time: '',
-    description: '',
-    id: 0,
-    event_type_id: 0,
-    school_id: 0,
-    image: '',
-  });
-  const [name, setName] = React.useState("");
-  const [start_time, setstart_time] = React.useState("");
-  const [end_time, setend_time] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [event_type_id, setevent_type_id] = React.useState(0);
-  const messageRef = React.useRef<HTMLParagraphElement>(null);
+const UpdateEventForm: React.FC<Props> = ( Props ) => {
+  const { events, schoolId } = Props;
+  const [eventUpdate, setEventUpdate] = React.useState<Event>();
+  const { toggleUpdate, eventIdUpdate } = React.useContext(EventContext);
 
   React.useEffect(() => {
-    getEventById(1, eventIdUpdate).then((event) => {
-      setEvent(event);
-      setName(event.name);
-      setstart_time(event.start_time);
-      setend_time(event.end_time);
-      setDescription(event.description);
-      setevent_type_id(event.event_type_id);
+    events.forEach((event) => {
+      if (event.id === eventIdUpdate) {
+        setEventUpdate(event);
+      }
     });
-  }, [eventIdUpdate]);
+  }, [eventUpdate, events, eventIdUpdate]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const eventToUpdate = {
-      name,
-      start_time,
-      end_time,
-      description,
-      event_type_id,
-      id: event.id,
-      school_id: event.school_id,
-      image: event.image,
-    };
-    updateEvent(eventToUpdate);
-  }
-
-  const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const cancelUpdate = () => {
     toggleUpdate();
-    setId(0);
-  }
+  };
 
-  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.eventPhase;
-    console.log(e);
-    setEvent({
-      ...event,
-      [event_type_id]: value,
-    });
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(eventUpdate);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name
-      <input className='input--txt' type="text" name="name" id="name" value={name} onChange={(e) => setName(e.target.value)} />
-      </label>
-      <div className='align-row'>
-        <label htmlFor="start_time">Start
-          <input className='input--txt' type="datetime-local" name="start_time" id="start_time" value={start_time} onChange={(e) => setstart_time(e.target.value)}/>
-        </label>
-        <label htmlFor="end_time">End
-          <input className='input--txt' type="datetime-local" name="end_time" id="end_time"  value={end_time} onChange={(e) => setend_time(e.target.value)}/>
-        </label>
+      <div className="form-group">
+        <label htmlFor="event-name">Event Name</label>
+        <input
+          type="text"
+          className="form-control"
+          id="event-name"
+          placeholder="Event Name"
+          value={eventUpdate?.name}
+        />
       </div>
-      <label htmlFor="description">Description
-        <textarea className='input--txt' name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-      </label>
-      <label htmlFor="type">Type
-        <select className='input--txt' name="type" id="type" onChange={(e) => {
-          console.log(e.eventPhase)
-          handleChangeSelect(e)
-        }}>
-          <option value="1">Party</option>
-          <option value="2">Conference</option>
-          <option value="3">Workshop</option>
-          <option value="4">Other</option>
-        </select>
-      </label>
-      <label htmlFor="image">Image</label>
-      <input className='input--file' type="file" accept='.jpg,.png' name="image" id="image"/>
-      <div className='threeButtonSet'>
-        <div>
-          <button className='button--secondary' onClick={handleCancel}>Cancel</button>
-          <button type="submit" className='button--primary'>Edit event</button>
-        </div>
-        <button className='button--secondary--red' onClick={() => deleteEvent(1, event.id)}>Delete this event</button>
-      </div>
-      <p ref={messageRef} className="messageAlerte"></p>
+      <button type="submit" className="btn btn-primary">
+        Update Event
+      </button>
+      <button type="button" className="btn btn-secondary" onClick={cancelUpdate}>
+        Cancel
+      </button>
     </form>
-  ); */
-  return <div></div>
+  );
 };
 
 export default UpdateEventForm;

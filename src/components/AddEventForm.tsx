@@ -9,7 +9,11 @@ const createEvent = async (token: string, event: Event) => {
   return res;
 }
 
-const AddEventForm: React.FC = () => {
+interface Props {
+  schoolId: number;
+}
+
+const AddEventForm: React.FC<Props> = (Props) => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
   const { token } = React.useContext(TokenContext);
@@ -20,7 +24,6 @@ const AddEventForm: React.FC = () => {
     description: '',
     event_type: {
       name: '',
-      color: '',
     }
   });
   const [eventTypes, setEventTypes] = React.useState<Array<string>>([]);
@@ -59,6 +62,7 @@ const AddEventForm: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log(token);
     const { name, start_time, end_time, description, event_type } = event;
     const eventToCreate = {
       name,
@@ -67,7 +71,6 @@ const AddEventForm: React.FC = () => {
       description,
       event_type: {
         name: event_type.name,
-        color: event_type.color,
       }
     };
     const formData = new FormData();

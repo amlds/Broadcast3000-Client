@@ -1,13 +1,21 @@
 import React from 'react';
 import { EventContext } from '../context/EventContext';
 
+import Event from '../types/Event';
+
 import AddEventForm from '../components/AddEventForm';
 import UpdateEventForm from '../components/UpdateEventForm';
 
-const EventFormContainer: React.FC = () => {
-  const { isUpdate } = React.useContext(EventContext);
+interface Props {
+  schoolId: number;
+  events: Event[];
+}
 
-  return <>{isUpdate ? <UpdateEventForm /> : <AddEventForm />}</>;
+const EventFormContainer: React.FC<Props> = (Props) => {
+  const { isUpdate } = React.useContext(EventContext);
+  const { schoolId, events } = Props;
+
+  return <>{isUpdate ? <UpdateEventForm schoolId={schoolId} events={events}/> : <AddEventForm schoolId={schoolId}/>}</>;
 };
 
 export default EventFormContainer;

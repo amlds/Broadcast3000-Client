@@ -6,6 +6,6 @@ export default interface event {
   end_time: string;
   event_type: {
     name: string;
-    color: string;
+    color?: string;
   };
 }

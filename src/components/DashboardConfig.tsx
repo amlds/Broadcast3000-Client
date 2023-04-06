@@ -12,6 +12,7 @@ interface Props {
 
 const DashboardConfig: React.FC<Props> = (Props) => {
   const [menu, setMenu] = React.useState('Events');
+  const { school, events } = Props;
 
   const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent)
@@ -41,7 +42,7 @@ const DashboardConfig: React.FC<Props> = (Props) => {
                   Settings
           </button>
         </nav>
-        {menu === 'Events' && <EventFormContainer />}
+        {menu === 'Events' && <EventFormContainer schoolId={school.id ? school.id : 0} events={events ? events : []}/>}
         {menu === 'Settings' && <Settings />}
       </div>
     </section>

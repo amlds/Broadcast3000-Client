@@ -15,6 +15,8 @@ class EventService {
       body: JSON.stringify(event),
     });
     const newEvent = await response.json();
+    console.log('response', response);
+    console.log(newEvent);
     return newEvent;
   }
 
