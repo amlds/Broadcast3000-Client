@@ -2,15 +2,17 @@ import React from 'react';
 
 import EventService from '../services/EventService';
 import Event from '../types/Event'
+import { TokenContext } from '../context/TokenContext';
 
-const createEvent = async (event: Event) => {
-  const res = await EventService.createEvent(1, event);
+const createEvent = async (token: string, event: Event) => {
+  const res = await EventService.createEvent(token, 1, event);
   return res;
 }
 
 const AddEventForm: React.FC = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
+  const { token } = React.useContext(TokenContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -21,6 +23,14 @@ const AddEventForm: React.FC = () => {
       color: '',
     }
   });
+  const [eventTypes, setEventTypes] = React.useState<Array<string>>([]);
+
+  React.useEffect(() => {
+    // fetch event types from API or set locally
+    const types = ['Private', 'Public', 'Formation', 'Extern'];
+    setEventTypes(types);
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     setEvent({
@@ -41,34 +51,32 @@ const AddEventForm: React.FC = () => {
     const { name, value } = e.currentTarget;
     setEvent({
       ...event,
-      [name]: parseInt(value),
+      event_type: {
+        ...event.event_type,
+        [name]: value,
+      },
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    const { name, start_time, end_time, description } = event;
+    const { name, start_time, end_time, description, event_type } = event;
     const eventToCreate = {
       name,
       start_time,
       end_time,
       description,
-
+      event_type: {
+        name: event_type.name,
+        color: event_type.color,
+      }
     };
     const formData = new FormData();
     formData.append('event', JSON.stringify(eventToCreate));
     e.preventDefault();
-    if (name && start_time && end_time && description ) {
-      createEvent({
-        ...event,
-      }).then(res => {
-        messageRef.current!.innerHTML = '✅ Event added ✅';
-        setTimeout(() => {
-          messageRef.current!.innerHTML = '';
-          formRef.current!.reset();
-        }, 5000);
-      }).catch(err => {
-        messageRef.current!.innerHTML = '🚨 Erreur 🚨';
-      });
+    if (name && start_time && end_time && description && event_type.name) {
+      createEvent(token, eventToCreate);
+      messageRef.current!.innerHTML = '🎉 Evénement créé 🎉';
+      formRef.current!.reset();
     }
     else {
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
@@ -118,19 +126,19 @@ const AddEventForm: React.FC = () => {
         onChange={handleChangeTextArea}
         ></textarea>
       </label>
-      {/* <label htmlFor="">Type
-        <select name=""
+      <label>
+        Type
+        <select name="name"
           id="event_type_name"
           className="input--txt"
           required
           onChange={handleChangeSelect}
           >
-          <option value="1">Private</option>
-          <option value="2">Public</option>
-          <option value="3">Formation</option>
-          <option value="4">Extern</option>
+          {eventTypes.map((type, index) => (
+            <option key={index} value={type}>{type}</option>
+          ))}
         </select>
-      </label> */}
+      </label>
       <label htmlFor="image">Image</label>
       <input type="file"
         name='image'

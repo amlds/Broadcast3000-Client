@@ -5,23 +5,12 @@ import Event from '../types/Event';
 const url = 'http://localhost:3001/api/v1/schools/';
 
 class EventService {
-  static async getEvents(schoolId: number): Promise<Event[]> {
-    const response = await fetch(`${url}${schoolId}/events`);
-    const events = await response.json();
-    return events;
-  }
-
-  static async getEvent(schoolId: number, eventId: number): Promise<Event> {
-    const response = await fetch(`${url}${schoolId}/events/${eventId}`);
-    const event = await response.json();
-    return event;
-  }
-
-  static async createEvent(schoolId: number, event: Event): Promise<Event> {
+  static async createEvent(token: string, schoolId: number, event: Event): Promise<Event> {
     const response = await fetch(`${url}${schoolId}/events`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `${token}`
       },
       body: JSON.stringify(event),
     });
@@ -29,21 +18,13 @@ class EventService {
     return newEvent;
   }
 
-  static async updateEvent(schoolId: number, event: Event): Promise<Event> {
-    const response = await fetch(`${url}${schoolId}/events/${event.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(event),
-    });
-    const updatedEvent = await response.json();
-    return updatedEvent;
-  }
-
-  static async deleteEvent(schoolId: number, eventId: number): Promise<Event> {
+  static async deleteEvent(token: string, schoolId: number, eventId: number): Promise<Event> {
     const response = await fetch(`${url}${schoolId}/events/${eventId}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${token}`
+      },
     });
     const deletedEvent = await response.json();
     return deletedEvent;
