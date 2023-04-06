@@ -20,6 +20,19 @@ class EventService {
     return newEvent;
   }
 
+  static async updateEvent(token: string, schoolId: number, eventId: number, event: Event): Promise<Event> {
+    const response = await fetch(`${url}${schoolId}/events/${eventId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `${token}`
+      },
+      body: JSON.stringify(event),
+    });
+    const updatedEvent = await response.json();
+    return updatedEvent;
+  }
+
   static async deleteEvent(token: string, schoolId: number, eventId: number): Promise<Event> {
     const response = await fetch(`${url}${schoolId}/events/${eventId}`, {
       method: 'DELETE',
