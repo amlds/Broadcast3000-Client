@@ -8,6 +8,7 @@ import '../../assets/views/dashboard.scss';
 import displayService from '../../services/displayService';
 import Event from '../../types/Event';
 import school from '../../types/School';
+import Batch from '../../types/Batch'
 
 import { TokenContext } from '../../context/TokenContext';
 import ListCard from '../../components/ListCard';
@@ -26,37 +27,35 @@ const getDisplay = (display_path: string) => {
 
 interface decoded {
   schools: [{
-    display_path: string
+    id: number,
+    city_id: number,
+    batches: Batch[],
+    display_path: string,
+    message_display: string,
+    nbr_carrousel: number,
+    created_at: string,
+    updated_at: string
   }]
 }
 
 
 const Dashboard: React.FC = () => {
   const { token , setToken } = React.useContext(TokenContext);
-  const [school, setSchool] = React.useState<school>({
-    id: 0,
-    city_id: 0,
-    batches: [],
-    display_path: '',
-    message_display: '',
-    nbr_carrousel: 0,
-    created_at: '',
-    updated_at: '',
-  });
+  const [school, setSchool] = React.useState<school[]>();
   const [events, setEvents] = React.useState<Event[]>();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [display_path, setDisplayPath] = React.useState<string>('');
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const decoded = decodeToken(token.token) as decoded;
-    setDisplayPath(decoded.schools[0].display_path);
     if(!token.token) navigate('/login');
     else {
+      const decoded = decodeToken(token.token) as decoded;
+      setDisplayPath(decoded.schools[0].display_path);
+      setSchool(decoded.schools);
       const fetchDisplay = async () => {
         try {
           const data = await getDisplay(`/display/${display_path}`);
-          setSchool(data.school);
           setEvents(data.events);
           setLoading(false);
         } catch (error) {
@@ -94,7 +93,7 @@ const Dashboard: React.FC = () => {
                 </div>
               </div>
             </header>
-            <DashboardConfig school={school} events={events ? events : []}/>
+            <DashboardConfig school={school ? school : []} events={events ? events : []}/>
           </section>
           <ListCard events={events ? events : []}/>
         </EventProvider>

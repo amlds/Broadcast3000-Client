@@ -1,7 +1,7 @@
 import batch from './Batch'
 
 export default interface School {
-  id?: number,
+  id: number,
   city_id: number,
   batches: batch[],
   display_path: string,
