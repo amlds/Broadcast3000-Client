@@ -102,6 +102,7 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
         />
       </div>
       <input type="submit" value="Update Event" className="btn btn-primary" />
+      <button type="button" className="btn btn-danger" onClick={() => deleteEvent(token.token, eventIdUpdate)}>Delete Event</button>
       <button type="button" className="btn btn-secondary" onClick={cancelUpdate}>Cancel</button>
     </form>
   );
