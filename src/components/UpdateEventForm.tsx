@@ -1,58 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Event from '../types/Event';
 import { EventContext } from '../context/EventContext';
-
 import EventService from '../services/EventService';
+import { TokenContext } from '../context/TokenContext';
 
 interface Props {
   events: Event[];
   schoolId: number;
 }
 
-const updateEventService = async (token: string, schoolId: number, eventId: number, event: Event) => {
-  const res = await EventService.updateEvent(token,schoolId , eventId, event);
-  return res;
+const deleteEvent = async (token: string, eventId: number) => {
+  await EventService.deleteEvent(token, eventId);
 };
 
-const UpdateEventForm: React.FC<Props> = ( Props ) => {
-  const { events, schoolId } = Props;
-  const [eventUpdate, setEventUpdate] = React.useState<Event>();
-  const { toggleUpdate, eventIdUpdate } = React.useContext(EventContext);
-  const [event, setEvent] = React.useState<Event>({
-    name: '',
-    description: '',
-    event_type: {
-      name: '',
-    },
-    start_time: '',
-    end_time: '',
-  });
+const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
+  const { toggleUpdate, eventIdUpdate } = useContext(EventContext);
+  const { token } = useContext(TokenContext);
+  const [eventUpdate, setEventUpdate] = useState<Event>({ name: '', description: '', start_time: '', end_time: '', event_type: { id: 0, name: '' }, photo: '' });
+  const [eventTypes] = useState<string[]>(['Private', 'Public', 'Formation', 'Extern']);
 
-  React.useEffect(() => {
-    events.forEach((event) => {
-      if (event.id === eventIdUpdate) {
-        setEventUpdate(event);
-        console.log(eventUpdate);
-      }
-    });
-  }, [eventUpdate, events, eventIdUpdate]);
+  useEffect(() => {
+    const eventToUpdate = events.find((event) => event.id === eventIdUpdate);
+    if (eventToUpdate) {
+      setEventUpdate(eventToUpdate);
+      setEventUpdate(
+        (prevState) => ({
+          ...prevState,
+          start_time: eventToUpdate.start_time.replace(' ', 'T'),
+          end_time: eventToUpdate.end_time.replace(' ', 'T'),
+        })
+      )
+    }
+  }, [eventIdUpdate, events]);
 
   const cancelUpdate = () => {
     toggleUpdate();
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (eventUpdate) {
-      updateEventService('token', schoolId, eventIdUpdate, eventUpdate);
-    }
+    await EventService.updateEvent(token, eventIdUpdate, eventUpdate);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setEventUpdate(prevState => Object.assign({}, prevState, { name: value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEventUpdate((prevState) => ({ ...prevState, [name]: value }));
   };
-
 
 
   return (
@@ -63,50 +56,53 @@ const UpdateEventForm: React.FC<Props> = ( Props ) => {
           type="text"
           className="input--txt"
           id="event-name"
+          name="name"
           placeholder="Event Name"
-          value={eventUpdate?.name}
+          value={eventUpdate.name}
+          onChange={handleChange}
         />
         <label>
           Event Type
-          <select
-            name="name"
-            value={eventUpdate?.event_type.name}
-          >
-            <option value="sport">Sport</option>
-            <option value="culture">Culture</option>
-            <option value="other">Other</option>
+          <select name="event_type.name" value={eventUpdate.event_type.name} onChange={handleChange}>
+            {eventTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="event-description">Event Description</label>
         <textarea
           className="input--txt"
           id="event-description"
+          name="description"
           placeholder="Event Description"
-          value={eventUpdate?.description}
+          value={eventUpdate.description}
+          onChange={handleChange}
         />
         <label htmlFor="event-start-time">Event Start Time</label>
         <input
           type="datetime-local"
           className="input--txt"
           id="event-start-time"
+          name="start_time"
           placeholder="Event Start Time"
-          value={eventUpdate?.start_time.split('T');}
+          value={eventUpdate.start_time}
+          onChange={handleChange}
         />
         <label htmlFor="event-end-time">Event End Time</label>
         <input
           type="datetime-local"
           className="input--txt"
           id="event-end-time"
+          name="end_time"
           placeholder="Event End Time"
-          value={eventUpdate?.end_time}
+          value={eventUpdate.end_time}
+          onChange={handleChange}
         />
-        </div>
-      <button type="submit" className="btn btn-primary">
-        Update Event
-      </button>
-      <button type="button" className="btn btn-secondary" onClick={cancelUpdate}>
-        Cancel
-      </button>
+      </div>
+      <input type="submit" value="Update Event" className="btn btn-primary" />
+      <button type="button" className="btn btn-secondary" onClick={cancelUpdate}>Cancel</button>
     </form>
   );
 };

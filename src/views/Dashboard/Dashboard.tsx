@@ -54,13 +54,15 @@ const Dashboard: React.FC = () => {
       setDisplayPath(decoded.schools[0].display_path);
       setSchool(decoded.schools);
       const fetchDisplay = async () => {
-        try {
-          const data = await getDisplay(`/display/${display_path}`);
-          setEvents(data.events);
-          setLoading(false);
-        } catch (error) {
-          window.location.href = '/not-found';
-        }
+        setTimeout(async () => {
+          try {
+            const data = await getDisplay(`/display/${display_path}`);
+            setEvents(data.events);
+            setLoading(false);
+          } catch (error) {
+            window.location.href = '/not-found';
+          }
+        }, 2000);
       };
       fetchDisplay();
     }

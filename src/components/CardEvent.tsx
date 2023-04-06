@@ -29,6 +29,17 @@ const CardEvent: React.FC<props> = (event: props) => {
     }
   }, [event.event.id, eventIdUpdate]);
 
+  React.useEffect(() => {
+    // Ne pas affiché si l'event est fini
+    if (eventRef.current && cardRef.current) {
+      const date = new Date(event.event.end_time);
+      const now = new Date();
+      if (date < now) {
+        eventRef.current.style.display = "none";
+      }
+    }
+  }, [event.event.end_time]);
+
   return (
     <div key={event.event.id} className="cardEvent cardEvent" ref={eventRef}>
       <div className="cardEvent__header">

@@ -4,8 +4,17 @@ import EventService from '../services/EventService';
 import Event from '../types/Event'
 import { TokenContext } from '../context/TokenContext';
 
-const createEvent = async (token: string, event: Event) => {
-  const res = await EventService.createEvent(token, 1, event);
+interface NewEvent {
+  name: string;
+  description: string;
+  start_time: string;
+  end_time: string;
+  photo: string;
+  event_type_id: number;
+}
+
+const createEvent = async (token: any, event: NewEvent) => {
+  const res = await EventService.createEvent(token.token, 1, event);
   return res;
 }
 
@@ -22,9 +31,11 @@ const AddEventForm: React.FC<Props> = (Props) => {
     start_time: '',
     end_time: '',
     description: '',
+    photo: '',
     event_type: {
+      id: 0,
       name: '',
-    }
+    },
   });
   const [eventTypes, setEventTypes] = React.useState<Array<string>>([]);
 
@@ -35,12 +46,26 @@ const AddEventForm: React.FC<Props> = (Props) => {
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setEvent({
-      ...event,
-      [name]: value,
-    });
+    const { name } = e.currentTarget;
+    if (name === 'image') {
+      const file = e.currentTarget.files![0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEvent({
+          ...event,
+          photo: reader.result as string,
+        });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      const { value } = e.currentTarget;
+      setEvent({
+        ...event,
+        [name]: value,
+      });
+    }
   };
+
 
   const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget;
@@ -64,14 +89,14 @@ const AddEventForm: React.FC<Props> = (Props) => {
   const handleSubmit = (e: React.FormEvent) => {
     console.log(token);
     const { name, start_time, end_time, description, event_type } = event;
+    const eventTypeId = eventTypes.findIndex(type => type === event_type.name) + 1;
     const eventToCreate = {
       name,
       start_time,
       end_time,
       description,
-      event_type: {
-        name: event_type.name,
-      }
+      photo: event.photo,
+      event_type_id: eventTypeId,
     };
     const formData = new FormData();
     formData.append('event', JSON.stringify(eventToCreate));
@@ -85,6 +110,7 @@ const AddEventForm: React.FC<Props> = (Props) => {
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
     }
   };
+
 
   return (
     <form onSubmit={handleSubmit} ref={formRef}>
