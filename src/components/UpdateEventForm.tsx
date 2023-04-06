@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
+
 import Event from '../types/Event';
-import { EventContext } from '../context/EventContext';
 import EventService from '../services/EventService';
+import { EventContext } from '../context/EventContext';
 import { TokenContext } from '../context/TokenContext';
 
 interface Props {
@@ -50,8 +51,7 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="form-group">
-        <label htmlFor="event-name">Event Name</label>
+        <label htmlFor="event-name">Event Name
         <input
           type="text"
           className="input--txt"
@@ -59,11 +59,49 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
           name="name"
           placeholder="Event Name"
           value={eventUpdate.name}
-          onChange={handleChange}
-        />
+          onChange={handleChange}/>
+        </label>
+        <div className='align-row'>
+          <label htmlFor="event-start-time">Event Start Time
+            <input
+              type="datetime-local"
+              className="input--txt"
+              id="event-start-time"
+              name="start_time"
+              placeholder="Event Start Time"
+              value={eventUpdate.start_time}
+              onChange={handleChange}
+            />
+          </label>
+          <label htmlFor="event-end-time">Event End Time
+            <input
+              type="datetime-local"
+              className="input--txt"
+              id="event-end-time"
+              name="end_time"
+              placeholder="Event End Time"
+              value={eventUpdate.end_time}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
+        <label htmlFor="description">Description
+          <textarea
+            name="description"
+            className="input--txt"
+            id="description"
+            placeholder="Description"
+            value={eventUpdate.description}
+            onChange={handleChange}
+          />
+        </label>
         <label>
           Event Type
-          <select name="event_type.name" value={eventUpdate.event_type.name} onChange={handleChange}>
+          <select
+            name="event_type.name"
+            value={eventUpdate.event_type.name}
+            onChange={handleChange}
+            className="input--txt">
             {eventTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
@@ -71,39 +109,18 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
             ))}
           </select>
         </label>
-        <label htmlFor="event-description">Event Description</label>
-        <textarea
-          className="input--txt"
-          id="event-description"
-          name="description"
-          placeholder="Event Description"
-          value={eventUpdate.description}
-          onChange={handleChange}
-        />
-        <label htmlFor="event-start-time">Event Start Time</label>
-        <input
-          type="datetime-local"
-          className="input--txt"
-          id="event-start-time"
-          name="start_time"
-          placeholder="Event Start Time"
-          value={eventUpdate.start_time}
-          onChange={handleChange}
-        />
-        <label htmlFor="event-end-time">Event End Time</label>
-        <input
-          type="datetime-local"
-          className="input--txt"
-          id="event-end-time"
-          name="end_time"
-          placeholder="Event End Time"
-          value={eventUpdate.end_time}
-          onChange={handleChange}
-        />
-      </div>
-      <input type="submit" value="Update Event" className="btn btn-primary" />
-      <button type="button" className="btn btn-danger" onClick={() => deleteEvent(token.token, eventIdUpdate)}>Delete Event</button>
-      <button type="button" className="btn btn-secondary" onClick={cancelUpdate}>Cancel</button>
+        <label htmlFor="image">Image</label>
+          <input type="file"
+            name='image'
+            id='image'
+            placeholder="Image"
+            onChange={handleChange}
+          />
+        <div className="align-row">
+          <input type="submit" value="Update Event" className="button--primary" />
+          <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token.token, eventIdUpdate)}>Delete Event</button>
+          <button type="button" className="button--secondary" onClick={cancelUpdate}>Cancel</button>
+        </div>
     </form>
   );
 };
