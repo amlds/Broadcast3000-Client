@@ -28,9 +28,7 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    if(token === '' || token.error){
-      console.log('tit coquain')
-    } else {
+    if(token !== '' && !token.error){
       navigate('/dashboard')
     }
   }, [token, navigate])

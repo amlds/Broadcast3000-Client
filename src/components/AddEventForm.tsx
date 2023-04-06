@@ -9,16 +9,18 @@ const createEvent = async (event: Event) => {
 }
 
 const AddEventForm: React.FC = () => {
-/*   const messageRef = React.useRef<HTMLParagraphElement>(null);
+  const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
     end_time: '',
     description: '',
-    id: 0,
+    event_type: {
+      name: '',
+      color: '',
+    }
   });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     setEvent({
@@ -44,18 +46,18 @@ const AddEventForm: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    const { name, start_time, end_time, description, event_type_id } = event;
+    const { name, start_time, end_time, description } = event;
     const eventToCreate = {
       name,
       start_time,
       end_time,
       description,
-      event_type_id,
+
     };
     const formData = new FormData();
     formData.append('event', JSON.stringify(eventToCreate));
     e.preventDefault();
-    if (name && start_time && end_time && event_type_id && description && event_type_id) {
+    if (name && start_time && end_time && description ) {
       createEvent({
         ...event,
       }).then(res => {
@@ -116,9 +118,9 @@ const AddEventForm: React.FC = () => {
         onChange={handleChangeTextArea}
         ></textarea>
       </label>
-      <label htmlFor="event_type_id">Type
-        <select name="event_type_id"
-          id="event_type_id"
+      {/* <label htmlFor="">Type
+        <select name=""
+          id="event_type_name"
           className="input--txt"
           required
           onChange={handleChangeSelect}
@@ -128,7 +130,7 @@ const AddEventForm: React.FC = () => {
           <option value="3">Formation</option>
           <option value="4">Extern</option>
         </select>
-      </label>
+      </label> */}
       <label htmlFor="image">Image</label>
       <input type="file"
         name='image'
@@ -142,11 +144,6 @@ const AddEventForm: React.FC = () => {
         <p ref={messageRef} className='messageRef'></p>
       </div>
     </form>
-  ); */
-  return (
-    <div>
-      <p>🚧 Work in progress 🚧</p>
-    </div>
   );
 };
 

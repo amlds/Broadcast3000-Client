@@ -4,7 +4,7 @@ import { EventContext } from '../context/EventContext';
 import Edit from "./svg/Edit";
 
 interface IButtonEditProps {
-  id: number;
+  id: any;
 }
 
 const ButtonEdit: React.FC<IButtonEditProps> = ({ id }) => {

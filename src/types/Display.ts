@@ -2,6 +2,7 @@ import Event from './Event';
 import School from './School';
 
 export default interface Display {
+  error?: any;
   id: number;
   name: string;
   display_path: string;

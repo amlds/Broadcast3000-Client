@@ -12,7 +12,7 @@ const ListCard: React.FC<Props> = (Props) => {
   return (
     <div className="listCard">
       <span className='shadow'></span>
-      <h2 className='listCard__title'>{/* Nos prochains events */} :</h2>
+      <h2 className='listCard__title'>Nos prochains events :</h2>
         <div className='listCard__content'>
           {
             Props.events.map((event) => {

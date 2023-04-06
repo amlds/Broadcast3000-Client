@@ -1,4 +1,5 @@
 import React from 'react';
+import '../assets/views/display.scss'
 
 import displayService from '../services/displayService';
 import Batch from '../types/Batch'
@@ -17,13 +18,22 @@ const DisplayView: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>();
   const [date, setDate] = React.useState<Date>(new Date());
   const messageRef = React.useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    getDisplay(`${window.location.pathname}`).then((data) => {
-      setBatch(data.school.batches)
-      setEvents(data.events)
-    });
+    const fetchDisplay = async () => {
+      try {
+        const data = await getDisplay(`${window.location.pathname}`);
+        setBatch(data.school.batches);
+        setEvents(data.events);
+        setLoading(false);
+      } catch (error) {
+        window.location.href = '/not-found';
+      }
+    };
+    fetchDisplay();
   }, []);
+
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -35,26 +45,34 @@ const DisplayView: React.FC = () => {
 
   return (
     <main className='device'>
-      <section className='device__content'>
-        <img className='logo' src='./images/Logo_wagon.png' alt='Wagon Logo'></img>
-        <div className='device__content--text'>
-          <h1>Hello wagoners !</h1>
-          <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
-          <p>Ici une phase que Marina pourra changer à sa guise</p>
-          <div className="align-row">
-            <p>Aujourd’hui au programme :</p>
-            {
-              batch?.map((Batch) => {
-                return (
-                  <ChallengeView key={Batch.id} Batch={Batch} />
-                )
-              })
-            }
-
+    {loading ? (
+      <div className="loader">
+          <div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <p>loading</p>
+      </div>
+    ) : (
+      <>
+        <section className='device__content'>
+          <img className='logo' src='../../images/Logo_wagon.png' alt='Wagon Logo'></img>
+          <div className='device__content--text'>
+            <h1>Hello wagoners !</h1>
+            <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
+            <p>Ici une phase que Marina pourra changer à sa guise</p>
+            <div className="align-row">
+              <p>Aujourd’hui au programme :</p>
+              {
+                batch?.map((Batch) => {
+                  return (
+                    <ChallengeView key={Batch.id} Batch={Batch} />
+                  )
+                })
+              }
+            </div>
           </div>
-        </div>
-      </section>
-      <ListCard events={events ? events : []} />
+        </section>
+        <ListCard events={events ? events : []} />
+      </>
+    )}
     </main>
   );
 };

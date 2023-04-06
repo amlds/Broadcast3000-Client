@@ -2,10 +2,15 @@ import React from 'react';
 
 import EventFormContainer from './EventFormContainer';
 import Settings from './Settings';
+import Event from '../types/Event';
+import School from '../types/School';
 
+interface Props {
+  school: School;
+  events: Event[];
+}
 
-
-const DashboardConfig: React.FC = () => {
+const DashboardConfig: React.FC<Props> = (Props) => {
   const [menu, setMenu] = React.useState('Events');
 
   const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {

@@ -1,5 +1,5 @@
 export default interface event {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   start_time: string;
