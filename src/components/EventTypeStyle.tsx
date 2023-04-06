@@ -1,39 +1,21 @@
 import React from 'react';
 
 import EventType from '../types/EventType';
-import EventTypeService from '../services/EventTypeSerivce';
 
 interface Props {
-  event_type_id: number;
+  event_type: EventType;
 }
 
-const getEventType = async (id: number) => {
-  const eventType = await EventTypeService.getEventType(id);
-  return eventType;
-};
 
-
-const EventTypeStyle: React.FC<Props> = ({ event_type_id }) => {
-  const [eventTypeState, setEventTypeState] = React.useState<EventType>({
-    id: 0,
-    name: '',
-    color: '',
-  });
-
-  React.useEffect(() => {
-    getEventType(event_type_id).then((eventType) => {
-      setEventTypeState(eventType);
-    });
-  }, [event_type_id]);
-
+const EventTypeStyle: React.FC<Props> = (Props) => {
   const style = {
-    backgroundColor: `${eventTypeState.color}1A`,
-    color: eventTypeState.color,
+    backgroundColor: `${Props.event_type.color}1A`,
+    color: Props.event_type.color,
   };
 
   return (
     <div className="event-type" style={style}>
-      <p className="event-type__name">{eventTypeState.name}</p>
+      <p className="event-type__name">{Props.event_type.name}</p>
     </div>
   );
 };

@@ -10,7 +10,7 @@ type props = {
 };
 
 const CardEvent: React.FC<props> = (event: props) => {
-  /* const eventRef = React.useRef<HTMLDivElement>(null);
+  const eventRef = React.useRef<HTMLDivElement>(null);
   const cardRef = React.useRef<HTMLDivElement>(null);
   const { eventIdUpdate } = useContext(EventContext);
 
@@ -36,7 +36,7 @@ const CardEvent: React.FC<props> = (event: props) => {
           {structureTime(event.event.start_time)}
         </p>
         <div className="cardEvent__header__button">
-          <EventTypeStyle event_type_id={event.event.event_type_id} />
+          <EventTypeStyle event_type={event.event.event_type} />
           <ButtonEdit id={event.event.id} />
         </div>
       </div>
@@ -47,8 +47,7 @@ const CardEvent: React.FC<props> = (event: props) => {
         </p>
       </div>
     </div>
-  ); */
-  return <div></div>;
+  );
 };
 
 export default CardEvent;

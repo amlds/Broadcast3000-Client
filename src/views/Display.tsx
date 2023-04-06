@@ -1,8 +1,11 @@
 import React from 'react';
 
 import displayService from '../services/displayService';
-import Display from '../types/Display'
+import Batch from '../types/Batch'
+import Event from '../types/Event'
+
 import ChallengeView from '../components/ChallengesView';
+import ListCard from '../components/ListCard';
 
 const getDisplay = (display_path: string) => {
   const display = displayService.getDisplayInfos(display_path);
@@ -10,16 +13,15 @@ const getDisplay = (display_path: string) => {
 }
 
 const DisplayView: React.FC = () => {
-  const [displays, setDisplays] = React.useState<Display>();
+  const [batch, setBatch] = React.useState<Batch[]>();
+  const [events, setEvents] = React.useState<Event[]>();
   const [date, setDate] = React.useState<Date>(new Date());
   const messageRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    getDisplay(`${window.location.pathname}/lyondisplayurl`).then((data) => {
-      setDisplays(data);
-      console.log(displays);
-      console.log(displays.school.batches);
-      console.log(displays.events)
+    getDisplay(`${window.location.pathname}`).then((data) => {
+      setBatch(data.school.batches)
+      setEvents(data.events)
     });
   }, []);
 
@@ -41,13 +43,18 @@ const DisplayView: React.FC = () => {
           <p>Ici une phase que Marina pourra changer à sa guise</p>
           <div className="align-row">
             <p>Aujourd’hui au programme :</p>
-            {displays.school.batches.map((batch) => {
-              console.log(batch);
-              return (<ChallengeView key={batch.number} Batch={batch} />)})}
+            {
+              batch?.map((Batch) => {
+                return (
+                  <ChallengeView key={Batch.id} Batch={Batch} />
+                )
+              })
+            }
+
           </div>
         </div>
       </section>
-      {/* <ListCard events={displays.events} /> */}
+      <ListCard events={events ? events : []} />
     </main>
   );
 };

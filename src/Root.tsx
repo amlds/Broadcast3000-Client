@@ -15,7 +15,7 @@ const Root: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/display" element={<DisplayView />} />
+        <Route path="/display/:path" element={<DisplayView />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
