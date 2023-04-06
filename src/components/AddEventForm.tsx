@@ -2,33 +2,70 @@ import React from 'react';
 
 import EventService from '../services/EventService';
 import Event from '../types/Event'
+import { TokenContext } from '../context/TokenContext';
 
-const createEvent = async (event: Event) => {
-  const res = await EventService.createEvent(1, event);
+interface NewEvent {
+  name: string;
+  description: string;
+  start_time: string;
+  end_time: string;
+  photo: string;
+  event_type_id: number;
+}
+
+const createEvent = async (token: any, event: NewEvent) => {
+  const res = await EventService.createEvent(token.token, 1, event);
   return res;
 }
 
-const AddEventForm: React.FC = () => {
+interface Props {
+  schoolId: number;
+}
+
+const AddEventForm: React.FC<Props> = (Props) => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
+  const { token } = React.useContext(TokenContext);
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
     end_time: '',
     description: '',
-    id: 0,
-    event_type_id: 0,
-    school_id: 0,
-    image: 'test',
+    photo: '',
+    event_type: {
+      id: 0,
+      name: '',
+    },
   });
+  const [eventTypes, setEventTypes] = React.useState<Array<string>>([]);
+
+  React.useEffect(() => {
+    // fetch event types from API or set locally
+    const types = ['Private', 'Public', 'Formation', 'Extern'];
+    setEventTypes(types);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.currentTarget;
-    setEvent({
-      ...event,
-      [name]: value,
-    });
+    const { name } = e.currentTarget;
+    if (name === 'image') {
+      const file = e.currentTarget.files![0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEvent({
+          ...event,
+          photo: reader.result as string,
+        });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      const { value } = e.currentTarget;
+      setEvent({
+        ...event,
+        [name]: value,
+      });
+    }
   };
+
 
   const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.currentTarget;
@@ -42,39 +79,38 @@ const AddEventForm: React.FC = () => {
     const { name, value } = e.currentTarget;
     setEvent({
       ...event,
-      [name]: parseInt(value),
+      event_type: {
+        ...event.event_type,
+        [name]: value,
+      },
     });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    const { name, start_time, end_time, description, event_type_id } = event;
+    console.log(token);
+    const { name, start_time, end_time, description, event_type } = event;
+    const eventTypeId = eventTypes.findIndex(type => type === event_type.name) + 1;
     const eventToCreate = {
       name,
       start_time,
       end_time,
       description,
-      event_type_id,
+      photo: event.photo,
+      event_type_id: eventTypeId,
     };
     const formData = new FormData();
     formData.append('event', JSON.stringify(eventToCreate));
     e.preventDefault();
-    if (name && start_time && end_time && event_type_id && description && event_type_id) {
-      createEvent({
-        ...event,
-      }).then(res => {
-        messageRef.current!.innerHTML = '✅ Event added ✅';
-        setTimeout(() => {
-          messageRef.current!.innerHTML = '';
-          formRef.current!.reset();
-        }, 5000);
-      }).catch(err => {
-        messageRef.current!.innerHTML = '🚨 Erreur 🚨';
-      });
+    if (name && start_time && end_time && description && event_type.name) {
+      createEvent(token, eventToCreate);
+      messageRef.current!.innerHTML = '🎉 Evénement créé 🎉';
+      formRef.current!.reset();
     }
     else {
       messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
     }
   };
+
 
   return (
     <form onSubmit={handleSubmit} ref={formRef}>
@@ -119,17 +155,17 @@ const AddEventForm: React.FC = () => {
         onChange={handleChangeTextArea}
         ></textarea>
       </label>
-      <label htmlFor="event_type_id">Type
-        <select name="event_type_id"
-          id="event_type_id"
+      <label>
+        Type
+        <select name="name"
+          id="event_type_name"
           className="input--txt"
           required
           onChange={handleChangeSelect}
           >
-          <option value="1">Private</option>
-          <option value="2">Public</option>
-          <option value="3">Formation</option>
-          <option value="4">Extern</option>
+          {eventTypes.map((type, index) => (
+            <option key={index} value={type}>{type}</option>
+          ))}
         </select>
       </label>
       <label htmlFor="image">Image</label>
@@ -142,7 +178,7 @@ const AddEventForm: React.FC = () => {
       />
       <div className="align-row">
         <button type="submit" className="button button--primary">Add a new event</button>
-        <p ref={messageRef}></p>
+        <p ref={messageRef} className='messageRef'></p>
       </div>
     </form>
   );

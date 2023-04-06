@@ -2,11 +2,19 @@ import React from 'react';
 
 import EventFormContainer from './EventFormContainer';
 import Settings from './Settings';
+import Event from '../types/Event';
+import School from '../types/School';
 
+interface Props {
+  school: School[];
+  events: Event[];
+}
 
-
-const DashboardConfig: React.FC = () => {
+const DashboardConfig: React.FC<Props> = (Props) => {
   const [menu, setMenu] = React.useState('Events');
+  const { school, events } = Props;
+
+  console.log(school);
 
   const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent)
@@ -36,7 +44,7 @@ const DashboardConfig: React.FC = () => {
                   Settings
           </button>
         </nav>
-        {menu === 'Events' && <EventFormContainer />}
+        {menu === 'Events' && <EventFormContainer School={school ? school : []} events={events ? events : []}/>}
         {menu === 'Settings' && <Settings />}
       </div>
     </section>

@@ -33,7 +33,7 @@ const deleteBatch = async (id: number) => {
 
 
 const BatchConfig: React.FC = () => {
-  const [state, setState] = React.useState(0);
+  /* const [state, setState] = React.useState(0);
   const [batches, setBatches] = React.useState<Batch[]>([]);
   const [batchToUpdate, setBatchToUpdate] = React.useState<Batch>({
     id: 0,
@@ -219,7 +219,10 @@ const BatchConfig: React.FC = () => {
       {state === 1 && formCreateBatch}
       {state === 2 && formUpdateBatch}
     </>
-  )
+  ) */
+  return (
+    <p>In progress</p>
+  );
 };
 
 export default BatchConfig;

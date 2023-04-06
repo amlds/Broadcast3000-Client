@@ -1,5 +1,5 @@
 export default interface EventType {
-  id: number,
+  id?: number,
   name: string,
-  color: string
+  color?: string
 }

@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './views/Home';
 import Dashboard from './views/Dashboard/Dashboard';
 import Login from './views/Login';
-import Device from './views/Device';
+import DisplayView from './views/Display';
 import NotFound from './views/NotFound';
 
 const Root: React.FC = () => {
@@ -15,7 +15,7 @@ const Root: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/device" element={<Device />} />
+        <Route path="/display/:path" element={<DisplayView />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
