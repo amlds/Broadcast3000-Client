@@ -43,6 +43,7 @@ const Dashboard: React.FC = () => {
   const { token , setToken } = React.useContext(TokenContext);
   const [school, setSchool] = React.useState<school[]>();
   const [events, setEvents] = React.useState<Event[]>();
+  const [batch, setBatch] = React.useState<Batch[]>();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [display_path, setDisplayPath] = React.useState<string>('');
   const navigate = useNavigate();
@@ -58,20 +59,16 @@ const Dashboard: React.FC = () => {
           try {
             const data = await getDisplay(`/display/${display_path}`);
             setEvents(data.events);
+            setBatch(data.school.batches);
             setLoading(false);
           } catch (error) {
             window.location.href = '/not-found';
           }
-        }, 2000);
+        }, 500);
       };
       fetchDisplay();
     }
   }, [display_path, navigate, token]);
-
-  const handleClick = () => {
-    setToken('');
-    navigate('/login');
-  }
 
   return (
     <main className='dashboard'>
@@ -85,17 +82,18 @@ const Dashboard: React.FC = () => {
           <section className='dashboard__content'>
             <header>
               <div className="container--dashboard">
-                <div className="align-row">
-                  <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
-                  <button className='button--primary' onClick={handleClick}>Disconnect</button>
-                </div>
+                <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
                 <div className='header__txt'>
                   <h2>Hello Marina !</h2>
                   <LinkDevice displayPath={display_path}/>
                 </div>
               </div>
             </header>
-            <DashboardConfig school={school ? school : []} events={events ? events : []}/>
+            <DashboardConfig
+              school={school ? school : []}
+              events={events ? events : []}
+              batch= {batch ? batch : []}
+            />
           </section>
           <ListCard events={events ? events : []}/>
         </EventProvider>

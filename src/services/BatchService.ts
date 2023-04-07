@@ -1,23 +1,15 @@
 import Batch from "../types/Batch";
 
+interface NewBatch {
+  number: number;
+  start_at: string;
+}
 //Connect with the backend RUBY ON RAILS API
 // /api/v1/schools/:school_id/batchs
 const url = "http://localhost:3001/api/v1";
 
 const BatchService = {
-  async getBatchs(schoolId: number): Promise<Batch[]> {
-    const response = await fetch(`${url}/schools/${schoolId}/batchs`);
-    const batchs = await response.json();
-    return batchs;
-  },
-
-  async getBatch(schoolId: number, batchId: number): Promise<Batch> {
-    const response = await fetch(`${url}/schools/${schoolId}/batchs/${batchId}`);
-    const batch = await response.json();
-    return batch;
-  },
-
-  async createBatch(schoolId: number, batch: Batch): Promise<Batch> {
+  async createBatch(schoolId: number, batch: NewBatch): Promise<Batch> {
     const response = await fetch(`${url}/schools/${schoolId}/batchs`, {
       method: "POST",
       headers: {
@@ -29,8 +21,8 @@ const BatchService = {
     return newBatch;
   },
 
-  async updateBatch(schoolId: number, batch: Batch): Promise<Batch> {
-    const response = await fetch(`${url}/schools/${schoolId}/batchs/${batch.id}`, {
+  async updateBatch(batch: Batch): Promise<Batch> {
+    const response = await fetch(`${url}/batchs/${batch.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -41,8 +33,8 @@ const BatchService = {
     return updatedBatch;
   },
 
-  async deleteBatch(schoolId: number, batchId: number): Promise<Batch> {
-    const response = await fetch(`${url}/schools/${schoolId}/batchs/${batchId}`, {
+  async deleteBatch(batchId: number): Promise<Batch> {
+    const response = await fetch(`${url}/batchs/${batchId}`, {
       method: "DELETE"
     });
     const deletedBatch = await response.json();

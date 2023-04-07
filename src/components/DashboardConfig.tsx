@@ -4,10 +4,12 @@ import EventFormContainer from './EventFormContainer';
 import Settings from './Settings';
 import Event from '../types/Event';
 import School from '../types/School';
+import Batch from '../types/Batch';
 
 interface Props {
   school: School[];
   events: Event[];
+  batch: Batch[];
 }
 
 const DashboardConfig: React.FC<Props> = (Props) => {
@@ -45,7 +47,7 @@ const DashboardConfig: React.FC<Props> = (Props) => {
           </button>
         </nav>
         {menu === 'Events' && <EventFormContainer School={school ? school : []} events={events ? events : []}/>}
-        {menu === 'Settings' && <Settings school={school}/>}
+        {menu === 'Settings' && <Settings school={school} batch={Props.batch}/>}
       </div>
     </section>
   )

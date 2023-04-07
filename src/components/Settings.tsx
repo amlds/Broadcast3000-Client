@@ -2,7 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../context/TokenContext';
 
+import Batch from '../types/Batch';
 import School from '../types/School';
+import BatchConfig from './BatchConfig';
 
 /*interface Props {
   School: {
@@ -16,12 +18,13 @@ import School from '../types/School';
 
 interface Props {
   school: School[];
+  batch: Batch[];
 }
 
 const Settings: React.FC<Props> = (Props) => {
   const { setToken } = React.useContext(TokenContext);
   const [school, setSchool] = React.useState<School>();
-  const [nbrCarrousel, setNbrCarrousel] = React.useState<number>(1);
+  const [nbrCarrousel, setNbrCarrousel] = React.useState<number>(0);
   const [message_display, setMessage_display] = React.useState<string>('');
   const navigate = useNavigate();
 
@@ -35,7 +38,6 @@ const Settings: React.FC<Props> = (Props) => {
     setSchool(Props.school[0]);
     if(school) {
       setNbrCarrousel(school.nbr_carrousel);
-      console.log(school.nbr_carrousel);
       setMessage_display(school.message_display);
     }
   }, [Props.school, school]);
@@ -47,6 +49,7 @@ const Settings: React.FC<Props> = (Props) => {
 
   return (
     <section className='settings'>
+      <BatchConfig school={Props.school} batch={Props.batch}/>
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
         <div className="extra">
