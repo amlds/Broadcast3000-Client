@@ -45,7 +45,7 @@ const DashboardConfig: React.FC<Props> = (Props) => {
           </button>
         </nav>
         {menu === 'Events' && <EventFormContainer School={school ? school : []} events={events ? events : []}/>}
-        {menu === 'Settings' && <Settings />}
+        {menu === 'Settings' && <Settings school={school}/>}
       </div>
     </section>
   )

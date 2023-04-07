@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { TokenContext } from '../context/TokenContext';
 
-import BatchConfig from './BatchConfig';
+import School from '../types/School';
 
 /*interface Props {
   School: {
@@ -14,18 +13,40 @@ import BatchConfig from './BatchConfig';
     setMessage_display: React.Dispatch<React.SetStateAction<string>>;
   }
 }*/
-const Settings: React.FC = () => {
-  const { token , setToken } = React.useContext(TokenContext);
+
+interface Props {
+  school: School[];
+}
+
+const Settings: React.FC<Props> = (Props) => {
+  const { setToken } = React.useContext(TokenContext);
+  const [school, setSchool] = React.useState<School>();
+  const [nbrCarrousel, setNbrCarrousel] = React.useState<number>(1);
+  const [message_display, setMessage_display] = React.useState<string>('');
   const navigate = useNavigate();
+
 
   const handleClick = () => {
     setToken('');
     navigate('/login');
   }
 
+  React.useEffect(() => {
+    setSchool(Props.school[0]);
+    if(school) {
+      setNbrCarrousel(school.nbr_carrousel);
+      console.log(school.nbr_carrousel);
+      setMessage_display(school.message_display);
+    }
+  }, [Props.school, school]);
+
+  const onOptionChange = (e: { target: { value: string; }; }) => {
+    setNbrCarrousel(parseInt(e.target.value))
+  }
+
+
   return (
     <section className='settings'>
-      {/*<BatchConfig />*/}
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
         <div className="extra">
@@ -35,11 +56,11 @@ const Settings: React.FC = () => {
             </label>
             <label>Number of images</label>
             <ul className='settings__carrousel__radio'>
-              <li className='checkbox'><label  htmlFor='1'>1</label><input /* onChange={handleChange} */ type='radio' id='1' name='number' value='1' /></li>
-              <li className='checkbox'><label  htmlFor='2'>2</label><input /* onChange={handleChange} */ type='radio' id='2' name='number' value='2' /></li>
-              <li className='checkbox'><label  htmlFor='3'>3</label><input /* onChange={handleChange} */ type='radio' id='3' name='number' value='3' /></li>
-              <li className='checkbox'><label  htmlFor='4'>4</label><input /* onChange={handleChange} */ type='radio' id='4' name='number' value='4' /></li>
-              <li className='checkbox'><label  htmlFor='5'>5</label><input /* onChange={handleChange} */ type='radio' id='5' name='number' value='5' /></li>
+              <li className="checkbox"><label  htmlFor='1'>1</label><input type="radio" name="number" value="1" checked={nbrCarrousel === 1} onChange={onOptionChange} /></li>
+              <li className="checkbox"><label  htmlFor='1'>2</label><input type="radio" name="number" value="2" checked={nbrCarrousel === 2} onChange={onOptionChange} /></li>
+              <li className="checkbox"><label  htmlFor='1'>3</label><input type="radio" name="number" value="3" checked={nbrCarrousel === 3} onChange={onOptionChange} /></li>
+              <li className="checkbox"><label  htmlFor='1'>4</label><input type="radio" name="number" value="4" checked={nbrCarrousel === 4} onChange={onOptionChange} /></li>
+              <li className="checkbox"><label  htmlFor='1'>5</label><input type="radio" name="number" value="5" checked={nbrCarrousel === 5} onChange={onOptionChange} /></li>
             </ul>
             <button type="submit" className='button--primary'>Confirm</button>
           </form>
