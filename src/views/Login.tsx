@@ -1,9 +1,9 @@
 import React from 'react';
+import  Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
 import '../assets/views/login.scss';
 
-import { TokenContext } from '../context/TokenContext';
 import UserService from '../services/UserService';
 import User from '../types/User';
 
@@ -13,25 +13,34 @@ const Login = () => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const [isLogin, setIsLogin] = React.useState(true);
   const navigate = useNavigate();
-  const { token , setToken } = React.useContext(TokenContext);
 
   const handleSubmit = async (user: User) => {
     console.log(user);
     const response = await UserService.loginUser(user);
-    setToken(response);
+    Cookies.set('token', response.token);
+    navigateToDashboard();
   };
 
   const handleSignUp = async (user: User) => {
     console.log(user);
     const token = await UserService.signInUser(user);
-    setToken(token);
+    Cookies.set('token', token);
+    navigateToDashboard();
   };
 
-  React.useEffect(() => {
-    if(token !== '' && !token.error){
+  const navigateToDashboard = () => {
+    const token = Cookies.get('token');
+    if(token !== '' && token !== undefined && token !== null){
       navigate('/dashboard')
     }
-  }, [token, navigate])
+  }
+
+  React.useEffect(() => {
+    const token = Cookies.get('token');
+    if(token !== '' && token !== undefined && token !== null){
+      navigate('/dashboard')
+    }
+  }, [navigate])
 
 
   return (

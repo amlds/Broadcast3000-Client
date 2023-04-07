@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import { EventProvider } from '../../context/EventContext';
 import jwt_decode from 'jwt-decode';
+import  Cookies from 'js-cookie';
 
 import '../../assets/views/dashboard.scss';
 
@@ -10,7 +11,6 @@ import Event from '../../types/Event';
 import school from '../../types/School';
 import Batch from '../../types/Batch'
 
-import { TokenContext } from '../../context/TokenContext';
 import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
 import DashboardConfig from '../../components/DashboardConfig';
@@ -35,7 +35,7 @@ interface decoded {
 }
 
 const Dashboard: React.FC = () => {
-  const { token } = React.useContext(TokenContext);
+  const [ cookieToken ] = React.useState(Cookies.get('token'));
   const [school, setSchool] = React.useState<school[]>();
   const [events, setEvents] = React.useState<Event[]>();
   const [batch, setBatch] = React.useState<Batch[]>();
@@ -61,16 +61,17 @@ const Dashboard: React.FC = () => {
    }
 
   React.useEffect(() => {
-    if(!token.token) navigate('/login');
-    else {
-      const decoded = decodeToken(token.token) as decoded;
+    if (cookieToken === undefined || cookieToken === '' || cookieToken === null) {
+      navigate('/login');
+    } else {
+      const decoded = decodeToken(cookieToken) as decoded;
       setDisplayPath(decoded.schools[0].display_path);
       setSchool(decoded.schools);
       setTimeout(() => {
         fetchDisplay(decoded.schools[0].display_path);
       }, 500);
     }
-  }, [display_path, navigate, token]);
+  }, [display_path, navigate, cookieToken]);
 
   return (
     <main className='dashboard'>

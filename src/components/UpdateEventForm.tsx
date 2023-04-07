@@ -1,9 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-
+import  Cookies from 'js-cookie';
 import Event from '../types/Event';
 import EventService from '../services/EventService';
 import { EventContext } from '../context/EventContext';
-import { TokenContext } from '../context/TokenContext';
 
 interface Props {
   events: Event[];
@@ -16,7 +15,7 @@ const deleteEvent = async (token: string, eventId: number) => {
 
 const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
   const { toggleUpdate, eventIdUpdate } = useContext(EventContext);
-  const { token } = useContext(TokenContext);
+  const [token] = useState<string>(Cookies.get('token') || '');
   const [eventUpdate, setEventUpdate] = useState<Event>({ name: '', description: '', start_time: '', end_time: '', event_type: { id: 0, name: '' }, photo: '' });
   const [eventTypes] = useState<string[]>(['Private', 'Public', 'Formation', 'Extern']);
 
@@ -118,7 +117,7 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
           />
         <div className="align-row">
           <input type="submit" value="Update Event" className="button--primary" />
-          <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token.token, eventIdUpdate)}>Delete Event</button>
+          <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token, eventIdUpdate)}>Delete Event</button>
           <button type="button" className="button--secondary" onClick={cancelUpdate}>Cancel</button>
         </div>
     </form>

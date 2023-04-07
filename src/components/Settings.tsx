@@ -1,20 +1,10 @@
 import React from 'react';
+import  Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
-import { TokenContext } from '../context/TokenContext';
 
 import Batch from '../types/Batch';
 import School from '../types/School';
 import BatchConfig from './BatchConfig';
-
-/*interface Props {
-  School: {
-    schoolId: number;
-    nbrCarrousel: number;
-    setNbrCarrousel: React.Dispatch<React.SetStateAction<number>>;
-    message_display: string;
-    setMessage_display: React.Dispatch<React.SetStateAction<string>>;
-  }
-}*/
 
 interface Props {
   school: School[];
@@ -22,7 +12,6 @@ interface Props {
 }
 
 const Settings: React.FC<Props> = (Props) => {
-  const { setToken } = React.useContext(TokenContext);
   const [school, setSchool] = React.useState<School>();
   const [nbrCarrousel, setNbrCarrousel] = React.useState<number>(0);
   const [message_display, setMessage_display] = React.useState<string>('');
@@ -30,7 +19,7 @@ const Settings: React.FC<Props> = (Props) => {
 
 
   const handleClick = () => {
-    setToken('');
+    Cookies.remove('token');
     navigate('/login');
   }
 

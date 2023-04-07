@@ -1,8 +1,8 @@
 import React from 'react';
+import  Cookies from 'js-cookie';
 
 import EventService from '../services/EventService';
 import Event from '../types/Event'
-import { TokenContext } from '../context/TokenContext';
 
 interface NewEvent {
   name: string;
@@ -25,7 +25,7 @@ interface Props {
 const AddEventForm: React.FC<Props> = (Props) => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
-  const { token } = React.useContext(TokenContext);
+  const [token] = React.useState<string>(Cookies.get('token') || '');
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
