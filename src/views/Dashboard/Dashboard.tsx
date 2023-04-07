@@ -15,10 +15,6 @@ import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
 import DashboardConfig from '../../components/DashboardConfig';
 
-const decodeToken = (token: string) => {
-  const decoded = jwt_decode(token);
-  return decoded;
-}
 
 const getDisplay = (display_path: string) => {
   const display = displayService.getDisplayInfos(display_path);
@@ -38,9 +34,8 @@ interface decoded {
   }]
 }
 
-
 const Dashboard: React.FC = () => {
-  const { token , setToken } = React.useContext(TokenContext);
+  const { token } = React.useContext(TokenContext);
   const [school, setSchool] = React.useState<school[]>();
   const [events, setEvents] = React.useState<Event[]>();
   const [batch, setBatch] = React.useState<Batch[]>();
@@ -48,25 +43,32 @@ const Dashboard: React.FC = () => {
   const [display_path, setDisplayPath] = React.useState<string>('');
   const navigate = useNavigate();
 
+  const decodeToken = (token: string) => {
+    const decoded = jwt_decode(token) as decoded;
+    return decoded;
+  }
+
+  // // Callback function to fetch display infos
+  const fetchDisplay = async (display_path: string) =>{
+     try {
+      const data = await getDisplay(`/display/${display_path}`);
+       setBatch(data.school.batches);
+       setEvents(data.events);
+       setLoading(false);
+     } catch (error) {
+       window.location.href = '/not-found';
+     }
+   }
+
   React.useEffect(() => {
     if(!token.token) navigate('/login');
     else {
       const decoded = decodeToken(token.token) as decoded;
       setDisplayPath(decoded.schools[0].display_path);
       setSchool(decoded.schools);
-      const fetchDisplay = async () => {
-        setTimeout(async () => {
-          try {
-            const data = await getDisplay(`/display/${display_path}`);
-            setEvents(data.events);
-            setBatch(data.school.batches);
-            setLoading(false);
-          } catch (error) {
-            window.location.href = '/not-found';
-          }
-        }, 500);
-      };
-      fetchDisplay();
+      setTimeout(() => {
+        fetchDisplay(decoded.schools[0].display_path);
+      }, 500);
     }
   }, [display_path, navigate, token]);
 

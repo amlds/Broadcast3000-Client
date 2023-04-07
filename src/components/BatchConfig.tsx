@@ -37,7 +37,7 @@ const BatchConfig: React.FC<Props> = (Props) => {
     return res;
   };
 
-  const UpdateBatch = async (batch: Batch) => {
+  /* const UpdateBatch = async (batch: Batch) => {
     const res = await BatchService.updateBatch(batch);
     return res;
   };
@@ -45,18 +45,19 @@ const BatchConfig: React.FC<Props> = (Props) => {
   const deleteBatch = async (batchId: number) => {
     const res = await BatchService.deleteBatch(batchId);
     return res;
-  };
+  }; */
 
   const goToUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
     const batchId = e.currentTarget.dataset.id;
     const batch = batches.find((batch) => batch.id === Number(batchId));
     if (batch) {
       setBatchToUpdate(batch);
+      console.log(batchToUpdate);
       setState(2);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+ /*  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const batchNumber = e.currentTarget.batchNumber.value;
     const startDate = e.currentTarget.startDate.value;
@@ -72,7 +73,31 @@ const BatchConfig: React.FC<Props> = (Props) => {
       setState(0);
     }
   };
-
+ */
+  /* const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const batchNumber = e.currentTarget.batchNumber.value;
+    const startDate = e.currentTarget.startDate.value;
+    const courseId = e.currentTarget.courseId.value;
+    const batchToUpdate = {
+      id: batchToUpdate!.id,
+      number: batchNumber,
+      start_at: startDate,
+      course_id: courseId,
+    };
+    const res = await UpdateBatch(batchToUpdate);
+    if (res) {
+      const newBatches = batches.map((batch) => {
+        if (batch.id === res.id) {
+          return res;
+        }
+        return batch;
+      });
+      setBatches(newBatches);
+      setState(0);
+    }
+  };
+ */
   const viewBatch = (
     <div className='settings__batch'>
       <h3>Actual batches</h3>
@@ -92,27 +117,32 @@ const BatchConfig: React.FC<Props> = (Props) => {
     </div>
   );
 
-   const addBatch = (
+/*    const addBatch = (
     <div className='settings__batch'>
-      <h3>Add a new batch</h3>
-      <form onSubmit={handleSubmit}>
+      <h3>Add new batch</h3>
+      <form className='batch__form' onSubmit={handleSubmit}>
         <label htmlFor="batchNumber">Batch number</label>
-        <input type="number" name="batchNumber" id="batchNumber" required />
+        <input className='input--txt' type="number" name="batchNumber" id="batchNumber" required />
         <label htmlFor="startDate">Start date</label>
-        <input type="date" name="startDate" id="startDate" required />
+        <input className='input--txt' type="date" name="startDate" id="startDate" required />
         <label htmlFor="courseId">Course</label>
-        <select name="courseId" id="courseId" required>
-          <option value="1">Full Stack Web Development</option>
-          <option value="2">Data Science</option>
-          <option value="3">UX/UI Design</option>
-        </select>
-        <button type="submit" className='button--primary'>Create</button>
+        <div className="checkbox--batch">
+          <input type="radio" id="webdev" name="courseId" value="1" className='textContaint'/>
+          <label htmlFor="webdev">Web Development</label>
+          <input type="radio" id="datascience" name="courseId" value="2" className='textContaint'/>
+          <label htmlFor="datascience">Data Science</label>
+          <input type="radio" id="dataanalyse" name="courseId" value="3" className='textContaint'/>
+          <label htmlFor="dataanalyse">Data Analyse</label>
+        </div>
+        <div className='align-row'>
+          <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
+          <button type="submit" className='button--primary'>Confirm create</button>
+        </div>
       </form>
-      <button type="submit" className='button--primary' onClick={() => setState(0)}>Back</button>
     </div>
-  );
-/*
-  const updateBatch = (
+  ); */
+
+  /* const updateBatch = (
     <div className='settings__batch'>
       <h3>Update batch #{batchToUpdate?.number}</h3>
       <form onSubmit={handleUpdate}>
@@ -136,9 +166,9 @@ const BatchConfig: React.FC<Props> = (Props) => {
   return (
     <div className='settings__batch'>
       {state === 0 && viewBatch}
-      {state === 1 && addBatch}
-      {/*{state === 2 && updateBatch} */}
-    </div>
+      {/*  {state === 1 && addBatch}
+     {state === 2 && updateBatch}
+ */}    </div>
   );
 };
 
