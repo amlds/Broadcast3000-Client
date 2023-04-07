@@ -52,7 +52,7 @@ const Settings: React.FC<Props> = (Props) => {
         <div className="extra">
           <form>
             <label>Extra info sentence
-              <input className='input--txt' type="text" name='text' placeholder='Message pour les devices'/>
+              <input className='input--txt' type="text" name="message" value={message_display} onChange={(e) => setMessage_display(e.target.value)} />
             </label>
             <label>Number of images</label>
             <ul className='settings__carrousel__radio'>
