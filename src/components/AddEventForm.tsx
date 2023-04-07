@@ -13,8 +13,8 @@ interface NewEvent {
   event_type_id: number;
 }
 
-const createEvent = async (token: any, event: NewEvent) => {
-  const res = await EventService.createEvent(token.token, 1, event);
+const createEvent = async (token: any, shcoolId: number, event: NewEvent) => {
+  const res = await EventService.createEvent(token.token, shcoolId, event);
   return res;
 }
 
@@ -102,7 +102,7 @@ const AddEventForm: React.FC<Props> = (Props) => {
     formData.append('event', JSON.stringify(eventToCreate));
     e.preventDefault();
     if (name && start_time && end_time && description && event_type.name) {
-      createEvent(token, eventToCreate);
+      createEvent(token, Props.schoolId, eventToCreate);
       messageRef.current!.innerHTML = '🎉 Evénement créé 🎉';
       formRef.current!.reset();
     }
