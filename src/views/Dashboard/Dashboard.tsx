@@ -54,6 +54,7 @@ const Dashboard: React.FC = () => {
      try {
       const data = await getDisplay(`/display/${display_path}`);
        setBatch(data.school.batches);
+       console.log(data.school.batches);
        setEvents(data.events);
        setLoading(false);
      } catch (error) {

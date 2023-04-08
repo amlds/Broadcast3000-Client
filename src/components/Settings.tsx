@@ -6,12 +6,20 @@ import Batch from '../types/Batch';
 import School from '../types/School';
 import BatchConfig from './BatchConfig';
 
+import SchoolService from '../services/SchoolService';
+
 interface Props {
   school: School[];
   batch: Batch[];
 }
 
+interface UpdateSchool {
+  nbr_carrousel: number;
+  message_display: string;
+}
+
 const Settings: React.FC<Props> = (Props) => {
+  const token = Cookies.get('token');
   const [school, setSchool] = React.useState<School>();
   const [nbrCarrousel, setNbrCarrousel] = React.useState<number>(0);
   const [message_display, setMessage_display] = React.useState<string>('');
@@ -35,6 +43,19 @@ const Settings: React.FC<Props> = (Props) => {
     setNbrCarrousel(parseInt(e.target.value))
   }
 
+  const updateSchool = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const nbrCarrousel = e.currentTarget.number.value;
+    const message_display = e.currentTarget.message.value;
+    const schoolToCreate = {
+      nbr_carrousel: nbrCarrousel,
+      message_display: message_display
+    };
+    const res = await SchoolService.updateSchool(schoolToCreate, school!.id, token);
+    if (res) {
+      setSchool(res);
+    }
+  }
 
   return (
     <section className='settings'>
@@ -42,7 +63,7 @@ const Settings: React.FC<Props> = (Props) => {
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
         <div className="extra">
-          <form>
+          <form onSubmit={updateSchool}>
             <label>Extra info sentence
               <input className='input--txt' type="text" name="message" value={message_display} onChange={(e) => setMessage_display(e.target.value)} />
             </label>
@@ -54,7 +75,8 @@ const Settings: React.FC<Props> = (Props) => {
               <li className="checkbox"><label  htmlFor='1'>4</label><input type="radio" name="number" value="4" checked={nbrCarrousel === 4} onChange={onOptionChange} /></li>
               <li className="checkbox"><label  htmlFor='1'>5</label><input type="radio" name="number" value="5" checked={nbrCarrousel === 5} onChange={onOptionChange} /></li>
             </ul>
-            <button type="submit" className='button--primary'>Confirm</button>
+            <input type="submit" className='button--secondary' value="Save" />
+            <button type="submit" className='button--secondary'>Cancel</button>
           </form>
         </div>
       </div>

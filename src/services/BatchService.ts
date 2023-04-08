@@ -2,7 +2,9 @@ import Batch from "../types/Batch";
 
 interface NewBatch {
   number: number;
+  course_id: number;
   start_at: string;
+  school_id: number;
 }
 //Connect with the backend RUBY ON RAILS API
 // /api/v1/schools/:school_id/batchs
