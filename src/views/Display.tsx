@@ -16,6 +16,7 @@ const getDisplay = (display_path: string) => {
 const DisplayView: React.FC = () => {
   const [batch, setBatch] = React.useState<Batch[]>();
   const [events, setEvents] = React.useState<Event[]>();
+  const [message_display, setMessage_display] = React.useState<string>('');
   const [date, setDate] = React.useState<Date>(new Date());
   const messageRef = React.useRef<HTMLDivElement>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -26,6 +27,7 @@ const DisplayView: React.FC = () => {
         const data = await getDisplay(`${window.location.pathname}`);
         setBatch(data.school.batches);
         setEvents(data.events);
+        setMessage_display(data.school.message_display);
         setLoading(false);
       } catch (error) {
         window.location.href = '/not-found';
@@ -57,7 +59,7 @@ const DisplayView: React.FC = () => {
           <div className='device__content--text'>
             <h1>Hello wagoners !</h1>
             <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
-            <p>Ici une phase que Marina pourra changer à sa guise</p>
+            <p>{message_display}</p>
             <div className="align-row">
               <p>Aujourd’hui au programme :</p>
               {

@@ -31,7 +31,6 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ handleChange, user }) => {
 
   const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const confirmPassword = event.target.value;
-    console.log(confirmPassword, user.user.password)
     if (confirmPassword === '') {
       messageRef.current!.classList.remove('show');
       messageRef.current!.innerHTML = '';

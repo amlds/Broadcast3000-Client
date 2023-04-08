@@ -22,9 +22,7 @@ const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (user.user.password.match(/[!@#$%^&*(),.?":{}|<>]/g) && user.user.password.match(/\d+/g) && user.user.password.match(/[A-Z]/g)) {
-      console.log('Form submitted successfully');
     } else {
-      console.log('Password does not meet the requirements');
       messageRef.current!.classList.add('show');
       messageRef.current!.innerHTML = 'Password does not meet the requirements';
     }

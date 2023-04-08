@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import { EventProvider } from '../../context/EventContext';
 import jwt_decode from 'jwt-decode';
+import  Cookies from 'js-cookie';
 
 import '../../assets/views/dashboard.scss';
 
@@ -10,15 +11,10 @@ import Event from '../../types/Event';
 import school from '../../types/School';
 import Batch from '../../types/Batch'
 
-import { TokenContext } from '../../context/TokenContext';
 import ListCard from '../../components/ListCard';
 import LinkDevice from '../../components/LinkDevice';
 import DashboardConfig from '../../components/DashboardConfig';
 
-const decodeToken = (token: string) => {
-  const decoded = jwt_decode(token);
-  return decoded;
-}
 
 const getDisplay = (display_path: string) => {
   const display = displayService.getDisplayInfos(display_path);
@@ -38,40 +34,46 @@ interface decoded {
   }]
 }
 
-
 const Dashboard: React.FC = () => {
-  const { token , setToken } = React.useContext(TokenContext);
+  const [ cookieToken ] = React.useState(Cookies.get('token'));
   const [school, setSchool] = React.useState<school[]>();
   const [events, setEvents] = React.useState<Event[]>();
+  const [batch, setBatch] = React.useState<Batch[]>();
   const [loading, setLoading] = React.useState<boolean>(true);
   const [display_path, setDisplayPath] = React.useState<string>('');
   const navigate = useNavigate();
 
+  const decodeToken = (token: string) => {
+    const decoded = jwt_decode(token) as decoded;
+    console.log(decoded);
+    return decoded;
+  }
+
+  // // Callback function to fetch display infos
+  const fetchDisplay = async (display_path: string) =>{
+     try {
+      const data = await getDisplay(`/display/${display_path}`);
+       setBatch(data.school.batches);
+       console.log(data.school.batches);
+       setEvents(data.events);
+       setLoading(false);
+     } catch (error) {
+       window.location.href = '/not-found';
+     }
+   }
+
   React.useEffect(() => {
-    if(!token.token) navigate('/login');
-    else {
-      const decoded = decodeToken(token.token) as decoded;
+    if (cookieToken === undefined || cookieToken === '' || cookieToken === null) {
+      navigate('/login');
+    } else {
+      const decoded = decodeToken(cookieToken) as decoded;
       setDisplayPath(decoded.schools[0].display_path);
       setSchool(decoded.schools);
-      const fetchDisplay = async () => {
-        setTimeout(async () => {
-          try {
-            const data = await getDisplay(`/display/${display_path}`);
-            setEvents(data.events);
-            setLoading(false);
-          } catch (error) {
-            window.location.href = '/not-found';
-          }
-        }, 2000);
-      };
-      fetchDisplay();
+      setTimeout(() => {
+        fetchDisplay(decoded.schools[0].display_path);
+      }, 500);
     }
-  }, [display_path, navigate, token]);
-
-  const handleClick = () => {
-    setToken('');
-    navigate('/login');
-  }
+  }, [display_path, navigate, cookieToken]);
 
   return (
     <main className='dashboard'>
@@ -85,17 +87,18 @@ const Dashboard: React.FC = () => {
           <section className='dashboard__content'>
             <header>
               <div className="container--dashboard">
-                <div className="align-row">
-                  <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
-                  <button className='button--primary' onClick={handleClick}>Disconnect</button>
-                </div>
+                <img className='logo' src='./images/Logo_wagon_white.png' alt='Wagon Logo'></img>
                 <div className='header__txt'>
                   <h2>Hello Marina !</h2>
                   <LinkDevice displayPath={display_path}/>
                 </div>
               </div>
             </header>
-            <DashboardConfig school={school ? school : []} events={events ? events : []}/>
+            <DashboardConfig
+              school={school ? school : []}
+              events={events ? events : []}
+              batch= {batch ? batch : []}
+            />
           </section>
           <ListCard events={events ? events : []}/>
         </EventProvider>

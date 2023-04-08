@@ -4,17 +4,17 @@ import EventFormContainer from './EventFormContainer';
 import Settings from './Settings';
 import Event from '../types/Event';
 import School from '../types/School';
+import Batch from '../types/Batch';
 
 interface Props {
   school: School[];
   events: Event[];
+  batch: Batch[];
 }
 
 const DashboardConfig: React.FC<Props> = (Props) => {
   const [menu, setMenu] = React.useState('Events');
   const { school, events } = Props;
-
-  console.log(school);
 
   const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent)
@@ -45,7 +45,7 @@ const DashboardConfig: React.FC<Props> = (Props) => {
           </button>
         </nav>
         {menu === 'Events' && <EventFormContainer School={school ? school : []} events={events ? events : []}/>}
-        {menu === 'Settings' && <Settings />}
+        {menu === 'Settings' && <Settings school={school} batch={Props.batch}/>}
       </div>
     </section>
   )

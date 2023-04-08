@@ -2,36 +2,24 @@ import School from "../types/School";
 
 const url = "http://localhost:3001/api/v1";
 
-const SchoolService = {
-  async getSchools(): Promise<School[]> {
-    const response = await fetch(`${url}/schools`);
-    const schools = await response.json();
-    return schools;
-  },
+interface UpdateSchool {
+  message_display: string;
+  nbr_carrousel: number;
+}
 
+const SchoolService = {
   async getSchool(schoolId: number): Promise<School> {
     const response = await fetch(`${url}/schools/${schoolId}`);
     const school = await response.json();
     return school;
   },
 
-  async createSchool(school: School): Promise<School> {
-    const response = await fetch(`${url}/schools`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(school)
-    });
-    const newSchool = await response.json();
-    return newSchool;
-  },
-
-  async updateSchool(school: School): Promise<School> {
-    const response = await fetch(`${url}/schools/${school.id}`, {
+  async updateSchool(school: UpdateSchool, schoolId: number, token: any): Promise<School> {
+    const response = await fetch(`${url}/schools/${schoolId}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": token
       },
       body: JSON.stringify(school)
     });

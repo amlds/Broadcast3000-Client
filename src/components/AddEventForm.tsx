@@ -1,8 +1,8 @@
 import React from 'react';
+import  Cookies from 'js-cookie';
 
 import EventService from '../services/EventService';
 import Event from '../types/Event'
-import { TokenContext } from '../context/TokenContext';
 
 interface NewEvent {
   name: string;
@@ -13,8 +13,8 @@ interface NewEvent {
   event_type_id: number;
 }
 
-const createEvent = async (token: any, event: NewEvent) => {
-  const res = await EventService.createEvent(token.token, 1, event);
+const createEvent = async (token: string, shcoolId: number, event: NewEvent) => {
+  const res = await EventService.createEvent(token, shcoolId, event);
   return res;
 }
 
@@ -25,7 +25,7 @@ interface Props {
 const AddEventForm: React.FC<Props> = (Props) => {
   const messageRef = React.useRef<HTMLParagraphElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
-  const { token } = React.useContext(TokenContext);
+  const [token] = React.useState<string>(Cookies.get('token') || '');
   const [event, setEvent] = React.useState<Event>({
     name: '',
     start_time: '',
@@ -87,7 +87,6 @@ const AddEventForm: React.FC<Props> = (Props) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(token);
     const { name, start_time, end_time, description, event_type } = event;
     const eventTypeId = eventTypes.findIndex(type => type === event_type.name) + 1;
     const eventToCreate = {
@@ -102,7 +101,7 @@ const AddEventForm: React.FC<Props> = (Props) => {
     formData.append('event', JSON.stringify(eventToCreate));
     e.preventDefault();
     if (name && start_time && end_time && description && event_type.name) {
-      createEvent(token, eventToCreate);
+      createEvent(token, Props.schoolId, eventToCreate);
       messageRef.current!.innerHTML = '🎉 Evénement créé 🎉';
       formRef.current!.reset();
     }
