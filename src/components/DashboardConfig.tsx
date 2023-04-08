@@ -16,8 +16,6 @@ const DashboardConfig: React.FC<Props> = (Props) => {
   const [menu, setMenu] = React.useState('Events');
   const { school, events } = Props;
 
-  console.log(school);
-
   const handlClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent)
     setMenu(e.currentTarget.textContent);

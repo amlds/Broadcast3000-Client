@@ -9,11 +9,12 @@ interface NewBatch {
 const url = "http://localhost:3001/api/v1";
 
 const BatchService = {
-  async createBatch(schoolId: number, batch: NewBatch): Promise<Batch> {
+  async createBatch(schoolId: number, batch: NewBatch, token: any): Promise<Batch> {
     const response = await fetch(`${url}/schools/${schoolId}/batchs`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": token
       },
       body: JSON.stringify(batch)
     });
@@ -21,11 +22,12 @@ const BatchService = {
     return newBatch;
   },
 
-  async updateBatch(batch: Batch): Promise<Batch> {
+  async updateBatch(batch: Batch, token: any): Promise<Batch> {
     const response = await fetch(`${url}/batchs/${batch.id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": token
       },
       body: JSON.stringify(batch)
     });
@@ -33,9 +35,13 @@ const BatchService = {
     return updatedBatch;
   },
 
-  async deleteBatch(batchId: number): Promise<Batch> {
+  async deleteBatch(batchId: number, token: any): Promise<Batch> {
     const response = await fetch(`${url}/batchs/${batchId}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
     });
     const deletedBatch = await response.json();
     return deletedBatch;

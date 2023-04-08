@@ -13,7 +13,6 @@ const UserService = {
         body: JSON.stringify(user)
       });
       const token = await response.json();
-      console.log(token);
       return token;
     } catch (error) {
       console.error(error);

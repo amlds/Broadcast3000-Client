@@ -15,14 +15,12 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (user: User) => {
-    console.log(user);
     const response = await UserService.loginUser(user);
     Cookies.set('token', response.token);
     navigateToDashboard();
   };
 
   const handleSignUp = async (user: User) => {
-    console.log(user);
     const token = await UserService.signInUser(user);
     Cookies.set('token', token);
     navigateToDashboard();
@@ -30,6 +28,7 @@ const Login = () => {
 
   const navigateToDashboard = () => {
     const token = Cookies.get('token');
+    console.log(token);
     if(token !== '' && token !== undefined && token !== null){
       navigate('/dashboard')
     }

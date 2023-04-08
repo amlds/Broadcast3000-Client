@@ -1,4 +1,5 @@
 import React from 'react';
+import Cookies from 'js-cookie';
 
 import school from '../types/School';
 import Batch from '../types/Batch';
@@ -15,9 +16,18 @@ interface Props {
 interface NewBatch {
   number: number;
   start_at: string;
+  course_id: number;
+}
+
+interface BatchToUpdate {
+  id: number;
+  number: number;
+  start_at: string;
+  course_id: number;
 }
 
 const BatchConfig: React.FC<Props> = (Props) => {
+  const [token] = React.useState(Cookies.get('token'));
   const [state, setState] = React.useState(0);
   const [schoolId, setSchoolId] = React.useState<number>(3);
   const [batches, setBatches] = React.useState<Batch[]>([]);
@@ -25,39 +35,41 @@ const BatchConfig: React.FC<Props> = (Props) => {
 
   React.useEffect(() => {
     if (Props.school.length > 0) {
-      console.log(Props.school);
       setSchoolId(Props.school[0].id);
       setBatches(Props.batch);
-      console.log(batches);
     }
   }, [Props.batch, Props.school, batches]);
 
-  const createBatch = async (schoolId: number, batch: NewBatch) => {
-    const res = await BatchService.createBatch(schoolId, batch);
+  const createBatch = async (schoolId: number, batch: NewBatch, token: any) => {
+    const res = await BatchService.createBatch(schoolId, batch, token);
     return res;
   };
 
-  /* const UpdateBatch = async (batch: Batch) => {
-    const res = await BatchService.updateBatch(batch);
+  const UpdateBatch = async (batch: Batch, token: any) => {
+    const res = await BatchService.updateBatch(batch, token);
     return res;
   };
 
-  const deleteBatch = async (batchId: number) => {
-    const res = await BatchService.deleteBatch(batchId);
+  const deleteBatch = async (batchId: number, token: any) => {
+    const res = await BatchService.deleteBatch(batchId, token);
     return res;
-  }; */
+  };
+
+  const structureTime = (time: string) => {
+    const date = new Date(time);
+    return `${date.toLocaleDateString('fr-FR', {year:'numeric', month: 'long', day: 'numeric' })}`;
+  };
 
   const goToUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {
     const batchId = e.currentTarget.dataset.id;
-    const batch = batches.find((batch) => batch.id === Number(batchId));
-    if (batch) {
-      setBatchToUpdate(batch);
-      console.log(batchToUpdate);
+    const goToUpdateBatch = batches.find((batch) => batch.id === Number(batchId));
+    if (goToUpdateBatch) {
+      setBatchToUpdate(goToUpdateBatch);
       setState(2);
     }
   };
 
- /*  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const batchNumber = e.currentTarget.batchNumber.value;
     const startDate = e.currentTarget.startDate.value;
@@ -67,25 +79,28 @@ const BatchConfig: React.FC<Props> = (Props) => {
       start_at: startDate,
       course_id: courseId,
     };
-    const res = await createBatch(schoolId, batchToCreate);
+    const res = await createBatch(schoolId, batchToCreate, token);
     if (res) {
       setBatches([...batches, res]);
       setState(0);
     }
   };
- */
-  /* const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const batchNumber = e.currentTarget.batchNumber.value;
     const startDate = e.currentTarget.startDate.value;
     const courseId = e.currentTarget.courseId.value;
-    const batchToUpdate = {
+    const batchGoToUpdate = {
       id: batchToUpdate!.id,
       number: batchNumber,
       start_at: startDate,
-      course_id: courseId,
+      course: {
+        id: courseId,
+        name: batchToUpdate!.course.name
+      }
     };
-    const res = await UpdateBatch(batchToUpdate);
+    const res = await UpdateBatch(batchGoToUpdate, token);
     if (res) {
       const newBatches = batches.map((batch) => {
         if (batch.id === res.id) {
@@ -97,14 +112,16 @@ const BatchConfig: React.FC<Props> = (Props) => {
       setState(0);
     }
   };
- */
+
   const viewBatch = (
     <div className='settings__batch'>
       <h3>Actual batches</h3>
       <ul>
         {batches.map((batch) => (
           <li key={batch.id}>
-            <span className='md-text-1'>Batch #{batch.number} :</span> <CoursesView id={batch.id ? batch.id : 0} /> - Started on {batch.start_at}
+            <span className='md-text-1'>Batch #{batch.number} :</span>
+            <CoursesView name={batch.course.name} />
+             - Started on {structureTime(batch.start_at)}
             <button className='button--edit--svg'
               data-id={batch.id}
               onClick={goToUpdate}>
@@ -117,7 +134,7 @@ const BatchConfig: React.FC<Props> = (Props) => {
     </div>
   );
 
-/*    const addBatch = (
+  const addBatch = (
     <div className='settings__batch'>
       <h3>Add new batch</h3>
       <form className='batch__form' onSubmit={handleSubmit}>
@@ -140,9 +157,9 @@ const BatchConfig: React.FC<Props> = (Props) => {
         </div>
       </form>
     </div>
-  ); */
+  );
 
-  /* const updateBatch = (
+  const updateBatch = (
     <div className='settings__batch'>
       <h3>Update batch #{batchToUpdate?.number}</h3>
       <form onSubmit={handleUpdate}>
@@ -151,7 +168,7 @@ const BatchConfig: React.FC<Props> = (Props) => {
         <label htmlFor="startDate">Start date</label>
         <input type="date" name="startDate" id="startDate" defaultValue={batchToUpdate?.start_at} required />
         <label htmlFor="courseId">Course</label>
-        <select name="courseId" id="courseId" defaultValue={batchToUpdate?.course_id} required>
+        <select name="courseId" id="courseId" defaultValue={batchToUpdate?.course.id} required>
           <option value="1">Full Stack Web Development</option>
           <option value="2">Data Science</option>
           <option value="3">UX/UI Design</option>
@@ -160,15 +177,15 @@ const BatchConfig: React.FC<Props> = (Props) => {
       </form>
       <button type="submit" className='button--primary' onClick={() => setState(0)}>Back</button>
     </div>
-  ); */
+  );
 
 
   return (
     <div className='settings__batch'>
       {state === 0 && viewBatch}
-      {/*  {state === 1 && addBatch}
+      {state === 1 && addBatch}
      {state === 2 && updateBatch}
- */}    </div>
+    </div>
   );
 };
 
@@ -245,7 +262,6 @@ const BatchConfig: React.FC<Props> = (Props) => {
     } else if (e.target.name === 'startDate') {
       setBatchToUpdate({ ...batchToUpdate, start_at: e.target.value });
     } else if (e.target.name === 'courseId') {
-      console.log(e.target.value);
       setBatchToUpdate({ ...batchToUpdate, course_id: parseInt(e.target.value) });
     }
   };

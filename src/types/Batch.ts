@@ -1,5 +1,5 @@
 export default interface Batch {
-  id?: number;
+  id: number;
   course: {
     id: number;
     name: string;

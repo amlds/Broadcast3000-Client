@@ -87,7 +87,6 @@ const AddEventForm: React.FC<Props> = (Props) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    console.log(token);
     const { name, start_time, end_time, description, event_type } = event;
     const eventTypeId = eventTypes.findIndex(type => type === event_type.name) + 1;
     const eventToCreate = {
