@@ -13,8 +13,8 @@ interface NewEvent {
   event_type_id: number;
 }
 
-const createEvent = async (token: any, shcoolId: number, event: NewEvent) => {
-  const res = await EventService.createEvent(token.token, shcoolId, event);
+const createEvent = async (token: string, shcoolId: number, event: NewEvent) => {
+  const res = await EventService.createEvent(token, shcoolId, event);
   return res;
 }
 

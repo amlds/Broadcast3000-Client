@@ -17,6 +17,7 @@ interface NewEvent {
 
 class EventService {
   static async createEvent(token: string, schoolId: number, event: NewEvent): Promise<Event> {
+    console.log(token);
     const response = await fetch(`${url}schools/${schoolId}/events`, {
       method: 'POST',
       headers: {

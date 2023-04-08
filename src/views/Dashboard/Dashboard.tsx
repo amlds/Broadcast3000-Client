@@ -45,6 +45,7 @@ const Dashboard: React.FC = () => {
 
   const decodeToken = (token: string) => {
     const decoded = jwt_decode(token) as decoded;
+    console.log(decoded);
     return decoded;
   }
 
