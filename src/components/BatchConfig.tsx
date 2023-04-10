@@ -20,13 +20,6 @@ interface NewBatch {
   school_id: number;
 }
 
-interface BatchToUpdate {
-  id: number;
-  number: number;
-  start_at: string;
-  course_id: number;
-}
-
 const BatchConfig: React.FC<Props> = (Props) => {
   const [token] = React.useState(Cookies.get('token'));
   const [state, setState] = React.useState(0);

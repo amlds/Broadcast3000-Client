@@ -13,11 +13,6 @@ interface Props {
   batch: Batch[];
 }
 
-interface UpdateSchool {
-  nbr_carrousel: number;
-  message_display: string;
-}
-
 const Settings: React.FC<Props> = (Props) => {
   const token = Cookies.get('token');
   const [school, setSchool] = React.useState<School>();
@@ -76,7 +71,6 @@ const Settings: React.FC<Props> = (Props) => {
               <li className="checkbox"><label  htmlFor='1'>5</label><input type="radio" name="number" value="5" checked={nbrCarrousel === 5} onChange={onOptionChange} /></li>
             </ul>
             <input type="submit" className='button--secondary' value="Save" />
-            <button type="submit" className='button--secondary'>Cancel</button>
           </form>
         </div>
       </div>

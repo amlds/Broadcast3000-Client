@@ -18,7 +18,8 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
   const [token] = useState<string>(Cookies.get('token') || '');
   const [eventUpdate, setEventUpdate] = useState<Event>({ name: '', description: '', start_time: '', end_time: '', event_type: { id: 0, name: '' }, photo: '' });
   const [eventTypes] = useState<string[]>(['Private', 'Public', 'Formation', 'Extern']);
-
+/*   const [file, setFile] = useState<File | null>(null);
+ */
   useEffect(() => {
     const eventToUpdate = events.find((event) => event.id === eventIdUpdate);
     if (eventToUpdate) {
@@ -47,6 +48,17 @@ const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
     setEventUpdate((prevState) => ({ ...prevState, [name]: value }));
   };
 
+ /*  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEventUpdate((prevState) => ({ ...prevState, [name]: { id: 0, name: value } }));
+  };
+
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.target;
+    if (files) {
+      setEventUpdate((prevState) => ({ ...prevState, [name]: files[0] }));
+    }
+  }; */
 
   return (
     <form onSubmit={handleSubmit}>
