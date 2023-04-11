@@ -14,8 +14,6 @@ const FormUser: React.FC<FormUserProps> = ({ isLogin, onSubmit }) => {
     user: {
       email: '',
       password: '',
-      first_name: '',
-      last_name: '',
     }
   });
 

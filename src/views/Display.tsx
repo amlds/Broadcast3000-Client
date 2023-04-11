@@ -41,7 +41,7 @@ const DisplayView: React.FC = () => {
     const interval = setInterval(() => {
       setDate(new Date());
       messageRef.current!.innerHTML = date.toLocaleDateString('fr-FR', { month: 'long', day: 'numeric', weekday: 'long' });
-    }, 50000);
+    }, 1000);
     return () => clearInterval(interval);
   });
 
