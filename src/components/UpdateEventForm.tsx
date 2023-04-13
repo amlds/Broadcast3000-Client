@@ -16,7 +16,6 @@ const deleteEvent = async (token: string, eventId: number) => {
 const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
   const [token] = useState<string>(Cookies.get('token') || '');
   const { toggleUpdate ,eventIdUpdate } = React.useContext(EventContext);
-  const [oldEvent, setOldEvent] = useState<Event | null>(null);
   const [event, setEvent] = useState<UpdateEvent>({
     event: {
       id: 0,
@@ -33,7 +32,6 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
   useEffect(() => {
     const event = events.find((event) => event.id === eventIdUpdate);
     if (event) {
-      setOldEvent(event);
       setEvent({
         event: {
           id: event.id,
@@ -57,17 +55,6 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // comparer les events pour voir si il y a des changements
-    if (oldEvent) {
-      if (oldEvent.name === event.event.name &&
-        oldEvent.description === event.event.description &&
-        oldEvent.start_time === event.event.start_time &&
-        oldEvent.end_time === event.event.end_time &&
-        oldEvent.event_type.id === event.event.event_type_id) {
-        setMessage('Aucun changement détecté');
-        return;
-      }
-    }
-
     if (!event.event.photo) {
       console.log('Pas de photo');
       delete event.event.photo;
@@ -80,13 +67,13 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
     try {
       const updatedEvent = await EventService.updateEvent(token, eventIdUpdate, event);
       console.log(`Événement avec l'ID ${eventIdUpdate} mis à jour :`, updatedEvent);
-      setMessage(`Événement avec l'ID ${event.event.name} mis à jour avec succès`);
+      setMessage(`Événement avec le nom ${event.event.name} mis à jour avec succès`);
       setTimeout(() => {
         toggleUpdate();
-      }, 500);
+      }, 3000);
     } catch (error) {
       console.error(`Erreur lors de la mise à jour de l'événement avec l'ID ${eventIdUpdate} :`, error);
-      setMessage(`Erreur lors de la mise à jour de l'événement avec l'ID ${eventIdUpdate}`);
+      setMessage(`Erreur lors de la mise à jour de l'événement avec le nom ${event.event.name}`);
     }
   };
 
@@ -104,6 +91,18 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
         [name]: newValue,
       },
     });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files) {
+      setEvent({
+        event: {
+          ...event.event,
+          photo: files[0],
+        },
+      });
+    }
   };
 
   return (
@@ -164,7 +163,7 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
         <option value="4">Externe</option>
       </select></label>
       <label htmlFor="photo">Photo :
-      <input type="file" name="photo" id="photo" /></label>
+      <input type="file" name="photo" id="photo" onChange={handleFileChange}/></label>
       <div className='align-row'>
         <button type="submit" className="button--primary">Update event</button>
         <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token, eventIdUpdate)}>Delete Event</button>
