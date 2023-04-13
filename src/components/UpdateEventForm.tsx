@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
-import  Cookies from 'js-cookie';
-import Event from '../types/Event';
-import EventService from '../services/EventService';
+import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import EventService, { NewEvent } from '../services/EventService';
 import { EventContext } from '../context/EventContext';
+import Event from '../types/Event';
 
 interface Props {
   events: Event[];
@@ -13,125 +13,157 @@ const deleteEvent = async (token: string, eventId: number) => {
   await EventService.deleteEvent(token, eventId);
 };
 
-const UpdateEventForm: React.FC<Props> = ({ events, schoolId }) => {
-  const { toggleUpdate, eventIdUpdate } = useContext(EventContext);
+const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
   const [token] = useState<string>(Cookies.get('token') || '');
-  const [eventUpdate, setEventUpdate] = useState<Event>({ name: '', description: '', start_time: '', end_time: '', event_type: { id: 0, name: '' }, photo: '' });
-  const [eventTypes] = useState<string[]>(['Private', 'Public', 'Formation', 'Extern']);
-/*   const [file, setFile] = useState<File | null>(null);
- */
+  const { toggleUpdate ,eventIdUpdate } = React.useContext(EventContext);
+  const [event, setEvent] = useState<NewEvent>({
+    event: {
+      id: 0,
+      name: '',
+      description: '',
+      start_time: '',
+      end_time: '',
+      photo: null as any,
+      event_type_id: 0,
+    },
+  });
+  const [message, setMessage] = useState<string>('');
+
   useEffect(() => {
-    const eventToUpdate = events.find((event) => event.id === eventIdUpdate);
-    if (eventToUpdate) {
-      setEventUpdate(eventToUpdate);
-      setEventUpdate(
-        (prevState) => ({
-          ...prevState,
-          start_time: eventToUpdate.start_time.replace(' ', 'T'),
-          end_time: eventToUpdate.end_time.replace(' ', 'T'),
-        })
-      )
+    const event = events.find((event) => event.id === eventIdUpdate);
+    if (event) {
+      setEvent({
+        event: {
+          id: event.id,
+          name: event.name,
+          description: event.description,
+          start_time: event.start_time,
+          end_time: event.end_time,
+          photo: null as any,
+          event_type_id: event.event_type.id,
+        },
+      });
+      console.log(event)
     }
-  }, [eventIdUpdate, events]);
+  }, [eventIdUpdate]);
 
   const cancelUpdate = () => {
     toggleUpdate();
   };
 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await EventService.updateEvent(token, eventIdUpdate, eventUpdate);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setEventUpdate((prevState) => ({ ...prevState, [name]: value }));
-  };
-
- /*  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setEventUpdate((prevState) => ({ ...prevState, [name]: { id: 0, name: value } }));
-  };
-
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-    if (files) {
-      setEventUpdate((prevState) => ({ ...prevState, [name]: files[0] }));
+    try {
+      const updatedEvent = await EventService.updateEvent(token, eventIdUpdate, event);
+      console.log(`Événement avec l'ID ${eventIdUpdate} mis à jour :`, updatedEvent);
+      setMessage(`Événement avec l'ID ${eventIdUpdate} mis à jour avec succès`);
+    } catch (error) {
+      console.error(`Erreur lors de la mise à jour de l'événement avec l'ID ${eventIdUpdate} :`, error);
+      setMessage(`Erreur lors de la mise à jour de l'événement avec l'ID ${eventIdUpdate}`);
     }
-  }; */
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    let newValue = value;
+    console.log(name);
+    console.log(value);
+    if (name === 'start_time' || name === 'end_time') {
+      // Convert the date value to ISO format
+      const date = new Date(value);
+      newValue = date.toISOString().slice(0, 16);
+    }
+    setEvent({
+      event: {
+        ...event.event,
+        [name]: newValue,
+      },
+    });
+  };
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const {name, value } = e.target;
+    setEvent({
+      ...event,
+      [name]: value,
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-        <label htmlFor="event-name">Event Name
+      <div>
+        <label htmlFor="name">Nom de l'événement :</label>
         <input
           type="text"
-          className="input--txt"
-          id="event-name"
           name="name"
-          placeholder="Event Name"
-          value={eventUpdate.name}
-          onChange={handleChange}/>
-        </label>
-        <div className='align-row'>
-          <label htmlFor="event-start-time">Event Start Time
-            <input
-              type="datetime-local"
-              className="input--txt"
-              id="event-start-time"
-              name="start_time"
-              placeholder="Event Start Time"
-              value={eventUpdate.start_time}
-              onChange={handleChange}
-            />
-          </label>
-          <label htmlFor="event-end-time">Event End Time
-            <input
-              type="datetime-local"
-              className="input--txt"
-              id="event-end-time"
-              name="end_time"
-              placeholder="Event End Time"
-              value={eventUpdate.end_time}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <label htmlFor="description">Description
-          <textarea
-            name="description"
-            className="input--txt"
-            id="description"
-            placeholder="Description"
-            value={eventUpdate.description}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Event Type
-          <select
-            name="event_type.name"
-            value={eventUpdate.event_type.name}
-            onChange={handleChange}
-            className="input--txt">
-            {eventTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label htmlFor="image">Image</label>
-          <input type="file"
-            name='image'
-            id='image'
-            placeholder="Image"
-            onChange={handleChange}
-          />
-        <div className="align-row">
-          <input type="submit" value="Update Event" className="button--primary" />
-          <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token, eventIdUpdate)}>Delete Event</button>
-          <button type="button" className="button--secondary" onClick={cancelUpdate}>Cancel</button>
-        </div>
+          id="name"
+          className="input--txt"
+          value={event.event.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="start_time">Date et heure de début :</label>
+        <input
+          type="datetime-local"
+          name="start_time"
+          id="start_time"
+          className="input--txt"
+          value={event.event.start_time}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="end_time">Date et heure de fin :</label>
+        <input
+          type="datetime-local"
+          name="end_time"
+          id="end_time"
+          className="input--txt"
+          value={event.event.end_time}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="description">Description :</label>
+        <textarea
+          name="description"
+          id="description"
+          className="input--txt"
+          value={event.event.description}
+          onChange={handleDescriptionChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="photo">Photo :</label>
+        <input type="file" name="photo" id="photo" />
+      </div>
+      <div>
+        <label htmlFor="event_type_id">Type d'événement :</label>
+        <select
+          name="event_type_id"
+          id="event_type_id"
+          className="input--txt"
+          value={event.event.event_type_id}
+          onChange={handleChange}
+        >
+          <option value="">-- Sélectionnez un type d'événement --</option>
+          <option value="1">Private</option>
+          <option value="2">Public</option>
+          <option value="3">Formation</option>
+          <option value="4">Externe</option>
+        </select>
+      </div>
+      <div>
+        <button type="submit">Créer l'événement</button>
+        <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token, eventIdUpdate)}>Delete Event</button>
+        <button type="button" className="button--secondary" onClick={cancelUpdate}>Cancel</button>
+      </div>{message && <p>{message}</p>}
     </form>
   );
 };

@@ -139,10 +139,10 @@ const AddEventForm: React.FC<Props> = ({ schoolId }) => {
           required
         >
           <option value="">-- Sélectionnez un type d'événement --</option>
-          <option value="1">Conférence</option>
-          <option value="2">Atelier</option>
-          <option value="3">Compétition</option>
-          <option value="4">Fête</option>
+          <option value="1">Private</option>
+          <option value="2">Public</option>
+          <option value="3">Formation</option>
+          <option value="4">Externe</option>
         </select>
       </div>
       <div>
