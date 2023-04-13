@@ -4,33 +4,39 @@ import Event from '../types/Event';
 // /api/v1/schools/:school_id/events
 const url = 'http://localhost:3001/api/v1/';
 
-interface NewEvent {
-  name: string;
-  description: string;
-  start_time: string;
-  end_time: string;
-  photo: string;
-  event_type_id: number;
+export interface NewEvent {
+  event: {
+    name: string;
+    description: string;
+    start_time: string;
+    end_time: string;
+    photo: File;
+    event_type_id: number;
+  }
 }
 
-/*  POST   /api/v1/schools/:school_id/events(.:format) api/v1/events#create */
+const EventService = {
+  async createEvent(token: string, schoolId: number, event: NewEvent): Promise<Event> {
+    const formData = new FormData();
+    formData.append('event[name]', event.event.name);
+    formData.append('event[description]', event.event.description);
+    formData.append('event[start_time]', event.event.start_time);
+    formData.append('event[end_time]', event.event.end_time);
+    formData.append('event[photo]', event.event.photo);
+    formData.append('event[event_type_id]', String(event.event.event_type_id));
 
-class EventService {
-  static async createEvent(token: string, schoolId: number, event: NewEvent): Promise<Event> {
-    console.log(token);
     const response = await fetch(`${url}schools/${schoolId}/events`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `${token}`
       },
-      body: JSON.stringify(event),
+      body: formData,
     });
     const newEvent = await response.json();
     return newEvent;
-  }
+  },
 
-  static async updateEvent(token: string, eventId: number, event: Event): Promise<Event> {
+  async updateEvent(token: string, eventId: number, event: Event): Promise<Event> {
     const response = await fetch(`${url}events/${eventId}`, {
       method: 'PUT',
       headers: {
@@ -41,9 +47,9 @@ class EventService {
     });
     const updatedEvent = await response.json();
     return updatedEvent;
-  }
+  },
 
-  static async deleteEvent(token: string, eventId: number): Promise<Event> {
+  async deleteEvent(token: string, eventId: number): Promise<Event> {
     const response = await fetch(`${url}events/${eventId}`, {
       method: 'DELETE',
       headers: {
@@ -55,5 +61,6 @@ class EventService {
     return deletedEvent;
   }
 }
+
 
 export default EventService;
