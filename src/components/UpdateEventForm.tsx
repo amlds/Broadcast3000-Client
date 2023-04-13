@@ -92,20 +92,18 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Nom de l'événement :</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          className="input--txt"
-          value={event.event.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="start_time">Date et heure de début :</label>
+      <label htmlFor="name">Nom de l'événement :
+      <input
+        type="text"
+        name="name"
+        id="name"
+        className="input--txt"
+        value={event.event.name}
+        onChange={handleChange}
+        required
+      /></label>
+      <div className="align-row">
+        <label htmlFor="start_time">Date et heure de début :
         <input
           type="datetime-local"
           name="start_time"
@@ -114,10 +112,8 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
           value={event.event.start_time}
           onChange={handleChange}
           required
-        />
-      </div>
-      <div>
-        <label htmlFor="end_time">Date et heure de fin :</label>
+        /></label>
+        <label htmlFor="end_time">Date et heure de fin :
         <input
           type="datetime-local"
           name="end_time"
@@ -126,41 +122,36 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
           value={event.event.end_time}
           onChange={handleChange}
           required
-        />
+        /></label>
       </div>
-      <div>
-        <label htmlFor="description">Description :</label>
-        <textarea
-          name="description"
-          id="description"
-          className="input--txt"
-          value={event.event.description}
-          onChange={handleDescriptionChange}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="photo">Photo :</label>
-        <input type="file" name="photo" id="photo" />
-      </div>
-      <div>
-        <label htmlFor="event_type_id">Type d'événement :</label>
-        <select
-          name="event_type_id"
-          id="event_type_id"
-          className="input--txt"
-          value={event.event.event_type_id}
-          onChange={handleChange}
-        >
-          <option value="">-- Sélectionnez un type d'événement --</option>
-          <option value="1">Private</option>
-          <option value="2">Public</option>
-          <option value="3">Formation</option>
-          <option value="4">Externe</option>
-        </select>
-      </div>
-      <div>
-        <button type="submit">Créer l'événement</button>
+      <label htmlFor="description">Description :
+      <textarea
+        name="description"
+        id="description"
+        className="input--txt"
+        value={event.event.description}
+        onChange={handleDescriptionChange}
+        required
+      /></label>
+
+      <label htmlFor="event_type_id">Type d'événement :
+      <select
+        name="event_type_id"
+        id="event_type_id"
+        className="input--txt"
+        value={event.event.event_type_id}
+        onChange={handleChange}
+      >
+        <option value="">-- Sélectionnez un type d'événement --</option>
+        <option value="1">Private</option>
+        <option value="2">Public</option>
+        <option value="3">Formation</option>
+        <option value="4">Externe</option>
+      </select></label>
+      <label htmlFor="photo">Photo :
+      <input type="file" name="photo" id="photo" /></label>
+      <div className='align-row'>
+        <button type="submit" className="button--primary">Update event</button>
         <button type="button" className="button--secondary--red" onClick={() => deleteEvent(token, eventIdUpdate)}>Delete Event</button>
         <button type="button" className="button--secondary" onClick={cancelUpdate}>Cancel</button>
       </div>{message && <p>{message}</p>}
