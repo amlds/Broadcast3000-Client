@@ -18,12 +18,12 @@ export interface NewEvent {
 const EventService = {
   async createEvent(token: string, schoolId: number, event: NewEvent): Promise<Event> {
     const formData = new FormData();
-    formData.append('event[name]', event.event.name);
-    formData.append('event[description]', event.event.description);
-    formData.append('event[start_time]', event.event.start_time);
-    formData.append('event[end_time]', event.event.end_time);
-    formData.append('event[photo]', event.event.photo);
-    formData.append('event[event_type_id]', String(event.event.event_type_id));
+    formData.append('name', event.event.name);
+    formData.append('description', event.event.description);
+    formData.append('start_time', event.event.start_time);
+    formData.append('end_time', event.event.end_time);
+    formData.append('photo', event.event.photo);
+    formData.append('event_type_id', String(event.event.event_type_id));
 
     const response = await fetch(`${url}schools/${schoolId}/events`, {
       method: 'POST',
