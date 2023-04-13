@@ -56,6 +56,7 @@ const Dashboard: React.FC = () => {
        setBatch(data.school.batches);
        console.log(data.school.batches);
        setEvents(data.events);
+       console.log(data.events)
        setLoading(false);
      } catch (error) {
        window.location.href = '/not-found';

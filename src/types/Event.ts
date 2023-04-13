@@ -6,6 +6,6 @@ export default interface event {
   description: string;
   start_time: string;
   end_time: string;
-  photo: string;
+  photo: File;
   event_type: EventType;
 }

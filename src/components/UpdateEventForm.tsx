@@ -43,7 +43,6 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
           event_type_id: event.event_type.id,
         },
       });
-      console.log(event)
     }
   }, [eventIdUpdate]);
 
@@ -57,18 +56,19 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
     try {
       const updatedEvent = await EventService.updateEvent(token, eventIdUpdate, event);
       console.log(`Événement avec l'ID ${eventIdUpdate} mis à jour :`, updatedEvent);
-      setMessage(`Événement avec l'ID ${eventIdUpdate} mis à jour avec succès`);
+      setMessage(`Événement avec l'ID ${event.event.name} mis à jour avec succès`);
+      setTimeout(() => {
+        toggleUpdate();
+      }, 500);
     } catch (error) {
       console.error(`Erreur lors de la mise à jour de l'événement avec l'ID ${eventIdUpdate} :`, error);
       setMessage(`Erreur lors de la mise à jour de l'événement avec l'ID ${eventIdUpdate}`);
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     let newValue = value;
-    console.log(name);
-    console.log(value);
     if (name === 'start_time' || name === 'end_time') {
       // Convert the date value to ISO format
       const date = new Date(value);
@@ -79,14 +79,6 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
         ...event.event,
         [name]: newValue,
       },
-    });
-  };
-
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const {name, value } = e.target;
-    setEvent({
-      ...event,
-      [name]: value,
     });
   };
 
@@ -130,7 +122,7 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
         id="description"
         className="input--txt"
         value={event.event.description}
-        onChange={handleDescriptionChange}
+        onChange={handleChange}
         required
       /></label>
 
@@ -142,7 +134,6 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
         value={event.event.event_type_id}
         onChange={handleChange}
       >
-        <option value="">-- Sélectionnez un type d'événement --</option>
         <option value="1">Private</option>
         <option value="2">Public</option>
         <option value="3">Formation</option>

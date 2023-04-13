@@ -20,11 +20,11 @@ const EventService = {
   async createEvent(token: string, schoolId: number, event: NewEvent): Promise<Event> {
     const formData = new FormData();
     formData.append('event[name]', event.event.name);
-    formData.append('event[description', event.event.description);
-    formData.append('event[start_time', event.event.start_time);
-    formData.append('event[end_time', event.event.end_time);
-    formData.append('event[photo', event.event.photo);
-    formData.append('event[event_type_id', String(event.event.event_type_id));
+    formData.append('event[description]', event.event.description);
+    formData.append('event[start_time]', event.event.start_time);
+    formData.append('event[end_time]', event.event.end_time);
+    formData.append('event[photo]', event.event.photo);
+    formData.append('event[event_type_id]', String(event.event.event_type_id));
 
     const response = await fetch(`${url}schools/${schoolId}/events`, {
       method: 'POST',
@@ -43,8 +43,14 @@ const EventService = {
     formData.append('event[description]', event.event.description);
     formData.append('event[start_time]', event.event.start_time);
     formData.append('event[end_time]', event.event.end_time);
-    formData.append('event[photo]', event.event.photo);
+    if (!event.event.photo){
+      console.log('no photo')
+    } else {
+      formData.append('event[photo]', event.event.photo);
+    }
     formData.append('event[event_type_id]', String(event.event.event_type_id));
+
+    console.log(event);
     const response = await fetch(`${url}events/${eventId}`, {
       method: 'PUT',
       headers: {
