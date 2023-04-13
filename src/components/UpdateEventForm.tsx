@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import EventService, { NewEvent } from '../services/EventService';
+import EventService, { UpdateEvent } from '../services/EventService';
 import { EventContext } from '../context/EventContext';
 import Event from '../types/Event';
 
@@ -16,7 +16,8 @@ const deleteEvent = async (token: string, eventId: number) => {
 const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
   const [token] = useState<string>(Cookies.get('token') || '');
   const { toggleUpdate ,eventIdUpdate } = React.useContext(EventContext);
-  const [event, setEvent] = useState<NewEvent>({
+  const [oldEvent, setOldEvent] = useState<Event | null>(null);
+  const [event, setEvent] = useState<UpdateEvent>({
     event: {
       id: 0,
       name: '',
@@ -32,6 +33,7 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
   useEffect(() => {
     const event = events.find((event) => event.id === eventIdUpdate);
     if (event) {
+      setOldEvent(event);
       setEvent({
         event: {
           id: event.id,
@@ -44,6 +46,7 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
         },
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eventIdUpdate]);
 
   const cancelUpdate = () => {
@@ -53,6 +56,27 @@ const UpdateEventForm: React.FC<Props> = ({ schoolId, events }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // comparer les events pour voir si il y a des changements
+    if (oldEvent) {
+      if (oldEvent.name === event.event.name &&
+        oldEvent.description === event.event.description &&
+        oldEvent.start_time === event.event.start_time &&
+        oldEvent.end_time === event.event.end_time &&
+        oldEvent.event_type.id === event.event.event_type_id) {
+        setMessage('Aucun changement détecté');
+        return;
+      }
+    }
+
+    if (!event.event.photo) {
+      console.log('Pas de photo');
+      delete event.event.photo;
+    } else if (event.event.photo) {
+      console.log('Photo');
+    }
+
+    console.log(event)
+
     try {
       const updatedEvent = await EventService.updateEvent(token, eventIdUpdate, event);
       console.log(`Événement avec l'ID ${eventIdUpdate} mis à jour :`, updatedEvent);

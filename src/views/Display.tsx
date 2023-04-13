@@ -31,6 +31,11 @@ const DisplayView: React.FC = () => {
         setBatch(data.school.batches);
         setEvents(data.events);
         console.log(data.events);
+        data.events.forEach((event) => {
+          if (event.photo) {
+            setEventsImage((eventsImage) => [...eventsImage, event.photo]);
+          }
+        });
         setMessage_display(data.school.message_display);
         setCarrousel(data.nbr_carrousel);
         setLoading(false);

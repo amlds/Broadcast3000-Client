@@ -16,6 +16,18 @@ export interface NewEvent {
   }
 }
 
+export interface UpdateEvent {
+  event: {
+    id?: number;
+    name: string;
+    description: string;
+    start_time: string;
+    end_time: string;
+    photo?: File;
+    event_type_id: number;
+  }
+}
+
 const EventService = {
   async createEvent(token: string, schoolId: number, event: NewEvent): Promise<Event> {
     const formData = new FormData();
@@ -37,7 +49,7 @@ const EventService = {
     return newEvent;
   },
 
-  async updateEvent(token: string, eventId: number, event: NewEvent): Promise<Event> {
+  async updateEvent(token: string, eventId: number, event: UpdateEvent): Promise<Event> {
     const formData = new FormData();
     formData.append('event[name]', event.event.name);
     formData.append('event[description]', event.event.description);
