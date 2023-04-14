@@ -17,7 +17,6 @@ const getDisplay = (display_path: string) => {
 const DisplayView: React.FC = () => {
   const [batch, setBatch] = React.useState<Batch[]>();
   const [events, setEvents] = React.useState<Event[]>();
-  const [eventsImage, setEventsImage] = React.useState<string[]>([]);
   const [message_display, setMessage_display] = React.useState<string>('');
   const [date, setDate] = React.useState<Date>(new Date());
   const [carrousel, setCarrousel] = React.useState<number>(1);
@@ -30,14 +29,8 @@ const DisplayView: React.FC = () => {
         const data = await getDisplay(`${window.location.pathname}`);
         setBatch(data.school.batches);
         setEvents(data.events);
-        console.log(data.events);
-        data.events.forEach((event) => {
-          if (event.photo_url) {
-            setEventsImage((eventsImage) => [...eventsImage, event.photo_url]);
-          }
-        });
         setMessage_display(data.school.message_display);
-        setCarrousel(data.nbr_carrousel);
+        setCarrousel(data.school.nbr_carrousel);
         setLoading(false);
       } catch (error) {
         window.location.href = '/not-found';
@@ -45,7 +38,6 @@ const DisplayView: React.FC = () => {
     };
     fetchDisplay();
   }, []);
-
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -80,8 +72,8 @@ const DisplayView: React.FC = () => {
                 })
               }
             </div>
-            <div className="carroussel">
-              <ImageDisplay carrousel={carrousel} event_images={eventsImage}/>
+            <div className="carrousel">
+              <ImageDisplay carrousel={carrousel} events={events ? events : []}/>
             </div>
           </div>
         </section>

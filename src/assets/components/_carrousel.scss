@@ -1,0 +1,120 @@
+.carrousel{
+  width: 500px;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+
+  .wrapper{
+    width: 100%;
+    display: flex;
+    animation-delay: 5s;
+
+    img{
+      width: 100%;
+    }
+  }
+}
+
+@keyframes slide5{
+  0%{
+      transform: translateX(0);
+  }
+  20%{
+      transform: translateX(0);
+  }
+  25%{
+      transform: translateX(-100%);
+  }
+  45%{
+      transform: translateX(-100%);
+  }
+  50%{
+      transform: translateX(-200%);
+  }
+  70%{
+      transform: translateX(-200%);
+  }
+  75%{
+      transform: translateX(-300%);
+  }
+  95%{
+      transform: translateX(-300%);
+  }
+  100%{
+      transform: translateX(-400%);
+  }
+}
+
+@keyframes slide4{
+  0%{
+      transform: translateX(0);
+  }
+  25%{
+      transform: translateX(0);
+  }
+  30%{
+      transform: translateX(-100%);
+  }
+  50%{
+      transform: translateX(-100%);
+  }
+  55%{
+      transform: translateX(-200%);
+  }
+  75%{
+      transform: translateX(-200%);
+  }
+  80%{
+      transform: translateX(-300%);
+  }
+  100%{
+      transform: translateX(-300%);
+  }
+}
+
+@keyframes slide3{
+  0%{
+      transform: translateX(0);
+  }
+  30%{
+      transform: translateX(0);
+  }
+  35%{
+      transform: translateX(-100%);
+  }
+  65%{
+      transform: translateX(-100%);
+  }
+  70%{
+      transform: translateX(-200%);
+  }
+  100%{
+      transform: translateX(-200%);
+  }
+}
+
+@keyframes slide2{
+  0%{
+      transform: translateX(0);
+  }
+  50%{
+      transform: translateX(0);
+  }
+  55%{
+      transform: translateX(-100%);
+  }
+  100%{
+      transform: translateX(-100%);
+  }
+}
+
+@keyframes slide1{
+  0%{
+      transform: translateX(0);
+  }
+  100%{
+      transform: translateX(0);
+  }
+}
