@@ -32,8 +32,8 @@ const DisplayView: React.FC = () => {
         setEvents(data.events);
         console.log(data.events);
         data.events.forEach((event) => {
-          if (event.photo) {
-            setEventsImage((eventsImage) => [...eventsImage, event.photo]);
+          if (event.photo_url) {
+            setEventsImage((eventsImage) => [...eventsImage, event.photo_url]);
           }
         });
         setMessage_display(data.school.message_display);

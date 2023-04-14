@@ -6,6 +6,7 @@ interface Props {
 }
 
 const CloudinaryImage: React.FC<Props> = ( Props ) => {
+  console.log(Props.image);
   return (
     <img src={Props.image} key={Props.key} alt="Affiche de l'évenement affiché" />
   );

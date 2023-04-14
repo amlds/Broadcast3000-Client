@@ -20,12 +20,12 @@ const ImageDisplay: React.FC<Props> = (Props) => {
     <>
       {
         image.forEach((img, index) => {
-          if (index === carrousel) {
             return (
               <ImageCloudinary key={index} image={img} />
             )
           }
-      })}
+        )
+      }
     </>
   );
 };
