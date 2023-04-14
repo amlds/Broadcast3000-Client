@@ -12,8 +12,9 @@ const ImageDisplay: React.FC<Props> = (Props) => {
   const [image, setImage] = React.useState<string[]>([]);
   const [eventName, setEventName] = React.useState<string[]>([]);
   const [carrousel, setCarrousel] = React.useState<number>(0);
+  const timingAnimation = carrousel * 8;
   const divStyle = {
-    animation: `slide${carrousel} 16s infinite alternate ease-in-out`,
+    animation: `slide${carrousel} ${timingAnimation}s infinite alternate ease-in-out`,
   };
 
   React.useEffect(() => {
