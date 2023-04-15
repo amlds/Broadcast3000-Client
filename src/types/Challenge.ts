@@ -1,5 +1,5 @@
 export default interface Challenge {
-  id: number,
+  id?: number,
   name: string,
   programming_language: string,
 }

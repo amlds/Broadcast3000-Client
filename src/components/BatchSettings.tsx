@@ -2,12 +2,12 @@ import React from 'react';
 import Cookies from 'js-cookie';
 
 import Challenge from '../types/Challenge';
+import Course from '../types/Course';
 import school from '../types/School';
 import Batch from '../types/Batch';
 import BatchService from '../services/BatchService';
 
 import Edit from './svg/Edit';
-import ChallengeView from './ChallengesView';
 
 interface Props {
   school: school[];
@@ -37,33 +37,13 @@ const BatchSettings: React.FC<Props> = (Props) => {
   const [schoolId, setSchoolId] = React.useState<number>(Props.school[0].id);
   const [batches, setBatches] = React.useState<Batch[]>([]);
   const [batchToUpdate, setBatchToUpdate] = React.useState<Batch>();
-  const [challenge, setChallenge] = React.useState<Challenge[]>([]);
 
   React.useEffect(() => {
     if (Props.school.length > 0) {
       setSchoolId(Props.school[0].id);
       setBatches(Props.batch);
-      batches.map((batch) => {
-        console.log(batch);
-      });
     }
   }, [Props.batch, Props.school, batches]);
-
-  React.useEffect(() => {
-    const courseArray: Challenge[] = [];
-    if (batches) {
-      batches.forEach((batch) => {
-        courseArray.push({
-          id: batch.challenge.id,
-          name: batch.challenge.name,
-          programming_language: batch.challenge.programming_language,
-        });
-        console.log(batch.challenge);
-      });
-    }
-    console.log(courseArray);
-    setChallenge(courseArray);
-  }, [batches]);
 
   const createBatch = async (schoolId: number, batch: NewBatch, token: any) => {
     const res = await BatchService.createBatch(schoolId, batch, token);
@@ -94,6 +74,25 @@ const BatchSettings: React.FC<Props> = (Props) => {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const batchNumber = Number(e.currentTarget.batchNumber.value);
+    const startDate = e.currentTarget.startDate.value;
+    const courseId = Number(e.currentTarget.courseId.value);
+    const batchToCreate = {
+      batch: {
+        number: batchNumber,
+        start_at: startDate,
+        course_id: courseId
+      }
+    };
+    const res = await createBatch(schoolId, batchToCreate, token);
+    if (res) {
+      setBatches([...batches, res]);
+      setState(0);
+    }
+  };
+
   const viewBatch = (
     <div className='settings__batch'>
       <h3>Actual batches</h3>
@@ -102,6 +101,7 @@ const BatchSettings: React.FC<Props> = (Props) => {
           <li key={batch.id}>
             <span className='md-text-1'>Batch #{batch.number} : </span>
             <span>start at - {batch.start_at}</span>
+            <span> - {batch.course.name}</span>
             <button className='button--edit--svg'
               data-id={batch.id}
               onClick={goToUpdate}>
@@ -114,20 +114,88 @@ const BatchSettings: React.FC<Props> = (Props) => {
     </div>
   )
 
-  const editBatch = (
-    <div className="edit-batch">
+  /* const updateBatch = (
+    <div className='settings__batch'>
+      <h3>Update batch #{batchToUpdate?.batch.number}</h3>
+      <form className='batch__form' onSubmit={handleUpdate}>
+        <label htmlFor="batchNumber">Batch number</label>
+        <input className='input--txt' type="number" name="batchNumber" id="batchNumber" defaultValue={batchToUpdate?.batch.number} required />
+        <label htmlFor="startDate">Start date</label>
+        <input className='input--txt' type="date" name="startDate" id="startDate" defaultValue={batchToUpdate?.batch.start_at} required />
+        <label htmlFor="courseId">Course</label>
+        <div className="checkbox--batch">
+          <input type="radio" id="webdev" name="courseId" value="1" className='textContaint'/>
+          <label htmlFor="webdev">Web Development</label>
+          <input type="radio" id="datascience" name="courseId" value="2" className='textContaint'/>
+          <label htmlFor="datascience">Data Science</label>
+          <input type="radio" id="dataanalyse" name="courseId" value="3" className='textContaint'/>
+          <label htmlFor="dataanalyse">Data Analyse</label>
+        </div>
+        <div className="align-row">
+          <button type="submit" className='button--primary'>Update</button>
+          <button type="button" className="button--secondary--red" onClick={() => deleteBatch(batchToUpdate.batch.id, token)}>Delete Event</button>
+          <button type="submit" className='button--secondary' onClick={() => setState(0)}>Back</button>
+        </div>
+      </form>
     </div>
-  )
+  );
+ */
+
+  const updateBatch = (
+    <div className='settings__batch'>
+      <h3>Update batch #{batchToUpdate?.number}</h3>
+      <form className='batch__form' onSubmit={handleSubmit}>
+        <label htmlFor="batchNumber">Batch number</label>
+        <input className='input--txt' type="number" name="batchNumber" id="batchNumber" defaultValue={batchToUpdate?.number} required />
+        <label htmlFor="startDate">Start date</label>
+        <input className='input--txt' type="date" name="startDate" id="startDate" defaultValue={batchToUpdate?.start_at} required />
+        <label htmlFor="courseId">Course</label>
+        <div className="checkbox--batch">
+          <input type="radio" id="webdev" name="courseId" value="1" className='textContaint'/>
+          <label htmlFor="webdev">Web Development</label>
+          <input type="radio" id="datascience" name="courseId" value="2" className='textContaint'/>
+          <label htmlFor="datascience">Data Science</label>
+          <input type="radio" id="dataanalyse" name="courseId" value="3" className='textContaint'/>
+          <label htmlFor="dataanalyse">Data Analyse</label>
+        </div>
+        <div className="align-row">
+          <button type="submit" className='button--primary'>Update</button>
+{/*           <button type="button" className="button--secondary--red" onClick={() => deleteBatch(batchToUpdate.id, token)}>Delete Event</button>
+ */}          <button type="submit" className='button--secondary' onClick={() => setState(0)}>Back</button>
+        </div>
+      </form>
+    </div>
+  );
 
   const addBatch = (
-    <div className="create-batch">
+    <div className='settings__batch'>
+      <h3>Add new batch</h3>
+      <form className='batch__form' onSubmit={handleSubmit}>
+        <label htmlFor="batchNumber">Batch number</label>
+        <input className='input--txt' type="number" name="batchNumber" id="batchNumber" required />
+        <label htmlFor="startDate">Start date</label>
+        <input className='input--txt' type="date" name="startDate" id="startDate" required />
+        <label htmlFor="courseId">Course</label>
+        <div className="checkbox--batch">
+          <input type="radio" id="webdev" name="courseId" value="1" className='textContaint'/>
+          <label htmlFor="webdev">Web Development</label>
+          <input type="radio" id="datascience" name="courseId" value="2" className='textContaint'/>
+          <label htmlFor="datascience">Data Science</label>
+          <input type="radio" id="dataanalyse" name="courseId" value="3" className='textContaint'/>
+          <label htmlFor="dataanalyse">Data Analyse</label>
+        </div>
+        <div className='align-row'>
+          <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
+          <button type="submit" className='button--primary'>Confirm create</button>
+        </div>
+      </form>
     </div>
-  )
+  );
 
   return(
     <div className="batch-settings">
       {state === 0 && viewBatch}
-      {state === 1 && editBatch}
+      {state === 1 && updateBatch}
       {state === 2 && addBatch}
     </div>
   )
