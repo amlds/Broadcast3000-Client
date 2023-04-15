@@ -10,7 +10,6 @@ interface Props {
 const ImageDisplay: React.FC<Props> = (Props) => {
   const [events, setEvents] = React.useState<Event[]>([]);
   const [image, setImage] = React.useState<string[]>([]);
-  const [eventName, setEventName] = React.useState<string[]>([]);
   const [carrousel, setCarrousel] = React.useState<number>(0);
   const timingAnimation = carrousel * 8;
   const divStyle = {
@@ -20,24 +19,19 @@ const ImageDisplay: React.FC<Props> = (Props) => {
   React.useEffect(() => {
     setEvents(Props.events);
     setCarrousel(Props.carrousel);
-    console.log(carrousel);
-
   }, [Props.events, Props.carrousel, events, carrousel]);
 
   React.useEffect(() => {
     const imageArray: string[] = [];
-    const eventNameArray: string[] = [];
     events.forEach((event, index) => {
       if(index < carrousel){
-        eventNameArray.push(event.name);
         imageArray.push(event.photo_url);
       } else {
         return null;
       }
     });
     setImage(imageArray);
-    setEventName(eventNameArray);
-  }, [events]);
+  }, [carrousel, events]);
 
   return (
     <div className='wrapper' style={divStyle}>
@@ -45,7 +39,6 @@ const ImageDisplay: React.FC<Props> = (Props) => {
         image.map((img, index) => {
           return (
             <>
-              {/* <p>{eventName[index]}</p> */}
               <img
                 src={img}
                 key={index}

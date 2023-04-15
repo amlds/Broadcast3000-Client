@@ -67,7 +67,7 @@ const DisplayView: React.FC = () => {
               {
                 batch?.map((Batch) => {
                   return (
-                    <ChallengeView key={Batch.id} Batch={Batch} />
+                    <ChallengeView Batch={Batch} />
                   )
                 })
               }
