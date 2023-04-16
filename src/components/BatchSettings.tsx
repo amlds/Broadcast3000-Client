@@ -1,13 +1,10 @@
 import React from 'react';
 import Cookies from 'js-cookie';
 
-import Challenge from '../types/Challenge';
-import Course from '../types/Course';
 import school from '../types/School';
 import Batch from '../types/Batch';
 import BatchService from '../services/BatchService';
 
-import PopUp from './PopUp';
 import Edit from './svg/Edit';
 
 interface Props {
@@ -60,11 +57,6 @@ const BatchSettings: React.FC<Props> = (Props) => {
   const deleteBatch = async (batchId: number, token: any) => {
     const res = await BatchService.deleteBatch(batchId, token);
     return res;
-  };
-
-  const structureTime = (time: string) => {
-    const date = new Date(time);
-    return `${date.toLocaleDateString('fr-FR', {year:'numeric', month: 'long', day: 'numeric' })}`;
   };
 
   const goToUpdate = (e: React.MouseEvent<HTMLButtonElement>) => {

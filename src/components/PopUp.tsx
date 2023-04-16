@@ -22,6 +22,10 @@ const PopUp: React.FC<Props> = (Props) => {
     setMessage('');
   }, 4000);
 
+  if (!show) {
+    return null;
+  }
+
   return (
     <div className="popup">
       <div className="popup__content">
