@@ -115,7 +115,6 @@ const BatchSettings: React.FC<Props> = (Props) => {
 
       const res = await UpdateBatch(batchGoToUpdate, token);
       if (res) {
-        <PopUp message='Batch updated' state={1}/>
         setState(0);
       }
     }
@@ -151,14 +150,11 @@ const BatchSettings: React.FC<Props> = (Props) => {
         <label htmlFor="startDate">Start date</label>
         <input className='input--txt' type="date" name="startDate" id="startDate" defaultValue={batchToUpdate?.start_at} required />
         <label htmlFor="courseId">Course</label>
-        <div className="checkbox--batch">
-          <input type="radio" id="webdev" name="courseId" value="1" className='textContaint'/>
-          <label htmlFor="webdev">Web Development</label>
-          <input type="radio" id="datascience" name="courseId" value="2" className='textContaint'/>
-          <label htmlFor="datascience">Data Science</label>
-          <input type="radio" id="dataanalyse" name="courseId" value="3" className='textContaint'/>
-          <label htmlFor="dataanalyse">Data Analyse</label>
-        </div>
+        <select className='input--txt' name="courseId" id="courseId" defaultValue={batchToUpdate?.course.id} required>
+          <option value="1">Web Development</option>
+          <option value="2">Data Science</option>
+          <option value="3">Data Analyse</option>
+        </select>
         <div className="align-row">
           <button type="submit" className='button--primary'>Update</button>
           <button type="button" className="button--secondary--red" onClick={() => deleteBatch(batchToDeleteId, token)}>Delete Event</button>
@@ -177,6 +173,12 @@ const BatchSettings: React.FC<Props> = (Props) => {
         <label htmlFor="startDate">Start date</label>
         <input className='input--txt' type="date" name="startDate" id="startDate" required />
         <label htmlFor="courseId">Course</label>
+        <select className='input--txt' name="courseId" id="courseId" defaultValue={batchToUpdate?.course.id} required>
+          <option value="1">Web Development</option>
+          <option value="2">Data Science</option>
+          <option value="3">Data Analyse</option>
+        </select>
+{/*
         <div className="checkbox--batch">
           <input type="radio" id="webdev" name="courseId" value="1" className='textContaint'/>
           <label htmlFor="webdev">Web Development</label>
@@ -185,7 +187,7 @@ const BatchSettings: React.FC<Props> = (Props) => {
           <input type="radio" id="dataanalyse" name="courseId" value="3" className='textContaint'/>
           <label htmlFor="dataanalyse">Data Analyse</label>
         </div>
-        <div className='align-row'>
+ */}        <div className='align-row'>
           <button className='button--secondary' onClick={() => setState(0)}>Cancel</button>
           <button type="submit" className='button--primary'>Confirm create</button>
         </div>
