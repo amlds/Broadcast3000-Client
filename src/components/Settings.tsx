@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Batch from '../types/Batch';
 import School from '../types/School';
-import BatchConfig from './BatchConfig';
+import BatchSettings from './BatchSettings';
 
 import SchoolService from '../services/SchoolService';
 
@@ -54,7 +54,7 @@ const Settings: React.FC<Props> = (Props) => {
 
   return (
     <section className='settings'>
-      <BatchConfig school={Props.school} batch={Props.batch}/>
+      <BatchSettings school={Props.school} batch={Props.batch}/>
       <div className='settings__carrousel'>
         <h3>Display infos</h3>
         <div className="extra">

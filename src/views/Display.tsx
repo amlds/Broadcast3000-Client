@@ -7,6 +7,7 @@ import Event from '../types/Event'
 
 import ChallengeView from '../components/ChallengesView';
 import ListCard from '../components/ListCard';
+import ImageDisplay from '../components/ImageDisplay';
 
 const getDisplay = (display_path: string) => {
   const display = displayService.getDisplayInfos(display_path);
@@ -18,6 +19,7 @@ const DisplayView: React.FC = () => {
   const [events, setEvents] = React.useState<Event[]>();
   const [message_display, setMessage_display] = React.useState<string>('');
   const [date, setDate] = React.useState<Date>(new Date());
+  const [carrousel, setCarrousel] = React.useState<number>(1);
   const messageRef = React.useRef<HTMLDivElement>(null);
   const [loading, setLoading] = React.useState<boolean>(true);
 
@@ -28,14 +30,15 @@ const DisplayView: React.FC = () => {
         setBatch(data.school.batches);
         setEvents(data.events);
         setMessage_display(data.school.message_display);
+        setCarrousel(data.school.nbr_carrousel);
         setLoading(false);
+        console.log(data);
       } catch (error) {
         window.location.href = '/not-found';
       }
     };
     fetchDisplay();
   }, []);
-
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -60,15 +63,26 @@ const DisplayView: React.FC = () => {
             <h1>Hello wagoners !</h1>
             <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
             <p>{message_display}</p>
-            <div className="align-row">
-              <p>Aujourd’hui au programme :</p>
               {
                 batch?.map((Batch) => {
-                  return (
-                    <ChallengeView key={Batch.id} Batch={Batch} />
-                  )
+                  if(!Batch.challenge){
+                    return (
+                      <div className="align-row">
+                        <p>C'est le week end ! Bon lait à vous !</p>
+                      </div>
+                    )
+                  }else {
+                    return (
+                      <div className="align-row">
+                        <p>Aujourd’hui au programme :</p>
+                        <ChallengeView Batch={Batch} />
+                      </div>
+                    )
+                  }
                 })
               }
+            <div className="carrousel">
+              <ImageDisplay carrousel={carrousel} events={events ? events : []}/>
             </div>
           </div>
         </section>

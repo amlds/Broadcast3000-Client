@@ -1,11 +1,23 @@
 import Batch from "../types/Batch";
 
 interface NewBatch {
-  number: number;
-  course_id: number;
-  start_at: string;
-  school_id: number;
+  batch: {
+    number: number;
+    start_at: string;
+    course_id: number;
+  }
 }
+
+interface UpdateBatch {
+  batch: {
+    id: number;
+    number: number;
+    start_at: string;
+    course_id: number;
+  }
+}
+
+
 //Connect with the backend RUBY ON RAILS API
 // /api/v1/schools/:school_id/batchs
 const url = "http://localhost:3001/api/v1";
@@ -24,8 +36,9 @@ const BatchService = {
     return newBatch;
   },
 
-  async updateBatch(batch: Batch, token: any): Promise<Batch> {
-    const response = await fetch(`${url}/batchs/${batch.id}`, {
+  async updateBatch(batch: UpdateBatch, token: any): Promise<UpdateBatch> {
+    console.log(batch);
+    const response = await fetch(`${url}/batchs/${batch.batch.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

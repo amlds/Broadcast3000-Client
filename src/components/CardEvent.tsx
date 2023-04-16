@@ -20,6 +20,19 @@ const CardEvent: React.FC<props> = (event: props) => {
   };
 
   React.useEffect(() => {
+    // si l'event est en cours, on affiche le cardEvent__content--isActive
+    if (eventRef.current && cardRef.current) {
+      const date = new Date(event.event.start_time);
+      const now = new Date();
+      if (date < now) {
+        cardRef.current.classList.add("cardEvent__content--isActive");
+      }
+    }
+  }, [event.event.start_time]);
+
+
+
+  React.useEffect(() => {
     if (eventRef.current && cardRef.current) {
       if (event.event.id === eventIdUpdate) {
         cardRef.current.classList.add("cardEvent__content--active");

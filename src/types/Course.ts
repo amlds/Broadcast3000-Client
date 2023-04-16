@@ -1,4 +1,4 @@
-export default interface course {
-  id: number,
-  name: string,
+export default interface Course {
+  id?: number;
+  name: string;
 }

@@ -1,184 +1,144 @@
-import React from 'react';
-import  Cookies from 'js-cookie';
-
-import EventService from '../services/EventService';
-import Event from '../types/Event'
-
-interface NewEvent {
-  name: string;
-  description: string;
-  start_time: string;
-  end_time: string;
-  photo: string;
-  event_type_id: number;
-}
-
-const createEvent = async (token: string, shcoolId: number, event: NewEvent) => {
-  const res = await EventService.createEvent(token, shcoolId, event);
-  return res;
-}
+import React, { useState } from 'react';
+import Cookies from 'js-cookie';
+import EventService, { NewEvent } from '../services/EventService';
 
 interface Props {
   schoolId: number;
 }
 
-const AddEventForm: React.FC<Props> = (Props) => {
-  const messageRef = React.useRef<HTMLParagraphElement>(null);
-  const formRef = React.useRef<HTMLFormElement>(null);
-  const [token] = React.useState<string>(Cookies.get('token') || '');
-  const [event, setEvent] = React.useState<Event>({
-    name: '',
-    start_time: '',
-    end_time: '',
-    description: '',
-    photo: '',
-    event_type: {
-      id: 0,
+const AddEventForm: React.FC<Props> = ({ schoolId }) => {
+  const [token] = useState<string>(Cookies.get('token') || '');
+  const [event, setEvent] = useState<NewEvent>({
+    event: {
       name: '',
+      description: '',
+      start_time: '',
+      end_time: '',
+      photo: null as any,
+      event_type_id: 0,
     },
   });
-  const [eventTypes, setEventTypes] = React.useState<Array<string>>([]);
+  const [message, setMessage] = useState<string>('');
 
-  React.useEffect(() => {
-    // fetch event types from API or set locally
-    const types = ['Private', 'Public', 'Formation', 'Extern'];
-    setEventTypes(types);
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.currentTarget;
-    if (name === 'image') {
-      const file = e.currentTarget.files![0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setEvent({
-          ...event,
-          photo: reader.result as string,
-        });
-      };
-      reader.readAsDataURL(file);
-    } else {
-      const { value } = e.currentTarget;
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const newEvent = await EventService.createEvent(token, schoolId, event);
+      console.log('Nouvel événement créé :', newEvent);
+      // Réinitialiser le formulaire
       setEvent({
-        ...event,
-        [name]: value,
+        event: {
+          name: '',
+          description: '',
+          start_time: '',
+          end_time: '',
+          photo: null as any,
+          event_type_id: 0,
+        },
       });
+      setMessage('Nouvel événement créé avec succès');
+    } catch (error) {
+      console.error('Erreur lors de la création de l\'événement :', error);
+      setMessage('Erreur lors de la création de l\'événement');
     }
   };
 
-
-  const handleChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { name, value } = e.currentTarget;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
     setEvent({
-      ...event,
-      [name]: value,
-    });
-  };
-
-  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.currentTarget;
-    setEvent({
-      ...event,
-      event_type: {
-        ...event.event_type,
+      event: {
+        ...event.event,
         [name]: value,
       },
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    const { name, start_time, end_time, description, event_type } = event;
-    const eventTypeId = eventTypes.findIndex(type => type === event_type.name) + 1;
-    const eventToCreate = {
-      name,
-      start_time,
-      end_time,
-      description,
-      photo: event.photo,
-      event_type_id: eventTypeId,
-    };
-    const formData = new FormData();
-    formData.append('event', JSON.stringify(eventToCreate));
-    e.preventDefault();
-    if (name && start_time && end_time && description && event_type.name) {
-      createEvent(token, Props.schoolId, eventToCreate);
-      messageRef.current!.innerHTML = '🎉 Evénement créé 🎉';
-      formRef.current!.reset();
-    }
-    else {
-      messageRef.current!.innerHTML = '🚨 Veuillez remplir tous les champs 🚨';
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    setEvent({
+      event: {
+        ...event.event,
+        description: value,
+      },
+    });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      setEvent({
+        event: {
+          ...event.event,
+          photo: file,
+        },
+      });
     }
   };
 
-
   return (
-    <form onSubmit={handleSubmit} ref={formRef}>
-      <label htmlFor="name">Name
-      <input type="text"
-        name='name'
-        id='name'
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="name">Nom de l'événement :
+      <input
+        type="text"
+        name="name"
+        id="name"
         className="input--txt"
-        placeholder="Nom de l'événement"
-        required
+        value={event.event.name}
         onChange={handleChange}
-      />
-      </label>
-      <div className='align-row'>
-        <label htmlFor="start_time">Start
-        <input type="datetime-local"
-          name='start_time'
-          id='start_time'
+        required
+      /></label>
+      <div className="align-row">
+        <label htmlFor="start_time">Date et heure de début :
+        <input
+          type="datetime-local"
+          name="start_time"
+          id="start_time"
           className="input--txt"
-          placeholder="Date de début"
-          required
+          value={event.event.start_time}
           onChange={handleChange}
-          />
-        </label>
-        <label htmlFor="end_time">End
-        <input type="datetime-local"
-          name='end_time'
-          id='end_time'
+          required
+        /></label>
+        <label htmlFor="end_time">Date et heure de fin :
+        <input
+          type="datetime-local"
+          name="end_time"
+          id="end_time"
           className="input--txt"
-          placeholder="Date de fin"
-          required
+          value={event.event.end_time}
           onChange={handleChange}
-          />
-        </label>
+          required
+        /></label>
       </div>
-      <label htmlFor="description">Description
-      <textarea name="description"
+      <label htmlFor="description">Description :
+      <textarea
+        name="description"
         id="description"
         className="input--txt"
-        placeholder="Description"
+        value={event.event.description}
+        onChange={handleDescriptionChange}
         required
-        onChange={handleChangeTextArea}
-        ></textarea>
-      </label>
-      <label>
-        Type
-        <select name="name"
-          id="event_type_name"
-          className="input--txt"
-          required
-          onChange={handleChangeSelect}
-          >
-          {eventTypes.map((type, index) => (
-            <option key={index} value={type}>{type}</option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="image">Image</label>
-      <input type="file"
-        name='image'
-        id='image'
-        placeholder="Image"
-        required
+      /></label>
+      <label htmlFor="event_type_id">Type d'événement :
+      <select
+        name="event_type_id"
+        id="event_type_id"
+        className="input--txt"
+        value={event.event.event_type_id}
         onChange={handleChange}
-      />
-      <div className="align-row">
-        <button type="submit" className="button button--primary">Add a new event</button>
-        <p ref={messageRef} className='messageRef'></p>
-      </div>
+        required
+      >
+        <option value="">-- Sélectionnez un type d'événement --</option>
+        <option value="1">Private</option>
+        <option value="2">Public</option>
+        <option value="3">Formation</option>
+        <option value="4">Externe</option>
+      </select></label>
+      <label htmlFor="photo">Photo :
+      <input type="file" name="photo" id="photo" onChange={handleFileChange} />
+      </label>
+      <div>
+        <button type="submit" className='button--primary'>Create event</button>
+      </div>{message && <p>{message}</p>}
     </form>
   );
 };

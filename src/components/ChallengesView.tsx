@@ -8,7 +8,7 @@ interface Props {
 const ChallengeView: React.FC<Props> = (Batch) => {
   return (
     <div className="align-row">
-      <p>{Batch.Batch.course.name}</p>
+      <p>{/* {Batch.Batch.course.name} */}</p>
     </div>
   );
 };

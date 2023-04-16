@@ -1,6 +1,5 @@
-export default interface Batch {
+export default interface Challenge {
   id?: number,
-  name: string ,
+  name: string,
   programming_language: string,
-  course_id: number,
 }
