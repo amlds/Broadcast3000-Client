@@ -37,6 +37,7 @@ const BatchService = {
   },
 
   async updateBatch(batch: UpdateBatch, token: any): Promise<UpdateBatch> {
+    console.log(batch);
     const response = await fetch(`${url}/batchs/${batch.batch.id}`, {
       method: "PUT",
       headers: {

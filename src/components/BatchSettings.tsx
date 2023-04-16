@@ -7,6 +7,7 @@ import school from '../types/School';
 import Batch from '../types/Batch';
 import BatchService from '../services/BatchService';
 
+import PopUp from './PopUp';
 import Edit from './svg/Edit';
 
 interface Props {
@@ -98,28 +99,25 @@ const BatchSettings: React.FC<Props> = (Props) => {
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const batchId = e.currentTarget.dataset.id;
-    const batchNumber = e.currentTarget.batchNumber.value;
-    const startDate = e.currentTarget.startDate.value;
-    const courseId = e.currentTarget.courseId.value;
-    const batchGoToUpdate = {
-      batch: {
-        id: batchId,
-        number: batchNumber,
-        start_at: startDate,
-        course_id: courseId
-      }
-    };
-    const res = await UpdateBatch(batchGoToUpdate, token);
-    if (res) {
-      const newBatches = batches.map((batch) => {
-        if (batch.batch.id === res.batch.id) {
-          return res;
+    if (batchToUpdate) {
+      const batchId = batchToDeleteId;
+      const batchNumber = e.currentTarget.batchNumber.value;
+      const startDate = e.currentTarget.startDate.value;
+      const courseId = e.currentTarget.courseId.value;
+      const batchGoToUpdate = {
+        batch: {
+          id: batchId,
+          number: batchNumber,
+          start_at: startDate,
+          course_id: courseId
         }
-        return batch;
-      });
-      setBatches(newBatches);
-      setState(0);
+      };
+
+      const res = await UpdateBatch(batchGoToUpdate, token);
+      if (res) {
+        <PopUp message='Batch updated' state={1}/>
+        setState(0);
+      }
     }
   };
 
