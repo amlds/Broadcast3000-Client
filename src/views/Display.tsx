@@ -32,6 +32,7 @@ const DisplayView: React.FC = () => {
         setMessage_display(data.school.message_display);
         setCarrousel(data.school.nbr_carrousel);
         setLoading(false);
+        console.log(data);
       } catch (error) {
         window.location.href = '/not-found';
       }
@@ -62,16 +63,24 @@ const DisplayView: React.FC = () => {
             <h1>Hello wagoners !</h1>
             <p>Nous somme le <span className='text-normal' ref={messageRef}></span></p>
             <p>{message_display}</p>
-            <div className="align-row">
-              <p>Aujourd’hui au programme :</p>
               {
                 batch?.map((Batch) => {
-                  return (
-                    <ChallengeView Batch={Batch} />
-                  )
+                  if(!Batch.challenge){
+                    return (
+                      <div className="align-row">
+                        <p>C'est le week end ! Bon lait à vous !</p>
+                      </div>
+                    )
+                  }else {
+                    return (
+                      <div className="align-row">
+                        <p>Aujourd’hui au programme :</p>
+                        <ChallengeView Batch={Batch} />
+                      </div>
+                    )
+                  }
                 })
               }
-            </div>
             <div className="carrousel">
               <ImageDisplay carrousel={carrousel} events={events ? events : []}/>
             </div>
